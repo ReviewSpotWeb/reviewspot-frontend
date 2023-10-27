@@ -13,7 +13,7 @@ const ReviewSpot = () => {
     <div className="min-h-screen min-w-screen w-full h-full font-mono relative">
       <Navbar />
       <div className="flex justify-center w-full">
-        <div className="w-full my-3 mx-2">
+        <div className="p-2 xl:w-4/5 w-full">
           <Outlet />
         </div>
       </div>
