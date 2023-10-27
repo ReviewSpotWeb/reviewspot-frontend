@@ -11,6 +11,26 @@
         "name": "Pitbull",
         "type": "artist",
         "uri": "spotify:artist:0TnOYISbd1XYRBk9myaseg"
+      },
+      {
+        "external_urls": {
+          "spotify": "https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg"
+        },
+        "href": "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
+        "id": "0ASDfoiogDke9234kpofpp",
+        "name": "Pitbull's Brother",
+        "type": "artist",
+        "uri": "spotify:artist:0TnOYISbd1XYRBk9myaseg"
+      },
+      {
+        "external_urls": {
+          "spotify": "https://open.spotify.com/artist/0TnOYISbd1XYRBk9myaseg"
+        },
+        "href": "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
+        "id": "0ASDfoiogDke9234kpofpp",
+        "name": "Pitbull's Other Brother",
+        "type": "artist",
+        "uri": "spotify:artist:0TnOYISbd1XYRBk9myafdf"
       }
     ],
     "available_markets": [
@@ -8021,7 +8041,7 @@
       }
     ],
     "label": "Roc-A-Fella",
-    "name": "The Blueprint (Explicit Version)",
+    "name": "The Blueprint (Explicit Version) - Really Long Title",
     "popularity": 71,
     "release_date": "2001-09-11",
     "release_date_precision": "day",
