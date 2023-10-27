@@ -19,7 +19,7 @@ const AlbumList = ({ albums }: { albums: Album[] }) => {
   };
 
   return (
-    <ul className="w-full flex flex-col gap-2 p-2">
+    <ul className="w-full flex flex-col gap-2 p-2 rounded">
       {albums.length > 0 &&
         albums.map((album, idx) => <AlbumListItem album={album} key={idx} />)}
       <div className="bg-gray-500 flex justify-between p-1 rounded">

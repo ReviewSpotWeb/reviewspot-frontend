@@ -10,14 +10,14 @@ const ReviewSpot = () => {
   //   });
   // };
   return (
-    <div className="min-h-screen min-w-screen w-full h-full font-mono relative">
-      <Navbar />
-      <div className="flex justify-center w-full">
-        <div className="p-2 xl:w-4/5 w-full">
+    <div className="min-h-screen min-w-screen w-full h-full font-mono flex justify-center">
+      <div className="xl:w-4/5 w-full p-2">
+        <Navbar />
+        <div className="pt-2">
           <Outlet />
         </div>
+        <ToastContainer />
       </div>
-      <ToastContainer />
     </div>
   );
 };

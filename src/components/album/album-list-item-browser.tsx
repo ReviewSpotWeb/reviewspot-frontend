@@ -17,7 +17,7 @@ const AlbumListItemBrowser = ({ album }: { album: Album }) => {
         <img
           src={album.images[0].url}
           alt={`${album.name} album cover`}
-          className="object-fit h-48 md:h-56 lg:h-64 rounded cursor-pointer hover:border-2 border-green-400"
+          className="object-fit h-48 md:h-56 lg:h-64 rounded cursor-pointer border-2 border-transparent hover:border-green-400"
           onClick={() => navigate(`/album/${album.id}`)}
         />
         <div className="w-full flex flex-col items-center justify-between h-48 md:h-56 lg:h-64 overflow-hidden">

@@ -24,8 +24,7 @@ const Home = () => {
         <Tabs tabs={tabs} />
       </div>
       <div className="justify-between gap-3 hidden lg:flex">
-        {/* border-pink-200 rounded animate-[pulse_30s_ease-in-out_infinite] */}
-        <div className="lg:w-2/3 w-full bg-[#303030]">
+        <div className="lg:w-2/3 w-full bg-[#303030] rounded">
           <AlbumList albums={albums as Album[]} />
         </div>
         <div className="lg:w-1/3 bg-[#303030] rounded md:inline hidden">
