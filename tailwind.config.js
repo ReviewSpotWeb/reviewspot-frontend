@@ -1,8 +1,7 @@
-import withMT from "@material-tailwind/react/utils/withMT";
 import colors from "tailwindcss/colors";
 
 /** @type {import('tailwindcss').Config} */
-export default withMT({
+export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
@@ -14,13 +13,13 @@ export default withMT({
         emerald: colors.emerald,
         indigo: colors.indigo,
         yellow: colors.yellow,
-        stone: colors.warmGray,
-        sky: colors.lightBlue,
-        neutral: colors.trueGray,
-        gray: colors.coolGray,
-        slate: colors.blueGray,
+        stone: colors.stone,
+        sky: colors.sky,
+        neutral: colors.neutral,
+        gray: colors.gray,
+        slate: colors.slate,
       },
     },
   },
   plugins: [],
-});
+};

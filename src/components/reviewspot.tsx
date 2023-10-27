@@ -10,10 +10,10 @@ const ReviewSpot = () => {
   //   });
   // };
   return (
-    <div className="min-h-screen w-screen">
+    <div className="min-h-screen min-w-screen w-full h-full font-mono relative">
       <Navbar />
-      <div className="flex justify-center">
-        <div className="w-full my-3 mx-10">
+      <div className="flex justify-center w-full">
+        <div className="w-full my-3 mx-2">
           <Outlet />
         </div>
       </div>
