@@ -7,6 +7,7 @@ interface Rating {
 }
 
 export interface Review {
+  id: string;
   authorInfo: {
     authorName: string;
     authorRole: string;

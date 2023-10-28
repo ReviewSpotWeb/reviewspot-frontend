@@ -21,6 +21,7 @@ const AlbumPage = () => {
   };
 
   const USER_REVIEW: Review = {
+    id: "0",
     authorInfo: {
       authorName: "eli",
       authorRole: Role.GENERAL,

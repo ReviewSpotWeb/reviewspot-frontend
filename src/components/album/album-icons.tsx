@@ -33,6 +33,6 @@ export const MusicNoteIcon = () => {
 
 export const ReviewIcon = () => {
   return createElement(ChatBubbleBottomCenterTextIcon, {
-    className: "w-6 text-green-400",
+    className: "w-6 text-blue-500",
   });
 };

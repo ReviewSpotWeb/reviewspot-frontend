@@ -1,0 +1,20 @@
+[
+  {
+    "_id": "0",
+    "username": "Alice",
+    "role": "GENERAL",
+    "banned": false
+  },
+  {
+    "_id": "1",
+    "username": "Bob",
+    "role": "GENERAL",
+    "banned": false
+  },
+  {
+    "_id": "2",
+    "username": "Charlie",
+    "role": "GENERAL",
+    "banned": false
+  }
+]

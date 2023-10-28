@@ -1,0 +1,79 @@
+[
+  {
+    "_id": "0",
+    "authorInfo": {
+      "authorName": "Alice",
+      "authorRole": "GENERAL"
+    },
+    "albumId": "0TnOYISbd1XYRBk9myaseg",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id aliquet lectus proin nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames.",
+    "numComments": 2,
+    "likeBy": [
+      {
+        "_id": "1",
+        "username": "Bob",
+        "role": "GENERAL",
+        "banned": false
+      }
+    ],
+    "rating": {
+      "rater": {
+        "_id": "0",
+        "username": "Alice",
+        "role": "GENERAL",
+        "banned": false
+      },
+      "rating": 75,
+      "albumId": "0TnOYISbd1XYRBk9myaseg"
+    }
+  },
+  {
+    "_id": "1",
+    "authorInfo": {
+      "authorName": "Bob",
+      "authorRole": "GENERAL"
+    },
+    "albumId": "3nFkdlSjzX9mRTtwJOzDYB",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id aliquet lectus proin nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames.",
+    "numComments": 1,
+    "likeBy": [
+      {
+        "_id": "0",
+        "username": "Alice",
+        "role": "GENERAL",
+        "banned": false
+      }
+    ],
+    "rating": {
+      "rater": {
+        "_id": "1",
+        "username": "Bob",
+        "role": "GENERAL",
+        "banned": false
+      },
+      "rating": 90,
+      "albumId": "3nFkdlSjzX9mRTtwJOzDYB"
+    }
+  },
+  {
+    "_id": "2",
+    "authorInfo": {
+      "authorName": "Charlie",
+      "authorRole": "GENERAL"
+    },
+    "albumId": "5K4W6rqBFWDnAN6FQUkS6x",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id aliquet lectus proin nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames.",
+    "numComments": 0,
+    "likeBy": [],
+    "rating": {
+      "rater": {
+        "_id": "2",
+        "username": "Charlie",
+        "role": "GENERAL",
+        "banned": false
+      },
+      "rating": 30,
+      "albumId": "5K4W6rqBFWDnAN6FQUkS6x"
+    }
+  }
+]

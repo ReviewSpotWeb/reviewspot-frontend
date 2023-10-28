@@ -6,6 +6,7 @@ import Home from "./components/home/home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/auth/login";
 import AlbumPage from "./components/album/album-page";
+import ReviewPage from "./components/review/review-page";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "album/:id",
         element: <AlbumPage />,
+      },
+      {
+        path: "review/:id",
+        element: <ReviewPage />,
       },
     ],
   },
