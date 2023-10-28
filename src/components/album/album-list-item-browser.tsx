@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Album } from "../../types/album";
 import AlbumArtists from "./album-artists";
 import AlbumPopularity from "./album-popularity";
 import AlbumTitle from "./album-title";
-import { MusicNoteIcon, ReviewIcon } from "./album-icons";
+import { MusicNoteIcon, ReviewIcon, SpotifyIcon } from "./album-icons";
 import { formatReleaseDate } from "../../helpers/album-helpers";
 const AlbumListItemBrowser = ({ album }: { album: Album }) => {
   const navigate = useNavigate();
@@ -21,6 +21,15 @@ const AlbumListItemBrowser = ({ album }: { album: Album }) => {
           onClick={() => navigate(`/album/${album.id}`)}
         />
         <div className="w-full flex flex-col items-center justify-between h-48 md:h-56 lg:h-64 overflow-hidden">
+          <div className="absolute right-2">
+            <Link
+              to={album.external_urls.spotify}
+              rel="noreferrer"
+              target={"_blank"}
+            >
+              <SpotifyIcon />
+            </Link>
+          </div>
           <div className="h-full flex flex-col justify-center w-full">
             <AlbumTitle album={album} />
             <AlbumArtists artists={album.artists} />

@@ -1,7 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Album } from "../../types/album";
 import AlbumArtists from "./album-artists";
-import { InfoIcon, MusicNoteIcon, ReviewIcon } from "./album-icons";
+import {
+  InfoIcon,
+  MusicNoteIcon,
+  ReviewIcon,
+  SpotifyIcon,
+} from "./album-icons";
 import { formatReleaseDate } from "../../helpers/album-helpers";
 import AlbumTitle from "./album-title";
 import AlbumPopularity from "./album-popularity";
@@ -15,7 +20,16 @@ const AlbumListItemMobile = ({ album }: { album: Album }) => {
   return (
     <div className="sm:hidden">
       <div className="w-full relative">
-        <div className="absolute right-0">
+        <div className="absolute right-2">
+          <Link
+            to={album.external_urls.spotify}
+            rel="noreferrer"
+            target={"_blank"}
+          >
+            <SpotifyIcon />
+          </Link>
+        </div>
+        <div className="absolute left-0">
           <InfoIcon
             title={`${album.name}\nReleased: ${formatReleaseDate(
               album.release_date
