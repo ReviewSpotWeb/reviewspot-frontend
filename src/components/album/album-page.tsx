@@ -1,15 +1,20 @@
 import { useParams } from "react-router-dom";
 import albumsJson from "../../data/albums.json";
 import { Album } from "../../types/album";
+import AlbumListItemMobile from "./album-list-item-mobile";
+import AlbumListItemBrowser from "./album-list-item-browser";
 
 const AlbumPage = () => {
   const { id } = useParams();
 
-  //   TODO: Get album info from state using id
   const albums: Album[] = albumsJson as never[];
-  console.log(albums);
-  console.log(id);
+  const album: Album = albums.filter((album) => album.id === id)[0];
 
-  return <div className="">{id}</div>;
+  return (
+    <div className="rounded w-full p-2 bg-[#404040] text-gray-300 relative">
+      <AlbumListItemMobile album={album} />
+      <AlbumListItemBrowser album={album} />
+    </div>
+  );
 };
 export default AlbumPage;

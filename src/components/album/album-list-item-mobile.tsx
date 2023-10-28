@@ -44,7 +44,7 @@ const AlbumListItemMobile = ({ album }: { album: Album }) => {
       <img
         src={album.images[0].url}
         alt={`${album.name} album cover`}
-        className="object-fit h-full border border-transparent rounded cursor-pointer hover:border-green-400"
+        className="object-fit h-full border border-transparent rounded cursor-pointer"
         onClick={() => navigate(`/album/${album.id}`)}
       />
       <div className="flex mt-2 gap-2 cursor-default">
