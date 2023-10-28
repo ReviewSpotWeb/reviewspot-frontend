@@ -1,6 +1,6 @@
 import { Album } from "../../types/album";
-import AlbumListItemMobile from "./album-list-item-mobile";
-import AlbumListItemBrowser from "./album-list-item-browser";
+import AlbumListItemMobile from "./album-item-mobile";
+import AlbumListItemBrowser from "./album-item-browser";
 
 const AlbumListItem = ({ album }: { album: Album }) => {
   return (
