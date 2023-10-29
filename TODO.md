@@ -9,3 +9,4 @@
 [ ] - conditionally render pagination bars
 [ ] - album cover too big on mobile layout?
 [ ] - combine album list item into one component
+[ ] - better location for UserBadge on review list item?
