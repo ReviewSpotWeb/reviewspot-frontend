@@ -55,11 +55,11 @@ const ProfilePage = () => {
         <div className="w-full h-full flex flex-col p-2 text-gray-300 gap-1">
           <div className="flex w-full h-full gap-1">
             {/* Place avatar at bottom of frame - flex flex-col justify-end */}
-            <div className="rounded bg-[#303030] border-4 border-[#202020] w-1/3 md:w-1/4 lg:w-1/5">
+            <div className="rounded bg-[#303030] w-1/3 md:w-1/4 lg:w-1/5">
               <ProfilePicture userId={id ?? ""} />
             </div>
             <div className="w-2/3 md:w-3/4 lg:w-4/5">
-              <div className="bg-[#303030] rounded w-full h-full border-4 border-[#202020]">
+              <div className="bg-[#303030] rounded w-full h-full">
                 <div className="flex flex-col items-center w-full h-full p-2 gap-1">
                   <div className="flex justify-center items-center w-full h-max">
                     <div className="flex justify-center items-center w-full relative">
