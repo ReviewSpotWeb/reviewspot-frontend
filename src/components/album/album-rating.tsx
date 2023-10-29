@@ -7,6 +7,7 @@ export type RatingInfo = {
 
 const RatingBar = ({ ratingInfo }: { ratingInfo: RatingInfo }) => {
   const { label, icon, color, rating } = ratingInfo;
+
   return (
     <div
       className="flex items-center gap-3 py-1 px-3 h-8 w-full rounded"
@@ -48,14 +49,17 @@ type AlbumRatingProps = {
 
 const AlbumRating = ({ ratings, hideNoRating = false }: AlbumRatingProps) => {
   return (
-    <div className="rounded text-center w-full h-full flex flex-col gap-1 border border-transparent hover:border-blue-500">
+    <div className="rounded text-center w-full h-full flex flex-col gap-1">
       {ratings.length > 0 &&
         ratings.map((rating, idx) => {
           if (hideNoRating && rating.rating === null)
             return <div key={idx}></div>;
 
           return (
-            <div key={idx} className={`rounded h-full w-full bg-[#303030] `}>
+            <div
+              key={idx}
+              className={`rounded h-full w-full bg-[#303030] border border-transparent hover:border-${rating.color} cursor-default`}
+            >
               {/* {idx !== 0 && <hr className="border-[#222222] text-center" />} */}
               <RatingBar ratingInfo={rating} />
             </div>
