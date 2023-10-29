@@ -12,6 +12,12 @@ const ProfilePicture = ({ userId }: { userId: string }) => {
   }, [id]);
 
   // TODO: Handle it being your own profile pic -- should just be /user
-  return <img src={avatar} alt={`${userId} Avatar`} />;
+  return (
+    <img
+      src={avatar}
+      alt={`${userId} Avatar`}
+      className="h-full w-full object-fill"
+    />
+  );
 };
 export default ProfilePicture;
