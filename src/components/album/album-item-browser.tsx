@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { Album } from "../../types/album";
 import AlbumArtists from "./album-artists";
 import AlbumRating, { RatingInfo } from "./album-rating";
@@ -12,10 +12,12 @@ import {
 import { formatReleaseDate } from "../../helpers/album-helpers";
 
 const AlbumItemBrowser = ({ album }: { album: Album }) => {
+  const { albumId } = useParams();
   const navigate = useNavigate();
   const numReviews: number = 0;
   const rng = Math.floor(Math.random() * 101);
   const albumRating: number | null = rng <= 30 ? null : rng;
+  const onAlbumPage = album.id === albumId;
 
   const ratings: RatingInfo[] = [
     {
@@ -38,8 +40,10 @@ const AlbumItemBrowser = ({ album }: { album: Album }) => {
         <img
           src={album.images[0].url}
           alt={`${album.name} album cover`}
-          className="object-fit rounded cursor-pointer w-1/3"
-          onClick={() => navigate(`/album/${album.id}`)}
+          className={`object-fit rounded w-1/3 ${
+            onAlbumPage ? "cursor-default" : "cursor-pointer"
+          }`}
+          onClick={() => (onAlbumPage ? navigate(`/album/${album.id}`) : "")}
         />
         <div className="w-full h-full flex flex-col items-center justify-between overflow-hidden gap-2 relative">
           <div className="absolute right-1 top-1">
