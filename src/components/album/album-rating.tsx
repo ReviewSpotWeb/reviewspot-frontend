@@ -46,14 +46,12 @@ const AlbumRating = ({ ratings, hideNoRating = false }: AlbumRatingProps) => {
 
           return (
             <div key={idx} className={`rounded h-full`}>
+              {idx !== 0 && <hr className="border-[#222222] text-center" />}
               <RatingBar
                 label={rating.label}
                 color={rating.color}
                 rating={rating.rating}
               />
-              {idx !== ratings.length - 1 && (
-                <hr className="border-[#222222] text-center" />
-              )}
             </div>
           );
         })}
