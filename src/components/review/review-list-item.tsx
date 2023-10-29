@@ -3,13 +3,19 @@ import { Review } from "../../types/review";
 import albumsJson from "../../data/albums.json";
 import { Album } from "../../types/album";
 import { Role } from "../../types/user";
-import { HeartIcon, ReviewIcon, SpotifyIconSmall } from "../util/icons";
+import { CommentIcon, HeartIcon, SpotifyIconSmall } from "../util/icons";
 import { RatingInfo } from "../album/album-rating";
 import AlbumRating from "../album/album-rating";
 import UserBadge from "../user/user-badge";
 import ProfilePicture from "../user/profile-picture";
 
-const ReviewListItem = ({ review }: { review: Review }) => {
+const ReviewListItem = ({
+  review,
+  hideAuthorInfo = false,
+}: {
+  review: Review;
+  hideAuthorInfo?: boolean;
+}) => {
   const albums: Album[] = albumsJson as never[];
   const album = albums.filter((album) => album.id === review.albumId)[0];
 
@@ -35,7 +41,7 @@ const ReviewListItem = ({ review }: { review: Review }) => {
       <div className="flex flex-col gap-1 w-full">
         {/* First Row */}
         <div className="w-full flex">
-          <div className={colSmall}>
+          <div className={hideAuthorInfo ? "hidden" : colSmall}>
             <Link to={`/user/${authorName.toLowerCase()}`}>
               <div className="w-full text-white font-bold bg-[#303030] border-2 border-[#222] hover:border-blue-500 rounded">
                 <div className="flex justify-center items-center">
@@ -48,7 +54,7 @@ const ReviewListItem = ({ review }: { review: Review }) => {
               </div>
             </Link>
           </div>
-          <div className={colBig}>
+          <div className={hideAuthorInfo ? "w-full" : colBig}>
             <div className="w-full relative">
               <div className="flex justify-center items-center mx-6">
                 <Link
@@ -73,9 +79,10 @@ const ReviewListItem = ({ review }: { review: Review }) => {
             </div>
           </div>
         </div>
+
         {/* Second Row - fill any space*/}
         <div className="w-full flex gap-2">
-          <div className={colSmall}>
+          <div className={hideAuthorInfo ? "hidden" : colSmall}>
             <Link to={`/user/${authorName.toLowerCase()}`}>
               <div
                 className="rounded bg-[#303030] border-4 border-[#222] hover:border-blue-500 flex justify-center"
@@ -85,7 +92,7 @@ const ReviewListItem = ({ review }: { review: Review }) => {
               </div>
             </Link>
           </div>
-          <div className={colBig}>
+          <div className={hideAuthorInfo ? "w-full h-full" : colBig}>
             <div className="bg-[#303030] rounded px-2 h-full flex justify-center items-center text-center border border-transparent hover:border-blue-500 cursor-default">
               <div className="line-clamp-5 lg:line-clamp-3 xl:line-clamp-4">
                 {review.content}
@@ -99,7 +106,7 @@ const ReviewListItem = ({ review }: { review: Review }) => {
             <div className="flex lg:flex-col justify-between gap-1">
               <div className="w-full bg-[#303030] rounded whitespace-pre px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
                 <b>{review.numComments} </b>
-                <ReviewIcon />
+                <CommentIcon />
               </div>
               <div className="w-full bg-[#303030] rounded whitespace-pre px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
                 <b>{review.likedBy.length} </b>
