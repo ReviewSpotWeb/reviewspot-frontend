@@ -8,6 +8,7 @@
 [ ] - reviewspot logo icon
 [ ] - conditionally render pagination bars
 [ ] - album cover too big on mobile layout?
+[ ] - album list item responsiveness (bottom of album cover not lining up with bottom of album rating)
 [ ] - combine album list item into one component
 [ ] - better location for UserBadge on review list item?
 [x] - link to artist spotify url
