@@ -8,7 +8,6 @@ import { RatingInfo } from "../album/album-rating";
 import AlbumRating from "../album/album-rating";
 import UserBadge from "../user/user-badge";
 import ProfilePicture from "../user/profile-picture";
-import IconChip from "../util/icon-chip";
 
 const ReviewListItem = ({ review }: { review: Review }) => {
   const albums: Album[] = albumsJson as never[];
@@ -98,22 +97,18 @@ const ReviewListItem = ({ review }: { review: Review }) => {
         <div className="w-full flex gap-2">
           <div className={colSmall}>
             <div className="flex lg:flex-col justify-between gap-1">
-              <div className="w-full">
-                <IconChip>
-                  <b>{review.numComments} </b>
-                  <ReviewIcon />
-                </IconChip>
+              <div className="w-full bg-[#303030] rounded whitespace-pre px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
+                <b>{review.numComments} </b>
+                <ReviewIcon />
               </div>
-              <div className="w-full">
-                <IconChip>
-                  <b>{review.likedBy.length} </b>
-                  <div
-                    className="flex justify-center items-center cursor-pointer"
-                    onClick={() => handleLike(review._id)}
-                  >
-                    <HeartIcon />
-                  </div>
-                </IconChip>
+              <div className="w-full bg-[#303030] rounded whitespace-pre px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
+                <b>{review.likedBy.length} </b>
+                <div
+                  className="flex justify-center items-center cursor-pointer "
+                  onClick={() => handleLike(review._id)}
+                >
+                  <HeartIcon />
+                </div>
               </div>
             </div>
           </div>
