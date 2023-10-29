@@ -1,4 +1,5 @@
 import { Artist } from "../../types/album";
+import { Link } from "react-router-dom";
 
 const AlbumArtists = ({ artists }: { artists: Artist[] }) => {
   const searchArtist = (artistId: string) => {
@@ -16,7 +17,13 @@ const AlbumArtists = ({ artists }: { artists: Artist[] }) => {
             key={idx}
             onClick={() => searchArtist(artist.id)}
           >
-            <span className="hover:text-blue-500">{artist.name}</span>
+            <Link
+              to={artist.external_urls.spotify}
+              rel="noreferrer"
+              target={"_blank"}
+            >
+              <span className="hover:text-blue-500">{artist.name}</span>
+            </Link>
             {idx !== artists.length - 1 && <span>, </span>}
           </span>
         );

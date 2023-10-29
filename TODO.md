@@ -10,3 +10,5 @@
 [ ] - album cover too big on mobile layout?
 [ ] - combine album list item into one component
 [ ] - better location for UserBadge on review list item?
+[x] - link to artist spotify url
+[ ] - a way to simplify onAlbumPage conditional rendering checks
