@@ -5,9 +5,8 @@ interface Rating {
   albumId: string;
   rating: number;
 }
-
 export interface Review {
-  id: string;
+  _id: string;
   authorInfo: {
     authorName: string;
     authorRole: string;

@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import albumsJson from "../../data/albums.json";
 import { Album } from "../../types/album";
-import AlbumListItemMobile from "./album-item-mobile";
-import AlbumListItemBrowser from "./album-item-browser";
+import AlbumItemMobile from "./album-item-mobile";
+import AlbumItemBrowser from "./album-item-browser";
 import { Review } from "../../types/review";
 import { Role, User } from "../../types/user";
 
@@ -43,8 +43,8 @@ const AlbumPage = () => {
       <div className="rounded w-full p-2 bg-[#404040] text-gray-300 relative">
         <div className="flex flex-col gap-2">
           <div>
-            <AlbumListItemMobile album={album} />
-            <AlbumListItemBrowser album={album} />
+            <AlbumItemMobile album={album} />
+            <AlbumItemBrowser album={album} />
           </div>
           {USER_REVIEW && (
             <div className="border">

@@ -6,21 +6,35 @@ import {
   MusicNoteIcon,
   ReviewIcon,
   SpotifyIcon,
-} from "./album-icons";
+} from "../util/icons";
 import { formatReleaseDate } from "../../helpers/album-helpers";
 import AlbumTitle from "./album-title";
-import AlbumPopularity from "./album-popularity";
+import AlbumRating, { RatingInfo } from "./album-rating";
 
-const AlbumListItemMobile = ({ album }: { album: Album }) => {
+const AlbumItemMobile = ({ album }: { album: Album }) => {
   const navigate = useNavigate();
 
   const numReviews: number = 0;
   const rng = Math.floor(Math.random() * 101);
   const albumRating: number | null = rng <= 30 ? null : rng;
+
+  const ratings: RatingInfo[] = [
+    {
+      label: "Spotify",
+      rating: album.popularity,
+      color: "green-500",
+    },
+    {
+      label: "ReviewSpot",
+      rating: albumRating,
+      color: "yellow-400",
+    },
+  ];
+
   return (
     <div className="sm:hidden">
       <div className="w-full relative">
-        <div className="absolute right-2">
+        <div className="absolute right-0">
           <Link
             to={album.external_urls.spotify}
             rel="noreferrer"
@@ -36,7 +50,7 @@ const AlbumListItemMobile = ({ album }: { album: Album }) => {
             )}`}
           />
         </div>
-        <div className="px-7">
+        <div className="mx-7">
           <AlbumTitle album={album} />
         </div>
         <AlbumArtists artists={album.artists} />
@@ -44,7 +58,7 @@ const AlbumListItemMobile = ({ album }: { album: Album }) => {
       <img
         src={album.images[0].url}
         alt={`${album.name} album cover`}
-        className="object-fit h-full border border-transparent rounded cursor-pointer"
+        className="object-fit h-full rounded cursor-pointer"
         onClick={() => navigate(`/album/${album.id}`)}
       />
       <div className="flex mt-2 gap-2 cursor-default">
@@ -59,11 +73,11 @@ const AlbumListItemMobile = ({ album }: { album: Album }) => {
           </div>
         </div>
         <div className="w-full text-gray-300 flex flex-col">
-          <AlbumPopularity popularity={album.popularity} rating={albumRating} />
+          <AlbumRating ratings={ratings} />
         </div>
       </div>
     </div>
   );
 };
 
-export default AlbumListItemMobile;
+export default AlbumItemMobile;

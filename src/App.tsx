@@ -2,7 +2,6 @@ import ReviewSpot from "./components/reviewspot";
 import "react-toastify/dist/ReactToastify.css";
 import ErrorPage from "./components/error/error-page";
 import Home from "./components/home/home";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/auth/login";
 import AlbumPage from "./components/album/album-page";

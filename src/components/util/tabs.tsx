@@ -44,11 +44,7 @@ const Tabs = ({ tabs, defaultActive }: TabProps) => {
       <div>
         {tabs.map((tab, idx) => {
           return (
-            idx === activeTabIdx && (
-              <div key={tab.key} className="bg-[#303030] rounded">
-                {tab.children}
-              </div>
-            )
+            idx === activeTabIdx && <div key={tab.key}>{tab.children}</div>
           );
         })}
       </div>

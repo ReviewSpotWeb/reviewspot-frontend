@@ -5,14 +5,14 @@
       "authorName": "Alice",
       "authorRole": "GENERAL"
     },
-    "albumId": "0TnOYISbd1XYRBk9myaseg",
+    "albumId": "4aawyAB9vmqN3uQ7FjRGTy",
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id aliquet lectus proin nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames.",
     "numComments": 2,
-    "likeBy": [
+    "likedBy": [
       {
         "_id": "1",
         "username": "Bob",
-        "role": "GENERAL",
+        "role": "MODERATOR",
         "banned": false
       }
     ],
@@ -24,19 +24,19 @@
         "banned": false
       },
       "rating": 75,
-      "albumId": "0TnOYISbd1XYRBk9myaseg"
+      "albumId": "4aawyAB9vmqN3uQ7FjRGTy"
     }
   },
   {
     "_id": "1",
     "authorInfo": {
       "authorName": "Bob",
-      "authorRole": "GENERAL"
+      "authorRole": "MODERATOR"
     },
-    "albumId": "3nFkdlSjzX9mRTtwJOzDYB",
+    "albumId": "69CmkikTHkGKdkrUZTtyWl",
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id aliquet lectus proin nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames.",
     "numComments": 1,
-    "likeBy": [
+    "likedBy": [
       {
         "_id": "0",
         "username": "Alice",
@@ -48,11 +48,11 @@
       "rater": {
         "_id": "1",
         "username": "Bob",
-        "role": "GENERAL",
+        "role": "MODERATOR",
         "banned": false
       },
       "rating": 90,
-      "albumId": "3nFkdlSjzX9mRTtwJOzDYB"
+      "albumId": "69CmkikTHkGKdkrUZTtyWl"
     }
   },
   {
@@ -61,10 +61,10 @@
       "authorName": "Charlie",
       "authorRole": "GENERAL"
     },
-    "albumId": "5K4W6rqBFWDnAN6FQUkS6x",
+    "albumId": "5ll74bqtkcXlKE7wwkMq4g",
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id aliquet lectus proin nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames.",
     "numComments": 0,
-    "likeBy": [],
+    "likedBy": [],
     "rating": {
       "rater": {
         "_id": "2",
@@ -73,7 +73,7 @@
         "banned": false
       },
       "rating": 30,
-      "albumId": "5K4W6rqBFWDnAN6FQUkS6x"
+      "albumId": "5ll74bqtkcXlKE7wwkMq4g"
     }
   }
 ]
