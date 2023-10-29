@@ -66,7 +66,7 @@ const AlbumItemMobile = ({ album }: { album: Album }) => {
         className={`object-fit h-full rounded ${
           onAlbumPage ? "cursor-default" : "cursor-pointer"
         }`}
-        onClick={() => (onAlbumPage ? navigate(`/album/${album.id}`) : "")}
+        onClick={() => (!onAlbumPage ? navigate(`/album/${album.id}`) : "")}
       />
       <div className="flex mt-2 gap-2 cursor-default">
         <div className="w-1/5 whitespace-pre bg-[#303030] rounded flex flex-col justify-around items-center border border-transparent hover:border-blue-500">

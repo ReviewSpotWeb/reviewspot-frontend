@@ -43,7 +43,7 @@ const AlbumItemBrowser = ({ album }: { album: Album }) => {
           className={`object-fit rounded w-1/3 ${
             onAlbumPage ? "cursor-default" : "cursor-pointer"
           }`}
-          onClick={() => (onAlbumPage ? navigate(`/album/${album.id}`) : "")}
+          onClick={() => (!onAlbumPage ? navigate(`/album/${album.id}`) : "")}
         />
         <div className="w-full h-full flex flex-col items-center justify-between overflow-hidden gap-2 relative">
           <div className="absolute right-1 top-1">
