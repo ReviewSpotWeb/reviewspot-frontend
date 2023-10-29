@@ -7,7 +7,8 @@ import {
   faMusic,
   // faCirclePlay,
   // faCirclePause,
-  faCommentDots,
+  faComment,
+  faComments,
   faHeart as faHeartSolid,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
@@ -34,7 +35,7 @@ export const SpotifyIcon = () => {
   return (
     <FontAwesomeIcon
       icon={faSpotify}
-      className="w-6 h-6 sm:w-7 sm:h-7 fill-current text-green-500 hover:text-green-400"
+      className="w-6 h-6 sm:w-7 sm:h-7 fill-current text-green-500"
     />
   );
 };
@@ -65,8 +66,12 @@ export const MusicNoteIcon = () => {
 };
 
 export const ReviewIcon = () => {
+  return <FontAwesomeIcon icon={faComment} className="w-5 h-5 text-blue-500" />;
+};
+
+export const CommentIcon = () => {
   return (
-    <FontAwesomeIcon icon={faCommentDots} className="w-5 h-5 text-blue-500" />
+    <FontAwesomeIcon icon={faComments} className="w-5 h-5 text-blue-500" />
   );
 };
 
