@@ -65,7 +65,7 @@ const AlbumItemBrowser = ({ album }: { album: Album }) => {
               </div>
             </div>
             <div>
-              <AlbumRating ratings={ratings} />
+              <AlbumRating ratings={ratings} hideNoRating />
             </div>
           </div>
         </div>

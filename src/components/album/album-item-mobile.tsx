@@ -73,7 +73,7 @@ const AlbumItemMobile = ({ album }: { album: Album }) => {
           </div>
         </div>
         <div className="w-full text-gray-300 flex flex-col">
-          <AlbumRating ratings={ratings} />
+          <AlbumRating ratings={ratings} hideNoRating />
         </div>
       </div>
     </div>
