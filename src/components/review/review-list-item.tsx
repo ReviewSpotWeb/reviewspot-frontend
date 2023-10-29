@@ -37,7 +37,7 @@ const ReviewListItem = ({ review }: { review: Review }) => {
         {/* First Row */}
         <div className="w-full flex">
           <div className={colSmall}>
-            <Link to={`/user/${authorName}`}>
+            <Link to={`/user/${authorName.toLowerCase()}`}>
               <div className="w-full text-white font-bold bg-[#303030] border-2 border-[#222] hover:border-blue-500 rounded">
                 <div className="flex justify-center items-center">
                   <span className="truncate" title={authorName}>
@@ -77,7 +77,7 @@ const ReviewListItem = ({ review }: { review: Review }) => {
         {/* Second Row - fill any space*/}
         <div className="w-full flex gap-2">
           <div className={colSmall}>
-            <Link to={`/user/${authorName}`}>
+            <Link to={`/user/${authorName.toLowerCase()}`}>
               <div
                 className="rounded bg-[#303030] border-4 border-[#222] hover:border-blue-500 flex justify-center"
                 title={authorName}
