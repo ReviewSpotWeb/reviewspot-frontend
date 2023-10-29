@@ -3,4 +3,5 @@
 [ ] - sort/filter review list on user profile page and album page
 [ ] - sort/filter comment list on review page
 [ ] - list item animations on load (slide in or cascade down)
-[ ] - review list item profile pic size on md-lg screens
+[ ] - review list item profile pic size responsiveness
+[ ] - profile page profile pic size responsiveness
