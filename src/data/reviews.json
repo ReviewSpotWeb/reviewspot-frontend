@@ -75,5 +75,26 @@
       "rating": 30,
       "albumId": "5ll74bqtkcXlKE7wwkMq4g"
     }
+  },
+  {
+    "_id": "3",
+    "authorInfo": {
+      "authorName": "Alice",
+      "authorRole": "GENERAL"
+    },
+    "albumId": "5ll74bqtkcXlKE7wwkMq4g",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id aliquet lectus proin nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames.",
+    "numComments": 0,
+    "likedBy": [],
+    "rating": {
+      "rater": {
+        "_id": "0",
+        "username": "Alice",
+        "role": "GENERAL",
+        "banned": false
+      },
+      "rating": 30,
+      "albumId": "5ll74bqtkcXlKE7wwkMq4g"
+    }
   }
 ]
