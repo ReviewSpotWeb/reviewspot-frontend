@@ -5,7 +5,7 @@ const CommentList = ({ comments }: { comments: Comment[] }) => {
     <ul className="w-full flex flex-col gap-2 rounded">
       {comments.length > 0 &&
         comments.map((comment, idx) => (
-          <CommentListItem comment={comment} key={idx} />
+          <CommentListItem comment={{ ...comment }} key={idx} />
         ))}
     </ul>
   );

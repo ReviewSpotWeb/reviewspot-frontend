@@ -23,15 +23,15 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "album/:id",
+        path: "album/:albumId",
         element: <AlbumPage />,
       },
       {
-        path: "review/:id",
+        path: "review/:reviewId",
         element: <ReviewPage />,
       },
       {
-        path: "user/:id",
+        path: "user/:userId",
         element: <ProfilePage />,
       },
     ],

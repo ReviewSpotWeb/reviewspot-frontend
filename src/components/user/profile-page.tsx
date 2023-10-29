@@ -12,15 +12,15 @@ import ReviewList from "../review/review-list";
 import PaginationBar, { PaginationInfo } from "../util/pagination-bar";
 
 const ProfilePage = () => {
-  const { id } = useParams();
+  const { userId } = useParams();
   const users: User[] = usersJson as never[];
   const user: User = users.filter(
-    (user) => user.username.toLowerCase() === id
+    (user) => user.username.toLowerCase() === userId
   )[0];
 
   let numLikes: number = 0;
   const reviews: Review[] = reviewsJson.filter((review) => {
-    if (review.authorInfo.authorName.toLowerCase() === id) {
+    if (review.authorInfo.authorName.toLowerCase() === userId) {
       numLikes += review.likedBy.length;
       return review;
     }
@@ -56,7 +56,7 @@ const ProfilePage = () => {
           <div className="flex w-full h-full gap-1">
             {/* Place avatar at bottom of frame - flex flex-col justify-end */}
             <div className="rounded bg-[#303030] w-1/3 md:w-1/4 lg:w-1/5">
-              <ProfilePicture userId={id ?? ""} />
+              <ProfilePicture userId={userId ?? ""} />
             </div>
             <div className="w-2/3 md:w-3/4 lg:w-4/5">
               <div className="bg-[#303030] rounded w-full h-full">
@@ -138,7 +138,7 @@ const ProfilePage = () => {
             ? "Review"
             : "Reviews"}
         </div>
-        <ReviewList reviews={reviews} hideAuthorInfo />
+        <ReviewList reviews={[...reviews]} hideAuthorInfo />
         <PaginationBar paginationInfo={paginationInfo} />
       </div>
     </div>

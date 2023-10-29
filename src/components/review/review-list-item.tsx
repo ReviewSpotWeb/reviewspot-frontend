@@ -21,14 +21,16 @@ const ReviewListItem = ({
   review: Review;
   hideAuthorInfo?: boolean;
 }) => {
-  const { id } = useParams();
+  const { reviewId, albumId } = useParams();
   const albums: Album[] = albumsJson as never[];
   const album = albums.filter((album) => album.id === review.albumId)[0];
 
   const { authorName, authorRole } = review.authorInfo;
   const role: Role = Role[authorRole as keyof typeof Role];
 
-  const onReviewPage = review._id === id;
+  const onReviewPage = review._id === reviewId;
+  const onAlbumPage = album.id === albumId;
+
   const rng = Math.floor(Math.random() * 101);
   const albumRating: number | null = rng <= 30 ? null : rng;
   const ratings: RatingInfo[] = onReviewPage
@@ -85,30 +87,32 @@ const ReviewListItem = ({
               </div>
             </Link>
           </div>
-          <div className={hideAuthorInfo ? "w-full" : colBig}>
-            <div className="w-full relative">
-              <div className="flex justify-center items-center mx-6">
-                <Link
-                  to={`/album/${album.id}`}
-                  className="font-bold text-lg truncate"
-                >
-                  <span className="hover:text-green-400" title={album.name}>
-                    {album.name}
-                  </span>
-                </Link>
-              </div>
-              <div className="absolute right-0 top-0">
-                <Link
-                  to={album.external_urls.spotify}
-                  rel="noreferrer"
-                  target={"_blank"}
-                  className="flex justify-center items-center"
-                >
-                  <SpotifyIconSmall />
-                </Link>
+          {!onAlbumPage && (
+            <div className={hideAuthorInfo ? "w-full" : colBig}>
+              <div className="w-full relative">
+                <div className="flex justify-center items-center mx-6">
+                  <Link
+                    to={`/album/${album.id}`}
+                    className="font-bold text-lg truncate"
+                  >
+                    <span className="hover:text-green-400" title={album.name}>
+                      {album.name}
+                    </span>
+                  </Link>
+                </div>
+                <div className="absolute right-0 top-0">
+                  <Link
+                    to={album.external_urls.spotify}
+                    rel="noreferrer"
+                    target={"_blank"}
+                    className="flex justify-center items-center"
+                  >
+                    <SpotifyIconSmall />
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Second Row - fill any space*/}

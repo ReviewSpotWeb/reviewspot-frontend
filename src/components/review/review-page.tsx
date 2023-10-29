@@ -7,7 +7,7 @@ import CommentList from "../comment/comment-list";
 import { Comment } from "../../types/comment";
 import PaginationBar, { PaginationInfo } from "../util/pagination-bar";
 const ReviewPage = () => {
-  const { id } = useParams();
+  const { reviewId } = useParams();
 
   const prev = true; // If previous page
   const next = true; // If next page
@@ -28,16 +28,16 @@ const ReviewPage = () => {
   };
 
   const reviews: Review[] = reviewsJson as never[];
-  const review: Review = reviews.filter((review) => review._id === id)[0];
+  const review: Review = reviews.filter((review) => review._id === reviewId)[0];
   const comments: Comment[] = commentsJson.filter(
-    (comment) => comment.reviewId === id
+    (comment) => comment.reviewId === reviewId
   ) as never[];
   const numComments: number = comments.length;
 
   return (
     <div className="h-max w-full">
       <div className="h-full w-full flex flex-col gap-5">
-        <ReviewList reviews={[review]} />
+        <ReviewList reviews={[{ ...review }]} />
         <div className="w-full h-max flex flex-col gap-2">
           <div className="text-center font-bold text-xl bg-green-500 rounded">
             {numComments === 0
@@ -46,7 +46,7 @@ const ReviewPage = () => {
               ? "Comment"
               : "Comments"}
           </div>
-          <CommentList comments={comments} />
+          <CommentList comments={[...comments]} />
           <PaginationBar paginationInfo={paginationInfo} />
         </div>
       </div>

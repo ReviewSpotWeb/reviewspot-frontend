@@ -13,7 +13,7 @@ const ReviewList = ({
       {reviews.length > 0 &&
         reviews.map((review, idx) => (
           <ReviewListItem
-            review={review}
+            review={{ ...review }}
             key={idx}
             hideAuthorInfo={hideAuthorInfo}
           />

@@ -13,12 +13,12 @@ const Home = () => {
     {
       key: "albums",
       label: "Albums",
-      children: <AlbumList albums={albums} />,
+      children: <AlbumList albums={[...albums]} />,
     },
     {
       key: "reviews",
       label: "Reviews",
-      children: <ReviewList reviews={reviews} />,
+      children: <ReviewList reviews={[...reviews]} />,
     },
   ];
 
@@ -29,13 +29,13 @@ const Home = () => {
       </div>
       <div className="justify-between gap-3 hidden lg:flex">
         <div className="lg:w-2/3 w-full rounded">
-          <AlbumList albums={albums} />
+          <AlbumList albums={[...albums]} />
         </div>
         <div className="lg:w-1/3 rounded md:inline hidden">
           <div className="w-full font-bold text-2xl text-center rounded bg-green-500 text-black p-1 mb-2 select-none cursor-default">
             Recent Reviews
           </div>
-          <ReviewList reviews={reviews} />
+          <ReviewList reviews={[...reviews]} />
         </div>
       </div>
     </div>
