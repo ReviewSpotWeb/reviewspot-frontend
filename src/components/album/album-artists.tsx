@@ -2,9 +2,6 @@ import { Artist } from "../../types/album";
 import { Link } from "react-router-dom";
 
 const AlbumArtists = ({ artists }: { artists: Artist[] }) => {
-  const searchArtist = (artistId: string) => {
-    console.log(artistId);
-  };
   return (
     <div
       className={`truncate text-center px-3`}
@@ -12,11 +9,7 @@ const AlbumArtists = ({ artists }: { artists: Artist[] }) => {
     >
       {artists.map((artist, idx) => {
         return (
-          <span
-            className="whitespace-pre cursor-pointer"
-            key={idx}
-            onClick={() => searchArtist(artist.id)}
-          >
+          <span className="whitespace-pre" key={idx}>
             <Link
               to={artist.external_urls.spotify}
               rel="noreferrer"
