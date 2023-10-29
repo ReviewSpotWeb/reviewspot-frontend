@@ -1,6 +1,6 @@
 export type RatingInfo = {
   rating: number | null;
-  icon: JSX.Element;
+  icon?: JSX.Element;
   color: string;
   label: string;
 };
@@ -9,7 +9,7 @@ const RatingBar = ({ ratingInfo }: { ratingInfo: RatingInfo }) => {
   const { label, icon, color, rating } = ratingInfo;
   return (
     <div
-      className="flex items-center gap-3 py-1 px-3 h-full rounded"
+      className="flex items-center gap-3 py-1 px-3 h-8 w-full rounded"
       title={`${label} - ${rating ?? "No ratings"}`}
     >
       {label !== "" && (
@@ -20,11 +20,11 @@ const RatingBar = ({ ratingInfo }: { ratingInfo: RatingInfo }) => {
           {label}
         </div>
       )}
-      {
+      {icon && (
         <div className="w-1/6 font-bold text-md flex justify-center items-center md:hidden">
           {icon}
         </div>
-      }
+      )}
       {rating ? (
         <div className="w-full h-2/5">
           <div className="bg-[#222222] rounded-full h-full">
@@ -48,15 +48,15 @@ type AlbumRatingProps = {
 
 const AlbumRating = ({ ratings, hideNoRating = false }: AlbumRatingProps) => {
   return (
-    <div className="rounded bg-[#303030] text-center h-full flex flex-col gap-1 border border-transparent hover:border-blue-500">
+    <div className="rounded text-center w-full h-full flex flex-col gap-1 border border-transparent hover:border-blue-500">
       {ratings.length > 0 &&
         ratings.map((rating, idx) => {
           if (hideNoRating && rating.rating === null)
             return <div key={idx}></div>;
 
           return (
-            <div key={idx} className={`rounded h-full`}>
-              {idx !== 0 && <hr className="border-[#222222] text-center" />}
+            <div key={idx} className={`rounded h-full w-full bg-[#303030] `}>
+              {/* {idx !== 0 && <hr className="border-[#222222] text-center" />} */}
               <RatingBar ratingInfo={rating} />
             </div>
           );

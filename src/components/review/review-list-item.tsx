@@ -3,7 +3,12 @@ import { Review } from "../../types/review";
 import albumsJson from "../../data/albums.json";
 import { Album } from "../../types/album";
 import { Role } from "../../types/user";
-import { CommentIcon, HeartIcon, SpotifyIconSmall } from "../util/icons";
+import {
+  CommentIcon,
+  HeartIcon,
+  ReviewIcon,
+  SpotifyIconSmall,
+} from "../util/icons";
 import { RatingInfo } from "../album/album-rating";
 import AlbumRating from "../album/album-rating";
 import UserBadge from "../user/user-badge";
@@ -30,16 +35,24 @@ const ReviewListItem = ({
     ? [
         {
           label: "ReviewSpot",
+          icon: <div>RS</div>,
           rating: albumRating,
           color: "yellow-500",
         },
         {
           label: "Spotify",
+          icon: <SpotifyIconSmall />,
           rating: album.popularity,
           color: "green-500",
         },
       ]
-    : [{ label: "", rating: review.rating.rating, color: "blue-500" }];
+    : [
+        {
+          label: "",
+          rating: review.rating.rating,
+          color: "blue-500",
+        },
+      ];
   const handleLike = (reviewId: string) => {
     console.log(`${authorName} liked review #${reviewId}`);
   };
@@ -101,31 +114,16 @@ const ReviewListItem = ({
         {/* Second Row - fill any space*/}
         <div className="w-full flex gap-2">
           <div className={hideAuthorInfo ? "hidden" : colSmall}>
-            <div className="h-full w-full flex flex-col gap-1">
-              <div className="flex flex-col w-full h-full justify-center">
+            <div className="h-full w-full flex flex-col bg-[#303030] border-4 gap-1 border-[#222] hover:border-blue-500 rounded">
+              <div className="flex flex-col w-full h-full justify-center ">
                 <Link to={`/user/${authorName.toLowerCase()}`}>
                   <div
-                    className="rounded bg-[#303030] border-4 border-[#222] hover:border-blue-500 flex justify-center"
+                    className="rounded flex justify-center w-full h-full"
                     title={authorName}
                   >
                     <ProfilePicture userId={authorName} />
                   </div>
                 </Link>
-              </div>
-              <div className="flex md:hidden justify-center items-center gap-1">
-                <div className="w-full bg-[#303030] rounded whitespace-pre px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
-                  <b>{review.numComments} </b>
-                  <CommentIcon />
-                </div>
-                <div className="w-full bg-[#303030] rounded whitespace-pre px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
-                  <b>{review.likedBy.length} </b>
-                  <div
-                    className="flex justify-center items-center cursor-pointer "
-                    onClick={() => handleLike(review._id)}
-                  >
-                    <HeartIcon />
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -141,7 +139,8 @@ const ReviewListItem = ({
                   <AlbumRating
                     ratings={[
                       {
-                        label: authorName,
+                        label: "Rating",
+                        icon: <ReviewIcon />,
                         rating: review.rating.rating,
                         color: "blue-500",
                       },
@@ -153,7 +152,7 @@ const ReviewListItem = ({
           </div>
         </div>
         {/* Third Row */}
-        <div className="w-full gap-2 hidden md:flex">
+        <div className="w-full gap-2 flex">
           <div className={colSmall}>
             <div
               className={`flex lg:flex-col justify-between gap-1 ${

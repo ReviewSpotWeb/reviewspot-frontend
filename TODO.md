@@ -3,5 +3,6 @@
 [ ] - sort/filter review list on user profile page and album page
 [ ] - sort/filter comment list on review page
 [ ] - list item animations on load (slide in or cascade down)
-[ ] - review list item profile pic size responsiveness
-[ ] - profile page profile pic size responsiveness
+[ ] - review list item profile pic size responsiveness - hide profile pic on certain screen
+[x] - profile page profile pic size responsiveness
+[ ] - reviewspot logo icon
