@@ -1,0 +1,32 @@
+[
+  {
+    "id": "0",
+    "authorInfo": {
+      "authorId": "2",
+      "authorName": "Charlie",
+      "authorRole": "GENERAL"
+    },
+    "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, reiciendis.",
+    "reviewId": "0"
+  },
+  {
+    "id": "1",
+    "authorInfo": {
+      "authorId": "1",
+      "authorName": "Bob",
+      "authorRole": "MODERATOR"
+    },
+    "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, reiciendis.",
+    "reviewId": "0"
+  },
+  {
+    "id": "2",
+    "authorInfo": {
+      "authorId": "0",
+      "authorName": "Alice",
+      "authorRole": "GENERAL"
+    },
+    "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, reiciendis.",
+    "reviewId": "1"
+  }
+]

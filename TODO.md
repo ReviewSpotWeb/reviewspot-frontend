@@ -6,3 +6,4 @@
 [ ] - review list item profile pic size responsiveness - hide profile pic on certain screen
 [x] - profile page profile pic size responsiveness
 [ ] - reviewspot logo icon
+[ ] - conditionally render pagination bars
