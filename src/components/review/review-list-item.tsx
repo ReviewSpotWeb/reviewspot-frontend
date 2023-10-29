@@ -89,8 +89,8 @@ const ReviewListItem = ({
           </div>
           {!onAlbumPage && (
             <div className={hideAuthorInfo ? "w-full" : colBig}>
-              <div className="w-full relative">
-                <div className="flex justify-center items-center mx-6">
+              <div className="w-full">
+                <div className="flex justify-center items-center mx-4">
                   <Link
                     to={`/album/${album.id}`}
                     className="font-bold text-lg truncate"
@@ -98,16 +98,6 @@ const ReviewListItem = ({
                     <span className="hover:text-green-400" title={album.name}>
                       {album.name}
                     </span>
-                  </Link>
-                </div>
-                <div className="absolute right-0 top-0">
-                  <Link
-                    to={album.external_urls.spotify}
-                    rel="noreferrer"
-                    target={"_blank"}
-                    className="flex justify-center items-center"
-                  >
-                    <SpotifyIconSmall />
                   </Link>
                 </div>
               </div>
