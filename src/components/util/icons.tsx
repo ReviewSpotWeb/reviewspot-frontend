@@ -10,9 +10,14 @@ import {
   faComment,
   faComments,
   faHeart as faHeartSolid,
+  faSquarePen,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
+
+export const WriteOrEditReviewIcon = () => {
+  return <FontAwesomeIcon icon={faSquarePen} className="w-5 h-5" />;
+};
 
 export const HeartIconSolid = () => {
   return (
