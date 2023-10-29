@@ -3,7 +3,12 @@ import { Album } from "../../types/album";
 import AlbumArtists from "./album-artists";
 import AlbumRating, { RatingInfo } from "./album-rating";
 import AlbumTitle from "./album-title";
-import { MusicNoteIcon, ReviewIcon, SpotifyIcon } from "../util/icons";
+import {
+  MusicNoteIcon,
+  ReviewIcon,
+  SpotifyIcon,
+  SpotifyIconSmall,
+} from "../util/icons";
 import { formatReleaseDate } from "../../helpers/album-helpers";
 
 const AlbumItemBrowser = ({ album }: { album: Album }) => {
@@ -15,11 +20,13 @@ const AlbumItemBrowser = ({ album }: { album: Album }) => {
   const ratings: RatingInfo[] = [
     {
       label: "Spotify",
+      icon: <SpotifyIconSmall />,
       rating: album.popularity,
       color: "green-500",
     },
     {
       label: "ReviewSpot",
+      icon: <div>RS</div>,
       rating: albumRating,
       color: "yellow-400",
     },

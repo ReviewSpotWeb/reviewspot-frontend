@@ -6,6 +6,7 @@ import {
   MusicNoteIcon,
   ReviewIcon,
   SpotifyIcon,
+  SpotifyIconSmall,
 } from "../util/icons";
 import { formatReleaseDate } from "../../helpers/album-helpers";
 import AlbumTitle from "./album-title";
@@ -21,11 +22,13 @@ const AlbumItemMobile = ({ album }: { album: Album }) => {
   const ratings: RatingInfo[] = [
     {
       label: "Spotify",
+      icon: <SpotifyIconSmall />,
       rating: album.popularity,
       color: "green-500",
     },
     {
       label: "ReviewSpot",
+      icon: <div>RS</div>,
       rating: albumRating,
       color: "yellow-400",
     },
