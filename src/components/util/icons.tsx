@@ -43,7 +43,7 @@ export const SpotifyIconSmall = () => {
   return (
     <FontAwesomeIcon
       icon={faSpotify}
-      className="w-6 h-6 fill-current text-green-500 hover:text-green-400"
+      className="w-6 h-6 fill-current text-green-500"
     />
   );
 };
