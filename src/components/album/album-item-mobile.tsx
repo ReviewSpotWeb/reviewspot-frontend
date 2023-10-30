@@ -79,7 +79,7 @@ const AlbumItemMobile = ({ album }: { album: Album }) => {
             <ReviewIcon />
           </div>
         </div>
-        <div className="w-full text-gray-300 flex flex-col">
+        <div className="w-full h-full text-gray-300 flex flex-col">
           <AlbumRating ratings={ratings} />
         </div>
       </div>
