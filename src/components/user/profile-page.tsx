@@ -11,8 +11,10 @@ import { Review } from "../../types/review";
 import ReviewList from "../review/review-list";
 import PaginationBar, { PaginationInfo } from "../util/pagination-bar";
 
-const ProfilePage = () => {
-  const { userId } = useParams();
+const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
+  const params = useParams();
+  const userId = activeUserId ?? params.userId;
+  // if (!activeUserId)
   const users: User[] = usersJson as never[];
   const user: User = users.filter(
     (user) => user.username.toLowerCase() === userId

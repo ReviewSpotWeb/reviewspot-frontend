@@ -8,38 +8,43 @@ import AlbumPage from "./components/album/album-page";
 import ReviewPage from "./components/review/review-page";
 import ProfilePage from "./components/user/profile-page";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <ReviewSpot />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "login",
-        element: <Login />,
-      },
-      {
-        path: "album/:albumId",
-        element: <AlbumPage />,
-      },
-      {
-        path: "review/:reviewId",
-        element: <ReviewPage />,
-      },
-      {
-        path: "user/:userId",
-        element: <ProfilePage />,
-      },
-    ],
-  },
-]);
-
-function App() {
+const App = () => {
+  // TODO: Check if logged in and get username for profile page
+  const userId = "charlie";
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <ReviewSpot />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+        },
+        {
+          path: "login",
+          element: <Login />,
+        },
+        {
+          path: "album/:albumId",
+          element: <AlbumPage />,
+        },
+        {
+          path: "review/:reviewId",
+          element: <ReviewPage />,
+        },
+        {
+          path: "user/",
+          element: <ProfilePage activeUserId={userId} />,
+        },
+        {
+          path: "user/:userId",
+          element: <ProfilePage />,
+        },
+      ],
+    },
+  ]);
   return <RouterProvider router={router} />;
-}
+};
 
 export default App;
