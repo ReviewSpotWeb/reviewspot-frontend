@@ -1,14 +1,29 @@
-import albumsJson from "../../data/albums.json";
+import { useEffect, useState } from "react";
 import reviewsJson from "../../data/reviews.json";
 import AlbumList from "../album/album-list";
 import { Album } from "../../types/album";
 import Tabs, { TabInfo } from "../util/tabs";
 import ReviewList from "../review/review-list";
 import { Review } from "../../types/review";
+import { useAppSelector } from "../util/redux/hooks";
 
 const Home = () => {
-  const albums: Album[] = albumsJson as never[];
+  const stateAlbums = useAppSelector((state) => state.albums.albums);
+  // const stateActiveTabIdx = useAppSelector(
+  //   (state) => state.activeTab.activeIdx
+  // );
+  const [albums, setAlbums] = useState<Album[]>(stateAlbums);
+
+  useEffect(() => {
+    setAlbums(stateAlbums);
+  }, [stateAlbums]);
+
+  // useEffect(() => {
+  //   console.log(stateActiveTabIdx);
+  // }, [stateActiveTabIdx]);
+
   const reviews: Review[] = reviewsJson as never[];
+
   const tabs: TabInfo[] = [
     {
       key: "albums",

@@ -11,12 +11,28 @@ import {
   faComments,
   faHeart as faHeartSolid,
   faSquarePen,
+  faMagnifyingGlass,
+  faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
 export const WriteOrEditReviewIcon = () => {
   return <FontAwesomeIcon icon={faSquarePen} className="w-5 h-5" />;
+};
+
+export const SearchIcon = () => {
+  return <FontAwesomeIcon icon={faMagnifyingGlass} className="w-5 h-5" />;
+};
+
+export const ClearSearchIcon = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <FontAwesomeIcon
+      icon={faCircleXmark}
+      className="w-5 h-5 fill-current text-gray-300 cursor-pointer hover:text-gray-100"
+      onClick={() => onClick()}
+    />
+  );
 };
 
 export const HeartIconSolid = () => {

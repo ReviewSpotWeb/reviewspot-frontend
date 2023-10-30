@@ -1,5 +1,5 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import albumsJson from "../../data/albums.json";
 import reviewJson from "../../data/reviews.json";
 import { Album } from "../../types/album";
 import AlbumItemMobile from "./album-item-mobile";
@@ -7,12 +7,19 @@ import AlbumItemBrowser from "./album-item-browser";
 import { Review } from "../../types/review";
 import ReviewList from "../review/review-list";
 import { WriteOrEditReviewIcon } from "../util/icons";
+import { findAlbumAction } from "../../actions/albums-actions";
+import { AppDispatch } from "../util/redux/store";
+import { useAppDispatch, useAppSelector } from "../util/redux/hooks";
 
 const AlbumPage = () => {
+  const dispatch: AppDispatch = useAppDispatch();
   const { albumId } = useParams();
+  const album: Album = useAppSelector((state) => state.albums.albums[0]);
 
-  const albums: Album[] = albumsJson as never[];
-  const album: Album = albums.filter((album) => album.id === albumId)[0];
+  useEffect(() => {
+    // TODO: Handle albumId being undefined
+    findAlbumAction(dispatch, albumId!);
+  }, [albumId, dispatch]);
 
   // TODO: testing user review
   const albumReviews: Review[] =
@@ -30,6 +37,11 @@ const AlbumPage = () => {
   const handleWriteReview = () => {
     console.log("write");
   };
+
+  if (!album) {
+    // TODO: Style this and abstract as component
+    return <div>Loading</div>;
+  }
 
   return (
     <div className="h-max w-full">

@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
+import { setActive } from "../../reducers/tab-reducer";
 
 export type TabInfo = {
   key: string;
@@ -12,10 +14,18 @@ type TabProps = {
 };
 
 const Tabs = ({ tabs, defaultActive }: TabProps) => {
+  const stateActiveTabIdx = useAppSelector(
+    (state) => state.activeTab.activeIdx
+  );
+  const dispatch = useAppDispatch();
   const [activeTabIdx, setActiveTabIdx] = useState<number>(defaultActive ?? 0);
 
   const handleChangeTab = (tabIdx: number) => {
     setActiveTabIdx(tabIdx);
+    dispatch({
+      type: setActive,
+      payload: tabIdx,
+    });
   };
 
   const getTabStyle = (tabIdx: number): string => {
@@ -25,6 +35,10 @@ const Tabs = ({ tabs, defaultActive }: TabProps) => {
       ? `${tabStyle} bg-[#202020] border-[#303030]`
       : `${tabStyle} bg-[#303030] border-transparent cursor-pointer`;
   };
+
+  useEffect(() => {
+    setActiveTabIdx(stateActiveTabIdx);
+  }, [stateActiveTabIdx]);
 
   return (
     <div>
