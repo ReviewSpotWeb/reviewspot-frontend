@@ -13,3 +13,4 @@
 [ ] - better location for UserBadge on review list item?
 [x] - link to artist spotify url
 [ ] - a way to simplify onAlbumPage conditional rendering checks
+[ ] - yellow border not showing up for reviewspot ratings on album list items
