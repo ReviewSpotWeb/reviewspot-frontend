@@ -9,18 +9,11 @@ import { useAppSelector } from "../util/redux/hooks";
 
 const Home = () => {
   const stateAlbums = useAppSelector((state) => state.albums.albums);
-  // const stateActiveTabIdx = useAppSelector(
-  //   (state) => state.activeTab.activeIdx
-  // );
   const [albums, setAlbums] = useState<Album[]>(stateAlbums);
 
   useEffect(() => {
     setAlbums(stateAlbums);
   }, [stateAlbums]);
-
-  // useEffect(() => {
-  //   console.log(stateActiveTabIdx);
-  // }, [stateActiveTabIdx]);
 
   const reviews: Review[] = reviewsJson as never[];
 
