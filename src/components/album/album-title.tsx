@@ -3,10 +3,11 @@ import { Album } from "../../types/album";
 
 const AlbumTitle = ({ album }: { album: Album }) => {
   const { albumId } = useParams();
-  const albumNameSize = album.name.length >= 20 ? "text-lg" : "text-2xl";
+  const albumNameTextSize =
+    album.name.length >= 20 ? "text-lg" : "text-lg sm:text-xl lg:text-2xl";
   const onAlbumPage = album.id === albumId;
   return (
-    <div className={`${albumNameSize} truncate font-bold text-center`}>
+    <div className={`truncate font-bold text-center ${albumNameTextSize}`}>
       {!onAlbumPage ? (
         <Link to={`/album/${album.id}`}>
           <span className="hover:text-green-400" title={album.name}>
@@ -14,7 +15,10 @@ const AlbumTitle = ({ album }: { album: Album }) => {
           </span>
         </Link>
       ) : (
-        <span className="hover:text-green-400" title={album.name}>
+        <span
+          className="hover:text-green-400 cursor-default"
+          title={album.name}
+        >
           {album.name}
         </span>
       )}
