@@ -17,6 +17,13 @@
 [ ] - show review related to search term!!
 [ ] - extra flex boxes in review spot list item? refactor simpler
 [ ] - custom row and column components ??
-[ ] - simplify album page components (album-item-browser and album-item-mobile)
 [ ] - loading component
 [ ] - useMemo ??
+
+[ ] - simplify album item components if possible (album-item-browser, album-item-mobile, album-list, album-list-item)
+
+- pull out current album-list-item into new component
+- have album-list-item conditionally render album-item-browser, album-item-mobile, and the newly abstracted component (was album-list-item)
+  -- on album page and screen < small - album-item-mobile
+  -- album-item-browser always on screen > medium
+  -- (was album-list-item) on screen < medium if not on album page | if on album page then on only render small < screen < medium
