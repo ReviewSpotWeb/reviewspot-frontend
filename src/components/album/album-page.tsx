@@ -3,13 +3,13 @@ import { useParams } from "react-router-dom";
 import reviewJson from "../../data/reviews.json";
 import { Album } from "../../types/album";
 import AlbumItemMobile from "./album-item-mobile";
-import AlbumItemBrowser from "./album-item-browser";
 import { Review } from "../../types/review";
 import ReviewList from "../review/review-list";
 import { WriteOrEditReviewIcon } from "../util/icons";
 import { findAlbumAction } from "../../actions/albums-actions";
 import { AppDispatch } from "../util/redux/store";
 import { useAppDispatch, useAppSelector } from "../util/redux/hooks";
+import AlbumList from "./album-list";
 
 const AlbumPage = () => {
   const dispatch: AppDispatch = useAppDispatch();
@@ -47,9 +47,13 @@ const AlbumPage = () => {
     <div className="h-max w-full">
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-1">
-          <div className="rounded w-full h-full p-2 bg-[#404040] text-gray-300">
-            <AlbumItemMobile album={album} />
-            <AlbumItemBrowser album={album} />
+          <div className="rounded w-full h-full bg-[#404040] text-gray-300">
+            <div className="sm:hidden">
+              <AlbumItemMobile album={album} />
+            </div>
+            <div className="sm:block hidden">
+              <AlbumList albums={[album]} />
+            </div>
           </div>
           <div className="w-full h-full bg-[#404040] rounded">
             {USER_REVIEW ? (

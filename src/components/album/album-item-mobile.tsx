@@ -34,7 +34,7 @@ const AlbumItemMobile = ({ album }: { album: Album }) => {
   ];
 
   return (
-    <div className="sm:hidden">
+    <div className="p-2">
       <div className="w-full relative">
         <div className="absolute right-0 top-0">
           <Link

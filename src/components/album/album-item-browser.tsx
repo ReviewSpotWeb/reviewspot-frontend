@@ -35,7 +35,7 @@ const AlbumItemBrowser = ({ album }: { album: Album }) => {
   ];
 
   return (
-    <div className="hidden sm:flex cursor-default">
+    <div className="flex cursor-default">
       <div className="flex justify-between items-center w-full gap-2">
         <img
           src={album.images[0].url}
