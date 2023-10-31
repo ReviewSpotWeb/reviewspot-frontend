@@ -18,14 +18,17 @@ const AlbumList = ({ albums }: { albums: Album[] }) => {
     loadNext,
     loadPrev,
   };
+  const PAGE_SIZE = 10;
 
   return (
     <ul className="w-full h-max flex flex-col gap-2 rounded">
       {albums.length > 0 &&
         albums.map((album, idx) => <AlbumListItem album={album} key={idx} />)}
-      <div>
-        <PaginationBar paginationInfo={paginationInfo} />
-      </div>
+      {albums.length > PAGE_SIZE && (
+        <div>
+          <PaginationBar paginationInfo={paginationInfo} />
+        </div>
+      )}
     </ul>
   );
 };
