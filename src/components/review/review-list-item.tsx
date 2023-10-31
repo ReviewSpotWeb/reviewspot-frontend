@@ -33,6 +33,7 @@ const ReviewListItem = ({
 
   const rng = Math.floor(Math.random() * 101);
   const albumRating: number | null = rng <= 30 ? null : rng;
+
   const ratings: RatingInfo[] = onReviewPage
     ? [
         {
@@ -55,6 +56,7 @@ const ReviewListItem = ({
           color: "blue-500",
         },
       ];
+
   const handleLike = (reviewId: string) => {
     console.log(`${authorName} liked review #${reviewId}`);
   };
@@ -73,7 +75,7 @@ const ReviewListItem = ({
     <li className="bg-[#404040] rounded p-2 text-gray-300 h-max">
       <div className="flex flex-col gap-1 w-full">
         {/* First Row */}
-        <div className="w-full flex">
+        <div className="w-full flex gap-2">
           <div className={hideAuthorInfo ? "hidden" : colSmall}>
             <Link to={`/user/${authorName.toLowerCase()}`}>
               <div className="w-full text-white font-bold bg-[#303030] border-2 border-[#222] hover:border-blue-500 rounded">
