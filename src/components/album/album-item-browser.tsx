@@ -46,7 +46,7 @@ const AlbumItemBrowser = ({ album }: { album: Album }) => {
           onClick={() => (!onAlbumPage ? navigate(`/album/${album.id}`) : "")}
         />
         <div className="w-full h-full flex flex-col items-center justify-between overflow-hidden gap-2 relative">
-          <div className="absolute right-1 top-1">
+          <div className="absolute right-2 top-2">
             <Link
               to={album.external_urls.spotify}
               rel="noreferrer"
@@ -56,7 +56,7 @@ const AlbumItemBrowser = ({ album }: { album: Album }) => {
             </Link>
           </div>
           <div className="h-full flex flex-col justify-center w-full bg-[#303030] rounded border border-transparent hover:border-blue-500">
-            <div className="mx-7">
+            <div className="mx-8">
               <AlbumTitle album={album} />
             </div>
             <AlbumArtists artists={album.artists} />

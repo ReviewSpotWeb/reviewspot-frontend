@@ -1,4 +1,4 @@
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Album } from "../../types/album";
 import AlbumArtists from "./album-artists";
 import {
@@ -11,15 +11,12 @@ import {
 import { formatReleaseDate } from "../../helpers/album-helpers";
 import AlbumTitle from "./album-title";
 import AlbumRating, { RatingInfo } from "./album-rating";
+import AlbumCover from "./album-cover";
 
 const AlbumItemMobile = ({ album }: { album: Album }) => {
-  const { albumId } = useParams();
-  const navigate = useNavigate();
-
   const numReviews: number = 0;
   const rng = Math.floor(Math.random() * 101);
   const albumRating: number | null = rng <= 30 ? null : rng;
-  const onAlbumPage = album.id === albumId;
 
   const ratings: RatingInfo[] = [
     {
@@ -39,7 +36,7 @@ const AlbumItemMobile = ({ album }: { album: Album }) => {
   return (
     <div className="sm:hidden">
       <div className="w-full relative">
-        <div className="absolute right-0">
+        <div className="absolute right-0 top-0">
           <Link
             to={album.external_urls.spotify}
             rel="noreferrer"
@@ -60,14 +57,9 @@ const AlbumItemMobile = ({ album }: { album: Album }) => {
         </div>
         <AlbumArtists artists={album.artists} />
       </div>
-      <img
-        src={album.images[0].url}
-        alt={`${album.name} album cover`}
-        className={`object-fit h-full rounded ${
-          onAlbumPage ? "cursor-default" : "cursor-pointer"
-        }`}
-        onClick={() => (!onAlbumPage ? navigate(`/album/${album.id}`) : "")}
-      />
+      <div>
+        <AlbumCover album={album} />
+      </div>
       <div className="flex mt-2 gap-2 cursor-default">
         <div className="w-1/5 whitespace-pre bg-[#303030] rounded flex flex-col justify-around items-center border border-transparent hover:border-blue-500">
           <div className="flex justify-center items-center">
@@ -79,7 +71,7 @@ const AlbumItemMobile = ({ album }: { album: Album }) => {
             <ReviewIcon />
           </div>
         </div>
-        <div className="w-full h-full text-gray-300 flex flex-col">
+        <div className="w-full h-full text-gray-300 ">
           <AlbumRating ratings={ratings} />
         </div>
       </div>
