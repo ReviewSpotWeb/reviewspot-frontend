@@ -17,10 +17,10 @@ export const albumSlice = createSlice({
       state.albums = [action.payload];
     },
     findHome: (state, action: PayloadAction<Album[]>) => {
-      state.albums = action.payload;
+      state.albums = [...action.payload];
     },
     findSearch: (state, action: PayloadAction<Album[]>) => {
-      state.albums = action.payload;
+      state.albums = [...action.payload];
     },
   },
 });

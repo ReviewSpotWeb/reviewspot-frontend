@@ -17,13 +17,13 @@ export const reviewsSlice = createSlice({
       state.reviews = [action.payload];
     },
     findHome: (state, action: PayloadAction<Review[]>) => {
-      state.reviews = action.payload;
+      state.reviews = [...action.payload];
     },
     findUser: (state, action: PayloadAction<Review[]>) => {
-      state.reviews = action.payload;
+      state.reviews = [...action.payload];
     },
     findAlbum: (state, action: PayloadAction<Review[]>) => {
-      state.reviews = action.payload;
+      state.reviews = [...action.payload];
     },
   },
 });
