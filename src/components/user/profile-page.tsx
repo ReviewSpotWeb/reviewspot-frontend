@@ -56,6 +56,8 @@ const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
     loadPrev,
   };
 
+  const PAGE_SIZE = 10;
+
   return (
     <div className="flex flex-col gap-5">
       <div className="w-full h-max bg-[#404040] rounded">
@@ -146,7 +148,9 @@ const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
             : "Reviews"}
         </div>
         <ReviewList reviews={[...reviews]} hideAuthorInfo />
-        <PaginationBar paginationInfo={paginationInfo} />
+        {reviews.length > PAGE_SIZE && (
+          <PaginationBar paginationInfo={paginationInfo} />
+        )}
       </div>
     </div>
   );
