@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import commentsJson from "../../data/comments.json";
 import { Review } from "../../types/review";
 import ReviewList from "./review-list";
 import CommentList from "../comment/comment-list";
@@ -10,6 +9,7 @@ import { findReviewAction } from "../../actions/reviews-actions";
 import { AppDispatch } from "../util/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../util/redux/hooks";
+import { findReviewCommentsAction } from "../../actions/comments-actions";
 const ReviewPage = () => {
   const { reviewId } = useParams();
   // TODO: Handling undefined useParams
@@ -38,9 +38,12 @@ const ReviewPage = () => {
     findReviewAction(dispatch, reviewId ?? "");
   }, [reviewId, dispatch]);
 
-  const comments: Comment[] = commentsJson.filter(
-    (comment) => comment.reviewId === reviewId
-  ) as never[];
+  const comments: Comment[] = useAppSelector(
+    (state) => state.comments.comments
+  );
+  useEffect(() => {
+    findReviewCommentsAction(dispatch, reviewId ?? "");
+  }, [reviewId, dispatch]);
   const numComments: number = comments.length;
 
   const PAGE_SIZE = 10;

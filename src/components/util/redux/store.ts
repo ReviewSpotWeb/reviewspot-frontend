@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import albumsReducer from "../../../reducers/albums-reducer";
 import activeTabReducer from "../../../reducers/tab-reducer";
 import reviewsReducer from "../../../reducers/reviews-reducer";
+import commentsReducer from "../../../reducers/comments-reducer";
 
 export const store = configureStore({
   reducer: {
     albums: albumsReducer,
     reviews: reviewsReducer,
+    comments: commentsReducer,
     activeTab: activeTabReducer,
   },
   middleware: (getDefaultMiddleware) =>
