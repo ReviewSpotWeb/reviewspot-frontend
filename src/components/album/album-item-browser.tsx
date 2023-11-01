@@ -30,7 +30,7 @@ const AlbumItemBrowser = ({ album }: { album: Album }) => {
       label: "ReviewSpot",
       icon: <div>RS</div>,
       rating: albumRating,
-      color: "yellow-400",
+      color: "yellow-500",
     },
   ];
 
