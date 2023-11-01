@@ -20,6 +20,10 @@
 [ ] - loading component
 [ ] - useMemo ??
 
+[ ] - refactor profile page style (not sure if I like where the name and badge are)
+
+[ ] - see notes app
+
 [ ] - simplify album item components if possible (album-item-browser, album-item-mobile, album-list, album-list-item)
 
 - pull out current album-list-item into new component
