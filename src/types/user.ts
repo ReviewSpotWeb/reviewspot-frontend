@@ -5,7 +5,7 @@ export enum Role {
 
 export interface User {
   username: string;
-  password: string;
+  // password: string;
   role: Role;
   banned: boolean;
   // bio

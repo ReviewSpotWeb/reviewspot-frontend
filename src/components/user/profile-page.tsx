@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import ProfilePicture from "./profile-picture";
 import { Role, User } from "../../types/user";
-import usersJson from "../../data/users.json";
 import { HeartIconSolid, ReviewIcon } from "../util/icons";
 import { Album } from "../../types/album";
 import albumsJson from "../../data/albums.json";
@@ -14,21 +13,22 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "../util/redux/hooks";
 import { useEffect } from "react";
 import { findUserReviewsAction } from "../../actions/reviews-actions";
+import { findUserAction } from "../../actions/user-actions";
 
 const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
+  const dispatch: AppDispatch = useDispatch();
   const params = useParams();
   const userId = activeUserId ?? params.userId;
-  // if (!activeUserId)
-  const users: User[] = usersJson as never[];
-  const user: User = users.filter(
-    (user) => user.username.toLowerCase() === userId
-  )[0];
 
-  const dispatch: AppDispatch = useDispatch();
+  // TODO: Do I even need state for this? I think I can just fetch this data on render
+  const user: User = useAppSelector((state) => state.user.user);
   const reviews: Review[] = useAppSelector((state) => state.reviews.reviews);
+
   useEffect(() => {
+    findUserAction(dispatch, userId ?? "");
     findUserReviewsAction(dispatch, userId ?? "");
   }, [userId, dispatch]);
+
   const numReviews: number = reviews.length;
   let numLikes: number = 0;
   reviews.forEach((review) => (numLikes += review.likedBy.length));

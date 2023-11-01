@@ -3,12 +3,14 @@ import albumsReducer from "../../../reducers/albums-reducer";
 import activeTabReducer from "../../../reducers/tab-reducer";
 import reviewsReducer from "../../../reducers/reviews-reducer";
 import commentsReducer from "../../../reducers/comments-reducer";
+import userReducer from "../../../reducers/user-reducer";
 
 export const store = configureStore({
   reducer: {
     albums: albumsReducer,
     reviews: reviewsReducer,
     comments: commentsReducer,
+    user: userReducer,
     activeTab: activeTabReducer,
   },
   middleware: (getDefaultMiddleware) =>

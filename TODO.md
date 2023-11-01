@@ -24,6 +24,8 @@
 
 [ ] - see notes app
 
+- dont use state the way I am on profile page - FIX
+
 [ ] - simplify album item components if possible (album-item-browser, album-item-mobile, album-list, album-list-item)
 
 - pull out current album-list-item into new component
