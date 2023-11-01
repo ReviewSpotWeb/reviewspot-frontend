@@ -32,7 +32,6 @@ const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
   const numReviews: number = reviews.length;
   let numLikes: number = 0;
   reviews.forEach((review) => (numLikes += review.likedBy.length));
-  console.log(reviews);
 
   // TODO: users 3 highest rated albums?
   const FAVORITE_ALBUMS: Album[] = albumsJson.slice(
