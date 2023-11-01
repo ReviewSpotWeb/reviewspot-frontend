@@ -11,6 +11,7 @@ export const findAlbumAction = async (
   dispatch: AppDispatch,
   albumId: string
 ) => {
+  if (!albumId) return;
   const album = await findAlbum(albumId);
   dispatch({
     type: find,

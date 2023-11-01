@@ -1,13 +1,18 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import reviewsJson from "../../data/reviews.json";
 import commentsJson from "../../data/comments.json";
 import { Review } from "../../types/review";
 import ReviewList from "./review-list";
 import CommentList from "../comment/comment-list";
 import { Comment } from "../../types/comment";
 import PaginationBar, { PaginationInfo } from "../util/pagination-bar";
+import { findReviewAction } from "../../actions/reviews-actions";
+import { AppDispatch } from "../util/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../util/redux/hooks";
 const ReviewPage = () => {
   const { reviewId } = useParams();
+  // TODO: Handling undefined useParams
 
   const prev = true; // If previous page
   const next = true; // If next page
@@ -27,29 +32,41 @@ const ReviewPage = () => {
     loadPrev,
   };
 
-  const reviews: Review[] = reviewsJson as never[];
-  const review: Review = reviews.filter((review) => review._id === reviewId)[0];
+  const dispatch: AppDispatch = useDispatch();
+  const review: Review = useAppSelector((state) => state.reviews.reviews[0]);
+  useEffect(() => {
+    findReviewAction(dispatch, reviewId ?? "");
+  }, [reviewId, dispatch]);
+
   const comments: Comment[] = commentsJson.filter(
     (comment) => comment.reviewId === reviewId
   ) as never[];
   const numComments: number = comments.length;
 
+  const PAGE_SIZE = 10;
+
   return (
     <div className="h-max w-full">
-      <div className="h-full w-full flex flex-col gap-5">
-        <ReviewList reviews={[{ ...review }]} />
-        <div className="w-full h-max flex flex-col gap-2">
-          <div className="text-center font-bold text-xl bg-green-500 rounded">
-            {numComments === 0
-              ? "No Comments"
-              : numComments === 1
-              ? "Comment"
-              : "Comments"}
+      {!review ? (
+        <div className="text-center">Looking for review...</div>
+      ) : (
+        <div className="h-full w-full flex flex-col gap-5">
+          <ReviewList reviews={[{ ...review }]} />
+          <div className="w-full h-max flex flex-col gap-2">
+            <div className="text-center font-bold text-xl bg-green-500 rounded">
+              {numComments === 0
+                ? "No Comments"
+                : numComments === 1
+                ? "Comment"
+                : "Comments"}
+            </div>
+            <CommentList comments={[...comments]} />
+            {comments.length > PAGE_SIZE && (
+              <PaginationBar paginationInfo={paginationInfo} />
+            )}
           </div>
-          <CommentList comments={[...comments]} />
-          <PaginationBar paginationInfo={paginationInfo} />
         </div>
-      </div>
+      )}
     </div>
   );
 };

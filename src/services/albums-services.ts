@@ -9,7 +9,7 @@ export const findAlbum = async (albumId: string): Promise<Album> => {
 };
 
 // Albums to display on home page
-export const findHomeAlbums = async () => {
+export const findHomeAlbums = async (): Promise<Album[]> => {
   //   const response = await axios.get(`${API_BASE}/newReleases`, {
   //     params: { limit: 10, offset: 0 },
   //   });
@@ -17,11 +17,13 @@ export const findHomeAlbums = async () => {
   return albumsJson as never[];
 };
 
-export const findSearchAlbums = async (searchTerm: string) => {
+export const findSearchAlbums = async (
+  searchTerm: string
+): Promise<Album[]> => {
   //   const response = await axios.get(`${API_BASE}/search`, {
   //     params: { q: searchTerm, limit: 10, offset: 0 },
   //   });
   //   return response.data;
   console.log(searchTerm);
-  return [...albumsJson.slice(2)] as never[];
+  return [albumsJson[Math.floor(Math.random() * albumsJson.length)]] as never[];
 };

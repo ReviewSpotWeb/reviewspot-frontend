@@ -5,11 +5,15 @@ import usersJson from "../../data/users.json";
 import { HeartIconSolid, ReviewIcon } from "../util/icons";
 import { Album } from "../../types/album";
 import albumsJson from "../../data/albums.json";
-import reviewsJson from "../../data/reviews.json";
 import { Link } from "react-router-dom";
 import { Review } from "../../types/review";
 import ReviewList from "../review/review-list";
 import PaginationBar, { PaginationInfo } from "../util/pagination-bar";
+import { AppDispatch } from "../util/redux/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../util/redux/hooks";
+import { useEffect } from "react";
+import { findUserReviewsAction } from "../../actions/reviews-actions";
 
 const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
   const params = useParams();
@@ -20,15 +24,17 @@ const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
     (user) => user.username.toLowerCase() === userId
   )[0];
 
-  let numLikes: number = 0;
-  const reviews: Review[] = reviewsJson.filter((review) => {
-    if (review.authorInfo.authorName.toLowerCase() === userId) {
-      numLikes += review.likedBy.length;
-      return review;
-    }
-  }) as never[];
+  const dispatch: AppDispatch = useDispatch();
+  const reviews: Review[] = useAppSelector((state) => state.reviews.reviews);
+  useEffect(() => {
+    findUserReviewsAction(dispatch, userId ?? "");
+  }, [userId, dispatch]);
   const numReviews: number = reviews.length;
+  let numLikes: number = 0;
+  reviews.forEach((review) => (numLikes += review.likedBy.length));
+  console.log(reviews);
 
+  // TODO: users 3 highest rated albums?
   const FAVORITE_ALBUMS: Album[] = albumsJson.slice(
     Math.floor(Math.random() * albumsJson.length)
   ) as never[];
