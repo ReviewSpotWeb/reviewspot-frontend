@@ -20,7 +20,6 @@ export const findAlbumReviews = async (albumId: string): Promise<Review[]> => {
 };
 
 export const findUserReviews = async (userId: string): Promise<Review[]> => {
-  console.log(userId, reviewsJson);
   return [
     ...reviewsJson.filter(
       (review) => review.authorInfo.authorName.toLowerCase() === userId

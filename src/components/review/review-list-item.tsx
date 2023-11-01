@@ -33,7 +33,6 @@ const ReviewListItem = ({
 
   const rng = Math.floor(Math.random() * 101);
   const albumRating: number | null = rng <= 30 ? null : rng;
-  console.log(albumRating);
   const ratings: RatingInfo[] = onReviewPage
     ? [
         {
