@@ -1,16 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Role, User } from "../types/user";
 
-interface UserState {
+interface ProfileState {
   user: User;
 }
 
-const initialState: UserState = {
+const initialState: ProfileState = {
   user: { username: "", role: Role.GENERAL, banned: false },
 };
 
-export const userSlice = createSlice({
-  name: "user",
+export const profileSlice = createSlice({
+  name: "profile",
   initialState,
   reducers: {
     find: (state, action: PayloadAction<User>) => {
@@ -19,6 +19,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { find } = userSlice.actions;
+export const { find } = profileSlice.actions;
 
-export default userSlice.reducer;
+export default profileSlice.reducer;

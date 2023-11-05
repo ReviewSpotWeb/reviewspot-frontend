@@ -13,19 +13,18 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "../util/redux/hooks";
 import { useEffect } from "react";
 import { findUserReviewsAction } from "../../actions/reviews-actions";
-import { findUserAction } from "../../actions/user-actions";
+import { findUserProfileAction } from "../../actions/profile-actions";
 
 const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
   const dispatch: AppDispatch = useDispatch();
   const params = useParams();
   const userId = activeUserId ?? params.userId;
 
-  // TODO: Do I even need state for this? I think I can just fetch this data on render
-  const user: User = useAppSelector((state) => state.user.user);
+  const user: User = useAppSelector((state) => state.profile.user);
   const reviews: Review[] = useAppSelector((state) => state.reviews.reviews);
 
   useEffect(() => {
-    findUserAction(dispatch, userId ?? "");
+    findUserProfileAction(dispatch, userId ?? "");
     findUserReviewsAction(dispatch, userId ?? "");
   }, [userId, dispatch]);
 
@@ -111,7 +110,7 @@ const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
               </div>
             </div>
           </div>
-          <div className="rounded flex gap-2">
+          <div className="rounded flex gap-1">
             <div className="w-1/2 bg-[#202020] rounded whitespace-pre px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
               <ReviewIcon />
               <div>
