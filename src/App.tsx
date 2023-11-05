@@ -7,6 +7,7 @@ import Login from "./components/auth/login";
 import AlbumPage from "./components/album/album-page";
 import ReviewPage from "./components/review/review-page";
 import ProfilePage from "./components/user/profile-page";
+import SearchResults from "./components/search/search-results";
 
 const App = () => {
   // TODO: Check if logged in and get username for profile page
@@ -40,6 +41,10 @@ const App = () => {
         {
           path: "user/:userId",
           element: <ProfilePage />,
+        },
+        {
+          path: "search/",
+          element: <SearchResults />,
         },
       ],
     },

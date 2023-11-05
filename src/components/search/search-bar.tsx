@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { showToastMessage } from "../../helpers/toast-helpers";
 import { ToastInfo } from "../../helpers/toast-helpers";
-import { AppDispatch } from "../util/redux/store";
-import { findSearchAlbumsAction } from "../../actions/albums-actions";
 import { ClearSearchIcon, SearchIcon } from "../util/icons";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../util/redux/hooks";
 import { setActive } from "../../reducers/tab-reducer";
+import { AppDispatch } from "../util/redux/store";
+import { useDispatch } from "react-redux";
 
 const SearchBar = () => {
+  const dispatch: AppDispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const dispatch: AppDispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSearch = (searchTerm: string) => {
@@ -25,14 +24,11 @@ const SearchBar = () => {
       setSearchTerm("");
       return;
     }
-    findSearchAlbumsAction(dispatch, search).then(() => {
-      // Set state back to album tab for small screens
-      dispatch({
-        type: setActive,
-        payload: 0,
-      });
-      navigate("/");
+    dispatch({
+      type: setActive,
+      payload: 0,
     });
+    navigate(`/search?q=${search}`);
   };
 
   const handleClearSearch = () => {
