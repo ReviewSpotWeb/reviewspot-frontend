@@ -12,12 +12,17 @@ export const commentsSlice = createSlice({
   name: "comments",
   initialState,
   reducers: {
-    findReview: (state, action: PayloadAction<Comment[]>) => {
+    findComments: (state, action: PayloadAction<Comment[]>) => {
       state.comments = [...action.payload];
+    },
+    // TODO: Fix when server is connected
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    create: (state, action: PayloadAction<Comment>) => {
+      // state.comments = [...state.comments, action.payload];
     },
   },
 });
 
-export const { findReview } = commentsSlice.actions;
+export const { findComments, create } = commentsSlice.actions;
 
 export default commentsSlice.reducer;

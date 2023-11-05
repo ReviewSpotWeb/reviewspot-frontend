@@ -1,6 +1,9 @@
-import { findReview } from "../reducers/comments-reducer";
+import { create, findComments } from "../reducers/comments-reducer";
 import { AppDispatch } from "../components/util/redux/store";
-import { findReviewComments } from "../services/comments-services";
+import {
+  createComment,
+  findReviewComments,
+} from "../services/comments-services";
 
 export const findReviewCommentsAction = async (
   dispatch: AppDispatch,
@@ -9,7 +12,19 @@ export const findReviewCommentsAction = async (
   if (!reviewId) return;
   const comments = await findReviewComments(reviewId);
   dispatch({
-    type: findReview,
+    type: findComments,
     payload: comments,
+  });
+};
+
+export const createCommentAction = async (
+  dispatch: AppDispatch,
+  comment: string
+) => {
+  if (!comment || !comment.trim()) return;
+  const newComment = await createComment(comment);
+  dispatch({
+    type: create,
+    payload: newComment,
   });
 };

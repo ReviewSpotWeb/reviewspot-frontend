@@ -9,3 +9,8 @@ export const findReviewComments = async (
     (comment) => comment.reviewId === reviewId
   ) as never[];
 };
+
+export const createComment = async (comment: string) => {
+  // TODO: make POST to server
+  console.log(comment);
+};
