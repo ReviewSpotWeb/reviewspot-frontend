@@ -22,7 +22,7 @@ export const WriteOrEditReviewIcon = () => {
 };
 
 export const SearchIcon = () => {
-  return <FontAwesomeIcon icon={faMagnifyingGlass} className="w-5 h-5" />;
+  return <FontAwesomeIcon icon={faMagnifyingGlass} className="w-4 h-4" />;
 };
 
 export const ClearSearchIcon = ({ onClick }: { onClick: () => void }) => {
