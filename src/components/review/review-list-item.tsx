@@ -82,7 +82,10 @@ const ReviewListItem = ({
         <div className="w-full flex gap-2">
           <div className={hideAuthorInfo ? "hidden" : colSmall}>
             <Link to={`/user/${authorName.toLowerCase()}`}>
-              <div className="w-full text-white font-bold bg-[#303030] border-2 border-[#222] hover:border-blue-500 rounded">
+              <div
+                className="w-full text-white font-bold bg-[#303030] border-2 border-[#222] hover:border-blue-500 rounded"
+                title={`${authorName} - ${role.toLowerCase()}`}
+              >
                 <div className="flex justify-center items-center">
                   <span className="truncate" title={authorName}>
                     {authorName}
