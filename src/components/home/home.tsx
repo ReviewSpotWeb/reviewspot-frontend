@@ -1,26 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AlbumList from "../album/album-list";
-import { Album } from "../../types/album";
 import Tabs, { TabInfo } from "../util/tabs";
 import ReviewList from "../review/review-list";
 import { useAppSelector } from "../util/redux/hooks";
 import { findHomeReviewsAction } from "../../actions/reviews-actions";
 import { AppDispatch } from "../util/redux/store";
 import { useDispatch } from "react-redux";
+import { findHomeAlbumsAction } from "../../actions/albums-actions";
 
 const Home = () => {
-  const stateAlbums = useAppSelector((state) => state.albums.albums);
-  const [albums, setAlbums] = useState<Album[]>(stateAlbums);
+  const albums = useAppSelector((state) => state.albums.albums);
   const reviews = useAppSelector((state) => state.reviews.reviews);
 
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
+    findHomeAlbumsAction(dispatch);
     findHomeReviewsAction(dispatch);
   }, [dispatch]);
-
-  useEffect(() => {
-    setAlbums(stateAlbums);
-  }, [stateAlbums]);
 
   const tabs: TabInfo[] = [
     {
