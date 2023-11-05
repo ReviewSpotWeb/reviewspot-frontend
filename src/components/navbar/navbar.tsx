@@ -51,7 +51,7 @@ const Navbar = () => {
           onClick={() => handleLinkHome()}
           className="cursor-pointer font-bold flex gap-2 items-center hover:text-blue-700"
         >
-          <div className="fill-current">
+          <div className="fill-current flex items-center">
             <HomeIcon />
           </div>
           <span className="sm:inline hidden">ReviewSpot</span>
