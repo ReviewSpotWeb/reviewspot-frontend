@@ -3,7 +3,6 @@ import ProfilePicture from "./profile-picture";
 import { Role, User } from "../../types/user";
 import { HeartIconSolid, ReviewIcon } from "../util/icons";
 import { Album } from "../../types/album";
-import albumsJson from "../../data/albums.json";
 import { Link } from "react-router-dom";
 import { Review } from "../../types/review";
 import ReviewList from "../review/review-list";
@@ -11,11 +10,33 @@ import PaginationBar, { PaginationInfo } from "../util/pagination-bar";
 import { AppDispatch } from "../util/redux/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../util/redux/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { findUserReviewsAction } from "../../actions/reviews-actions";
 import { findUserProfileAction } from "../../actions/profile-actions";
+import { findAlbum } from "../../services/albums-services";
+
+const getReviewedAlbumIdsByRating = (reviews: Review[]): [number, string][] => {
+  // [rating, albumId]
+  const ratings: [number, string][] = reviews.map((review) => {
+    return [review.rating.rating, review.albumId];
+  });
+  // sort by rating
+  ratings.sort((a, b) => b[0] - a[0]);
+  return ratings;
+};
+
+const getFavoriteAlbums = async (reviews: Review[], num: number = 3) => {
+  const reviewedAlbumIds = getReviewedAlbumIdsByRating(reviews);
+  const reviewedAlbums = await Promise.all(
+    reviewedAlbumIds.map(async ([, albumId]) => {
+      return await findAlbum(albumId ?? "");
+    })
+  );
+  return reviewedAlbums.slice(0, num);
+};
 
 const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
+  const [favoriteAlbums, setFavoriteAlbums] = useState<Album[]>([]);
   const dispatch: AppDispatch = useDispatch();
   const params = useParams();
   const userId = activeUserId ?? params.userId;
@@ -28,14 +49,13 @@ const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
     findUserReviewsAction(dispatch, userId ?? "");
   }, [userId, dispatch]);
 
+  useEffect(() => {
+    getFavoriteAlbums(reviews).then((albums) => setFavoriteAlbums(albums));
+  }, [reviews]);
+
   const numReviews: number = reviews.length;
   let numLikes: number = 0;
   reviews.forEach((review) => (numLikes += review.likedBy.length));
-
-  // TODO: users 3 highest rated albums?
-  const FAVORITE_ALBUMS: Album[] = albumsJson.slice(
-    Math.floor(Math.random() * albumsJson.length)
-  ) as never[];
 
   const prev = true; // If previous page
   const next = true; // If next page
@@ -84,14 +104,16 @@ const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
                       )}
                     </div>
                   </div>
+                  {/* Favorite Albums */}
                   <div className="w-full h-full flex justify-center items-center gap-2">
-                    {FAVORITE_ALBUMS.length > 0 && (
+                    {favoriteAlbums.length > 0 && (
                       <div className="flex flex-col gap-1">
                         <div className="flex gap-2">
-                          {FAVORITE_ALBUMS.map((album, idx) => {
+                          {favoriteAlbums.map((album, idx) => {
                             return (
                               <Link to={`/album/${album.id}`} key={idx}>
                                 <img
+                                  title={album.name}
                                   src={album.images[0].url}
                                   alt={`${album.name} album cover`}
                                   className="h-20 sm:h-28 md:h-40 w-20 sm:w-28 md:w-40 rounded cursor-pointer border border-transparent hover:border-blue-500"
