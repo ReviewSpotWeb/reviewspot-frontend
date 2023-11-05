@@ -1,22 +1,26 @@
 import { useState } from "react";
 import { showToastMessage } from "../../helpers/toast-helpers";
+import { Review } from "../../types/review";
 
 export type UserReview = {
   review: string;
   rating: number;
 };
 
-// TODO: pass in info when editing
 type ReviewFormProps = {
   onSave: (review: UserReview) => void;
+  review: Review | null;
 };
 
 const ReviewForm = (reviewFormProps: ReviewFormProps) => {
-  const [userReview, setUserReview] = useState<UserReview>({
-    review: "",
-    rating: 0,
-  });
-  const { onSave } = reviewFormProps;
+  const { onSave, review } = reviewFormProps;
+  const initialUserReview = review
+    ? { review: review.content, rating: review.rating.rating }
+    : {
+        review: "",
+        rating: 0,
+      };
+  const [userReview, setUserReview] = useState<UserReview>(initialUserReview);
   const handleSave = () => {
     if (!userReview.review.trim()) {
       showToastMessage({ message: "Your review is empty!" });
@@ -33,7 +37,7 @@ const ReviewForm = (reviewFormProps: ReviewFormProps) => {
           <textarea
             name="review"
             id="review-text"
-            className="resize-none px-2 py-1 w-full h-20 rounded bg-[#333] border-2 border-[#222]"
+            className="resize-none px-2 py-1 w-full h-32 rounded bg-[#333] border-2 border-[#222]"
             onChange={(e) =>
               setUserReview({ ...userReview, review: e.target.value })
             }

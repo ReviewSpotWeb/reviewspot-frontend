@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../util/redux/hooks";
 import AlbumList from "./album-list";
 import {
   createReviewAction,
+  editReviewAction,
   findAlbumReviewsAction,
 } from "../../actions/reviews-actions";
 import { loginToast } from "../../helpers/auth-helpers";
@@ -67,7 +68,7 @@ const AlbumPage = () => {
       loginToast("Login to edit your review", "top-center");
       return;
     }
-    console.log("edit");
+    setShowReviewForm((prev) => !prev);
   };
 
   const handleWriteReview = () => {
@@ -81,7 +82,13 @@ const AlbumPage = () => {
   const onSave = (review: UserReview) => {
     setShowReviewForm((prev) => !prev);
     if (!albumId) return;
-    createReviewAction(dispatch, review, albumId);
+    if (userReview) {
+      // edit
+      editReviewAction(dispatch, review, userReview._id, albumId);
+    } else {
+      // create
+      createReviewAction(dispatch, review, albumId);
+    }
     // TODO: component should rerender and display user review
     // TODO: Do i need to update state or can i just force rerender
   };
@@ -102,7 +109,7 @@ const AlbumPage = () => {
               </div>
             </div>
             <div className="w-full h-full bg-[#404040] rounded">
-              {userReview ? (
+              {userReview && !showReviewForm ? (
                 <div>
                   <div className="p-2 pb-0 w-full flex justify-between items-center resize-none text-lg">
                     <div className="w-max px-5 text-center font-bold h-max bg-blue-600 rounded cursor-default">
@@ -129,20 +136,20 @@ const AlbumPage = () => {
                       <WriteOrEditReviewIcon />
                     </div>
                   )}
-                  {showReviewForm && (
-                    <div className="rounded p-1">
-                      <ReviewForm onSave={onSave} />
-                    </div>
-                  )}
+                </div>
+              )}
+              {showReviewForm && (
+                <div className="rounded p-1">
+                  <ReviewForm onSave={onSave} review={userReview ?? null} />
                 </div>
               )}
             </div>
           </div>
           <div className="h-full w-full flex flex-col gap-2">
             <div className="text-center font-bold text-xl bg-green-500 rounded cursor-default">
-              {reviews.length === 0
-                ? "No Reviews"
-                : reviews.length === 1
+              {otherReviews.length === 0
+                ? "No Other Reviews"
+                : otherReviews.length === 1
                 ? "Review"
                 : "Reviews"}
             </div>

@@ -4,6 +4,7 @@ import {
   findHomeReviews,
   findUserReviews,
   createReview,
+  editReview,
 } from "../services/reviews-services";
 
 import {
@@ -12,6 +13,7 @@ import {
   findUser,
   findAlbum,
   create,
+  edit,
 } from "../reducers/reviews-reducer";
 import { AppDispatch } from "../components/util/redux/store";
 import { UserReview } from "../components/review/write-review-form";
@@ -70,5 +72,19 @@ export const createReviewAction = async (
   dispatch({
     type: create,
     payload: newReview,
+  });
+};
+
+export const editReviewAction = async (
+  dispatch: AppDispatch,
+  review: UserReview,
+  reviewId: string,
+  albumId: string
+) => {
+  if (!review || !reviewId || !albumId) return;
+  const editedReview = await editReview(review, reviewId, albumId);
+  dispatch({
+    type: edit,
+    payload: editedReview,
   });
 };

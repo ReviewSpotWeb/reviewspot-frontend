@@ -30,10 +30,17 @@ export const reviewsSlice = createSlice({
     create: (state, action: PayloadAction<Review>) => {
       // state.reviews = [...state.reviews, action.payload];
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    edit: (state, action: PayloadAction<Review>) => {
+      // const otherReviews = state.reviews.filter(
+      //   (review) => review._id !== action.payload._id
+      // );
+      // state.reviews = [...otherReviews, action.payload];
+    },
   },
 });
 
-export const { find, findHome, findUser, findAlbum, create } =
+export const { find, findHome, findUser, findAlbum, edit, create } =
   reviewsSlice.actions;
 
 export default reviewsSlice.reducer;

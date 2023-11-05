@@ -32,3 +32,12 @@ export const createReview = async (review: UserReview, albumId: string) => {
   // TODO: send POST to server
   console.log(review, albumId);
 };
+
+export const editReview = async (
+  review: UserReview,
+  reviewId: string,
+  albumId: string
+) => {
+  // TODO: send PUT to server
+  console.log(review, reviewId, albumId);
+};
