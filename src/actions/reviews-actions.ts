@@ -16,7 +16,7 @@ import {
   edit,
 } from "../reducers/reviews-reducer";
 import { AppDispatch } from "../components/util/redux/store";
-import { UserReview } from "../components/review/write-review-form";
+import { UserReview } from "../components/review/review-form";
 
 export const findReviewAction = async (
   dispatch: AppDispatch,

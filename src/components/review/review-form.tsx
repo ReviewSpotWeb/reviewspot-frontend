@@ -9,11 +9,12 @@ export type UserReview = {
 
 type ReviewFormProps = {
   onSave: (review: UserReview) => void;
+  onCancel: () => void;
   review: Review | null;
 };
 
 const ReviewForm = (reviewFormProps: ReviewFormProps) => {
-  const { onSave, review } = reviewFormProps;
+  const { onSave, onCancel, review } = reviewFormProps;
   const initialUserReview = review
     ? { review: review.content, rating: review.rating.rating }
     : {
@@ -59,7 +60,13 @@ const ReviewForm = (reviewFormProps: ReviewFormProps) => {
             Rating: <span className="text-blue-500">{userReview.rating}</span>
           </div>
         </div>
-        <div className="text-center">
+        <div className="flex justify-between">
+          <button
+            className="w-1/4 border-2 border-[#333] rounded font-bold bg-red-600 hover:bg-red-700 active:bg-red-800"
+            onClick={() => onCancel()}
+          >
+            Cancel
+          </button>
           <button
             className="w-1/4 border-2 border-[#333] rounded font-bold bg-blue-600 hover:bg-blue-700 active:bg-blue-800"
             onClick={() => handleSave()}

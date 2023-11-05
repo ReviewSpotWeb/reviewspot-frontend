@@ -1,5 +1,5 @@
 // import axios from "axios";
-import { UserReview } from "../components/review/write-review-form";
+import { UserReview } from "../components/review/review-form";
 import reviewsJson from "../data/reviews.json";
 import { Review } from "../types/review";
 

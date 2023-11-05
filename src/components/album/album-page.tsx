@@ -15,7 +15,7 @@ import {
   findAlbumReviewsAction,
 } from "../../actions/reviews-actions";
 import { loginToast } from "../../helpers/auth-helpers";
-import ReviewForm, { UserReview } from "../review/write-review-form";
+import ReviewForm, { UserReview } from "../review/review-form";
 
 const AlbumPage = () => {
   const dispatch: AppDispatch = useAppDispatch();
@@ -140,7 +140,11 @@ const AlbumPage = () => {
               )}
               {showReviewForm && (
                 <div className="rounded p-1">
-                  <ReviewForm onSave={onSave} review={userReview ?? null} />
+                  <ReviewForm
+                    onSave={onSave}
+                    review={userReview ?? null}
+                    onCancel={() => setShowReviewForm(false)}
+                  />
                 </div>
               )}
             </div>
