@@ -114,18 +114,18 @@ const ReviewListItem = ({
         {/* Second Row - fill any space*/}
         <div className="w-full flex gap-2">
           <div className={hideAuthorInfo ? "hidden" : colSmall}>
-            <div className="h-full w-full flex flex-col bg-[#303030] border-4 gap-1 border-[#222] hover:border-blue-500 rounded">
-              <div className="flex flex-col w-full h-full justify-center ">
-                <Link to={`/user/${authorName.toLowerCase()}`}>
+            <Link to={`/user/${authorName.toLowerCase()}`}>
+              <div className="h-full w-full flex flex-col bg-[#303030] border-4 gap-1 border-[#222] hover:border-blue-500 rounded">
+                <div className="flex flex-col w-full h-full justify-center">
                   <div
                     className="rounded flex justify-center w-full h-full"
                     title={authorName}
                   >
                     <ProfilePicture userId={authorName} />
                   </div>
-                </Link>
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
           <div className={hideAuthorInfo ? "w-full h-full" : colBig}>
             <div className="rounded h-full w-full text-center flex flex-col justify-between gap-2">
