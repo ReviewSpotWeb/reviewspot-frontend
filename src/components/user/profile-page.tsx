@@ -15,6 +15,7 @@ import { findUserReviewsAction } from "../../actions/reviews-actions";
 import { findUserProfileAction } from "../../actions/profile-actions";
 import { findAlbum } from "../../services/albums-services";
 
+// TODO: move to diff file
 const getReviewedAlbumIdsByRating = (reviews: Review[]): [number, string][] => {
   // [rating, albumId]
   const ratings: [number, string][] = reviews.map((review) => {
@@ -25,6 +26,7 @@ const getReviewedAlbumIdsByRating = (reviews: Review[]): [number, string][] => {
   return ratings;
 };
 
+// TODO: move to diff file
 const getFavoriteAlbums = async (reviews: Review[], num: number = 3) => {
   const reviewedAlbumIds = getReviewedAlbumIdsByRating(reviews);
   const reviewedAlbums = await Promise.all(
