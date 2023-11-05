@@ -1,4 +1,5 @@
 // import axios from "axios";
+import { UserReview } from "../components/review/write-review-form";
 import reviewsJson from "../data/reviews.json";
 import { Review } from "../types/review";
 
@@ -25,4 +26,9 @@ export const findUserReviews = async (userId: string): Promise<Review[]> => {
       (review) => review.authorInfo.authorName.toLowerCase() === userId
     ),
   ] as never[];
+};
+
+export const createReview = async (review: UserReview, albumId: string) => {
+  // TODO: send POST to server
+  console.log(review, albumId);
 };

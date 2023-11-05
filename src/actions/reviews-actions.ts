@@ -3,6 +3,7 @@ import {
   findAlbumReviews,
   findHomeReviews,
   findUserReviews,
+  createReview,
 } from "../services/reviews-services";
 
 import {
@@ -10,8 +11,10 @@ import {
   findHome,
   findUser,
   findAlbum,
+  create,
 } from "../reducers/reviews-reducer";
 import { AppDispatch } from "../components/util/redux/store";
+import { UserReview } from "../components/review/write-review-form";
 
 export const findReviewAction = async (
   dispatch: AppDispatch,
@@ -53,5 +56,19 @@ export const findUserReviewsAction = async (
   dispatch({
     type: findUser,
     payload: reviews,
+  });
+};
+
+// TODO: Only need this is if i want to manually update state
+export const createReviewAction = async (
+  dispatch: AppDispatch,
+  review: UserReview,
+  albumId: string
+) => {
+  if (!review || !albumId) return;
+  const newReview = await createReview(review, albumId);
+  dispatch({
+    type: create,
+    payload: newReview,
   });
 };

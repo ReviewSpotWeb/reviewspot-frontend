@@ -25,9 +25,15 @@ export const reviewsSlice = createSlice({
     findAlbum: (state, action: PayloadAction<Review[]>) => {
       state.reviews = [...action.payload];
     },
+    // TODO: change this when backend is connected
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    create: (state, action: PayloadAction<Review>) => {
+      // state.reviews = [...state.reviews, action.payload];
+    },
   },
 });
 
-export const { find, findHome, findUser, findAlbum } = reviewsSlice.actions;
+export const { find, findHome, findUser, findAlbum, create } =
+  reviewsSlice.actions;
 
 export default reviewsSlice.reducer;

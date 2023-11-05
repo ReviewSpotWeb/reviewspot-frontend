@@ -9,8 +9,12 @@ import { findAlbumAction } from "../../actions/albums-actions";
 import { AppDispatch } from "../util/redux/store";
 import { useAppDispatch, useAppSelector } from "../util/redux/hooks";
 import AlbumList from "./album-list";
-import { findAlbumReviewsAction } from "../../actions/reviews-actions";
+import {
+  createReviewAction,
+  findAlbumReviewsAction,
+} from "../../actions/reviews-actions";
 import { loginToast } from "../../helpers/auth-helpers";
+import ReviewForm, { UserReview } from "../review/write-review-form";
 
 const AlbumPage = () => {
   const dispatch: AppDispatch = useAppDispatch();
@@ -21,8 +25,10 @@ const AlbumPage = () => {
   const [otherReviews, setOtherReviews] = useState<Review[]>([]);
   const [userReview, setUserReview] = useState<Review | null>(null);
 
+  const [showReviewForm, setShowReviewForm] = useState<boolean>(false);
+
   // TODO: Get from state
-  const loggedIn = false;
+  const loggedIn = 1;
   // TODO: Get user from state
 
   useEffect(() => {
@@ -44,6 +50,9 @@ const AlbumPage = () => {
       setOtherReviews([
         ...reviews.filter((review) => review._id !== activeUserReview._id),
       ]);
+    } else {
+      setUserReview(null);
+      setOtherReviews(reviews);
     }
   }, [loggedIn, reviews]);
 
@@ -66,7 +75,15 @@ const AlbumPage = () => {
       loginToast("Login to write a review", "top-center");
       return;
     }
-    console.log("write");
+    setShowReviewForm((prev) => !prev);
+  };
+
+  const onSave = (review: UserReview) => {
+    setShowReviewForm((prev) => !prev);
+    if (!albumId) return;
+    createReviewAction(dispatch, review, albumId);
+    // TODO: component should rerender and display user review
+    // TODO: Do i need to update state or can i just force rerender
   };
 
   return (
@@ -102,12 +119,21 @@ const AlbumPage = () => {
                   <ReviewList reviews={[{ ...userReview }]} hideAuthorInfo />
                 </div>
               ) : (
-                <div
-                  className="flex justify-center items-center gap-2 w-full cursor-pointer bg-blue-600 hover:bg-blue-700 rounded py-1 font-bold text-lg"
-                  onClick={() => handleWriteReview()}
-                >
-                  <div>Write a Review</div>
-                  <WriteOrEditReviewIcon />
+                <div>
+                  {!showReviewForm && (
+                    <div
+                      className="flex justify-center items-center gap-2 w-full cursor-pointer bg-blue-600 hover:bg-blue-700 rounded py-1 font-bold text-lg"
+                      onClick={() => handleWriteReview()}
+                    >
+                      <div>Write a Review</div>
+                      <WriteOrEditReviewIcon />
+                    </div>
+                  )}
+                  {showReviewForm && (
+                    <div className="rounded p-1">
+                      <ReviewForm onSave={onSave} />
+                    </div>
+                  )}
                 </div>
               )}
             </div>
