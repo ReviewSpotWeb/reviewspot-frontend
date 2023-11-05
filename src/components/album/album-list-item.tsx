@@ -23,13 +23,13 @@ const AlbumListItem = ({ album }: { album: Album }) => {
       label: "Spotify",
       icon: <SpotifyIconSmall />,
       rating: album.popularity,
-      color: "green-500",
+      color: "bg-green-500",
     },
     {
       label: "ReviewSpot",
       icon: <div>RS</div>,
       rating: albumRating,
-      color: "yellow-500",
+      color: "bg-yellow-500",
     },
   ];
 

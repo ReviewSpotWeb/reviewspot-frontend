@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Review } from "../../types/review";
-import albumsJson from "../../data/albums.json";
 import { Album } from "../../types/album";
 import { Role } from "../../types/user";
 import {
@@ -13,6 +13,7 @@ import { RatingInfo } from "../album/album-rating";
 import AlbumRating from "../album/album-rating";
 import UserBadge from "../user/user-badge";
 import ProfilePicture from "../user/profile-picture";
+import { findAlbum } from "../../services/albums-services";
 
 const ReviewListItem = ({
   review,
@@ -21,38 +22,42 @@ const ReviewListItem = ({
   review: Review;
   hideAuthorInfo?: boolean;
 }) => {
+  const [album, setAlbum] = useState<Album | null>(null);
   const { reviewId, albumId } = useParams();
-  const albums: Album[] = albumsJson as never[];
-  const album = albums.filter((album) => album.id === review.albumId)[0];
 
+  useEffect(() => {
+    findAlbum(review.albumId).then((album) => setAlbum(album));
+  }, [review.albumId]);
   const { authorName, authorRole } = review.authorInfo;
   const role: Role = Role[authorRole as keyof typeof Role];
 
   const onReviewPage = review._id === reviewId;
-  const onAlbumPage = album.id === albumId;
+  const onAlbumPage = review.albumId === albumId;
 
+  // TODO: Replace with ReviewSpot average rating for this album
   const rng = Math.floor(Math.random() * 101);
   const albumRating: number | null = rng <= 30 ? null : rng;
+
   const ratings: RatingInfo[] = onReviewPage
     ? [
         {
           label: "ReviewSpot",
           icon: <div>RS</div>,
           rating: albumRating,
-          color: "yellow-500",
+          color: "bg-yellow-500",
         },
         {
           label: "Spotify",
           icon: <SpotifyIconSmall />,
-          rating: album.popularity,
-          color: "green-500",
+          rating: album ? album.popularity : null,
+          color: "bg-green-500",
         },
       ]
     : [
         {
           label: "",
           rating: review.rating.rating,
-          color: "blue-500",
+          color: "bg-blue-500",
         },
       ];
 
@@ -88,7 +93,7 @@ const ReviewListItem = ({
               </div>
             </Link>
           </div>
-          {!onAlbumPage && (
+          {!onAlbumPage && album && (
             <div className={hideAuthorInfo ? "w-full" : colBig}>
               <div className="w-full">
                 <div className="flex justify-center items-center mx-4">
@@ -137,7 +142,7 @@ const ReviewListItem = ({
                         label: "Rating",
                         icon: <ReviewIcon />,
                         rating: review.rating.rating,
-                        color: "blue-500",
+                        color: "bg-blue-500",
                       },
                     ]}
                   />

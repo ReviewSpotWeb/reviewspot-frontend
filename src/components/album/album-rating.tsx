@@ -30,7 +30,7 @@ const RatingBar = ({ ratingInfo }: { ratingInfo: RatingInfo }) => {
         <div className="w-full h-2/5">
           <div className="bg-[#222222] rounded-full h-full">
             <div
-              className={`bg-${color} h-full rounded-full`}
+              className={`${color} h-full rounded-full`}
               style={{ width: `${rating}%` }}
             />
           </div>
@@ -56,7 +56,7 @@ const AlbumRating = ({ ratings, hideNoRating = false }: AlbumRatingProps) => {
             return <div key={idx}></div>;
 
           return (
-            <div key={idx} className={`rounded h-8 w-full cursor-default`}>
+            <div key={idx} className="rounded h-8 w-full cursor-default">
               {/* {idx !== 0 && <hr className="border-[#222222] text-center" />} */}
               <RatingBar ratingInfo={rating} />
             </div>

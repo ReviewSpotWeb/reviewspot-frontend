@@ -19,6 +19,7 @@
 [ ] - custom row and column components ??
 [ ] - loading component
 [ ] - useMemo ??
+[] - Abstract rating configs
 
 [ ] - refactor profile page style (not sure if I like where the name and badge are)
 
