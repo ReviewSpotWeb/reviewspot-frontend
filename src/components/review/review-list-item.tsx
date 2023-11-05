@@ -14,6 +14,7 @@ import AlbumRating from "../album/album-rating";
 import UserBadge from "../user/user-badge";
 import ProfilePicture from "../user/profile-picture";
 import { findAlbum } from "../../services/albums-services";
+import { loginToast } from "../../helpers/auth-helpers";
 
 const ReviewListItem = ({
   review,
@@ -22,6 +23,9 @@ const ReviewListItem = ({
   review: Review;
   hideAuthorInfo?: boolean;
 }) => {
+  // TODO: Get from state
+  const loggedIn = false;
+
   const [album, setAlbum] = useState<Album | null>(null);
   const { reviewId, albumId } = useParams();
 
@@ -62,6 +66,10 @@ const ReviewListItem = ({
       ];
 
   const handleLike = (reviewId: string) => {
+    if (!loggedIn) {
+      loginToast("Login to like a review", "top-center");
+      return;
+    }
     console.log(`${authorName} liked review #${reviewId}`);
   };
 
