@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import reviewJson from "../../data/reviews.json";
 import { Album } from "../../types/album";
 import AlbumItemMobile from "./album-item-mobile";
 import { Review } from "../../types/review";
@@ -10,31 +9,63 @@ import { findAlbumAction } from "../../actions/albums-actions";
 import { AppDispatch } from "../util/redux/store";
 import { useAppDispatch, useAppSelector } from "../util/redux/hooks";
 import AlbumList from "./album-list";
+import { findAlbumReviewsAction } from "../../actions/reviews-actions";
+import { loginToast } from "../../helpers/auth-helpers";
 
 const AlbumPage = () => {
   const dispatch: AppDispatch = useAppDispatch();
   const { albumId } = useParams();
   const album: Album = useAppSelector((state) => state.albums.albums[0]);
+  const reviews: Review[] = useAppSelector((state) => state.reviews.reviews);
+
+  const [otherReviews, setOtherReviews] = useState<Review[]>([]);
+  const [userReview, setUserReview] = useState<Review | null>(null);
+
+  // TODO: Get from state
+  const loggedIn = false;
+  // TODO: Get user from state
 
   useEffect(() => {
-    // TODO: Handle albumId being undefined
-    findAlbumAction(dispatch, albumId ?? "");
-  }, [albumId, dispatch]);
+    if (!loggedIn) {
+      setOtherReviews(reviews);
+      setUserReview(null);
+      return;
+    }
+    // Get user review if it exists
+    const activeUserReview: Review | undefined = reviews
+      .filter(
+        // TODO: replace "alice" with active username
+        (review) => review.authorInfo.authorName.toLowerCase() === "alice"
+      )
+      .pop();
+    // Remove it from rest of review list
+    if (activeUserReview) {
+      setUserReview({ ...activeUserReview });
+      setOtherReviews([
+        ...reviews.filter((review) => review._id !== activeUserReview._id),
+      ]);
+    }
+  }, [loggedIn, reviews]);
 
-  // TODO: testing user review
-  const albumReviews: Review[] =
-    (reviewJson.filter((review) => review.albumId === albumId) as never[]) ??
-    [];
-  const USER_REVIEW: Review | undefined = albumReviews.pop();
-  const numReviews = albumReviews.length;
-  // TODO: Render more album info when on album page?
-  // TODO: smaller image size here?
+  useEffect(() => {
+    findAlbumAction(dispatch, albumId ?? "");
+    findAlbumReviewsAction(dispatch, albumId ?? "");
+  }, [albumId, dispatch, loggedIn]);
 
   const handleEditReview = () => {
+    if (!loggedIn) {
+      // Should never reach this
+      loginToast("Login to edit your review", "top-center");
+      return;
+    }
     console.log("edit");
   };
 
   const handleWriteReview = () => {
+    if (!loggedIn) {
+      loginToast("Login to write a review", "top-center");
+      return;
+    }
     console.log("write");
   };
 
@@ -54,7 +85,7 @@ const AlbumPage = () => {
               </div>
             </div>
             <div className="w-full h-full bg-[#404040] rounded">
-              {USER_REVIEW ? (
+              {userReview ? (
                 <div>
                   <div className="p-2 pb-0 w-full flex justify-between items-center resize-none text-lg">
                     <div className="w-max px-5 text-center font-bold h-max bg-blue-600 rounded cursor-default">
@@ -68,7 +99,7 @@ const AlbumPage = () => {
                       <WriteOrEditReviewIcon />
                     </div>
                   </div>
-                  <ReviewList reviews={[{ ...USER_REVIEW }]} hideAuthorInfo />
+                  <ReviewList reviews={[{ ...userReview }]} hideAuthorInfo />
                 </div>
               ) : (
                 <div
@@ -83,13 +114,13 @@ const AlbumPage = () => {
           </div>
           <div className="h-full w-full flex flex-col gap-2">
             <div className="text-center font-bold text-xl bg-green-500 rounded cursor-default">
-              {numReviews === 0
+              {reviews.length === 0
                 ? "No Reviews"
-                : numReviews === 1
+                : reviews.length === 1
                 ? "Review"
                 : "Reviews"}
             </div>
-            <ReviewList reviews={[...albumReviews]} />
+            <ReviewList reviews={[...otherReviews]} />
           </div>
         </div>
       )}
