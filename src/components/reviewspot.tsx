@@ -6,8 +6,10 @@ const ReviewSpot = () => {
   return (
     <div className="min-h-screen min-w-screen w-full h-full font-mono flex justify-center">
       <div className="xl:w-3/4 w-11/12 p-2">
-        <Navbar />
-        <div className="pt-2">
+        <div className="z-10">
+          <Navbar />
+        </div>
+        <div className="pt-2 z-0">
           <Outlet />
         </div>
         <ToastContainer />
