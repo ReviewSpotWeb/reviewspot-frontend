@@ -21,13 +21,11 @@
 [ ] - useMemo ??
 [] - Abstract rating configs
 
-[ ] - clicking back button from album page doesnt update home albums - probably true for other pages too
+[x] - clicking back button from album page doesnt update home albums - probably true for other pages too
 
 [ ] - refactor profile page style (not sure if I like where the name and badge are)
 
 [ ] - see notes app
-
-- dont use state the way I am on profile page - FIX
 
 [ ] - simplify album item components if possible (album-item-browser, album-item-mobile, album-list, album-list-item)
 
