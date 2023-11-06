@@ -18,7 +18,7 @@ const Navbar = () => {
   };
 
   // TODO: Get from state
-  const loggedIn = 1;
+  const loggedIn = 0;
   // TODO: Get this from state
   const username = "alice";
 
@@ -40,8 +40,7 @@ const Navbar = () => {
   };
 
   const handleLogin = () => {
-    // TODO: Handle login
-    console.log("login");
+    navigate("/login");
   };
 
   return (

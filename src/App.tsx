@@ -8,6 +8,7 @@ import AlbumPage from "./components/album/album-page";
 import ReviewPage from "./components/review/review-page";
 import ProfilePage from "./components/user/profile-page";
 import SearchResults from "./components/search/search-results";
+import Register from "./components/auth/register";
 
 const App = () => {
   // TODO: Check if logged in and get username for profile page
@@ -25,6 +26,10 @@ const App = () => {
         {
           path: "login",
           element: <Login />,
+        },
+        {
+          path: "register",
+          element: <Register />,
         },
         {
           path: "album/:albumId",
