@@ -5,6 +5,7 @@ import { Album } from "../../types/album";
 import { Role } from "../../types/user";
 import {
   CommentIcon,
+  DeleteIcon,
   HeartIcon,
   ReviewIcon,
   SpotifyIconSmall,
@@ -73,6 +74,16 @@ const ReviewListItem = ({
     console.log(`${authorName} liked review #${reviewId}`);
   };
 
+  // Can delete review if author
+  // TODO: Get from state
+  const username = "bob";
+  const userIsAuthor = username === authorName.toLowerCase();
+
+  const handleDeleteReview = () => {
+    console.log("delete review");
+    // TODO: Delete review
+  };
+
   const goToReviewButton = (
     <Link to={`/review/${review._id}`}>
       <div className="text-green-400 bg-[#303030] border-2 border-transparent hover:border-green-400 rounded font-bold flex justify-center items-center h-full">
@@ -84,7 +95,7 @@ const ReviewListItem = ({
   const colSmall = "w-1/3 sm:w-1/4";
   const colBig = "w-2/3 sm:w-3/4";
   return (
-    <li className="bg-[#404040] rounded p-2 text-gray-300 h-max">
+    <li className="bg-[#404040] rounded p-2 text-gray-300 h-max relative">
       <div className="flex flex-col gap-1 w-full">
         {/* First Row */}
         <div className="w-full flex gap-2">
@@ -203,6 +214,14 @@ const ReviewListItem = ({
           <div className="w-full lg:hidden">{goToReviewButton}</div>
         )}
       </div>
+      {userIsAuthor && onReviewPage && (
+        <div
+          className="absolute right-2 top-2 cursor-pointer fill-current hover:text-red-500"
+          onClick={() => handleDeleteReview()}
+        >
+          <DeleteIcon />
+        </div>
+      )}
     </li>
   );
 };
