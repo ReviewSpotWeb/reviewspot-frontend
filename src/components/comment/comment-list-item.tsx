@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { AppDispatch } from "../util/redux/store";
 import { useDispatch } from "react-redux";
 import { findUser } from "../../services/user-services";
+import { DeleteIcon } from "../util/icons";
 
 const CommentListItem = ({ comment }: { comment: Comment }) => {
   const dispatch: AppDispatch = useDispatch();
@@ -18,8 +19,18 @@ const CommentListItem = ({ comment }: { comment: Comment }) => {
     findUser(commenterId).then((user) => setCommenter(user));
   }, [commenterId, dispatch]);
 
+  // Can delete comment if commenter
+  // TODO: Get from state
+  const username = "bob";
+  const userIsAuthor = username === commenter?.username.toLowerCase();
+
+  const handleDeleteComment = () => {
+    console.log("delete comment");
+    // TODO: Delete comment
+  };
+
   return (
-    <li className="bg-[#404040] rounded p-2 text-gray-300 h-30 w-full">
+    <li className="bg-[#404040] rounded p-2 text-gray-300 h-30 w-full relative">
       {!commenter ? (
         <div className="text-center">Loading...</div>
       ) : (
@@ -47,6 +58,14 @@ const CommentListItem = ({ comment }: { comment: Comment }) => {
               {comment.content}
             </div>
           </div>
+        </div>
+      )}
+      {userIsAuthor && (
+        <div
+          className="absolute right-4 top-4 cursor-pointer fill-current hover:text-red-500"
+          onClick={() => handleDeleteComment()}
+        >
+          <DeleteIcon />
         </div>
       )}
     </li>

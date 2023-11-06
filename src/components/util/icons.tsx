@@ -13,10 +13,15 @@ import {
   faSquarePen,
   faMagnifyingGlass,
   faCircleXmark,
+  faTrash,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
+
+export const DeleteIcon = () => {
+  return <FontAwesomeIcon icon={faTrash} className="w-4 h-4" />;
+};
 
 export const HomeIcon = () => {
   return <FontAwesomeIcon icon={faHome} className="w-6 h-6" />;
