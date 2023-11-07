@@ -1,5 +1,4 @@
 // import axios from "axios";
-import albumsJson from "../data/albums.json";
 import { Album, AlbumList } from "../types/album";
 import { PaginationInfo } from "../types/pagination";
 import { app } from "./axios";
@@ -22,12 +21,11 @@ export const findHomeAlbums = async (
 };
 
 export const findSearchAlbums = async (
-  searchTerm: string
-): Promise<Album[]> => {
-  //   const response = await axios.get(`${API_BASE}/search`, {
-  //     params: { q: searchTerm, limit: 10, offset: 0 },
-  //   });
-  //   return response.data;
-  console.log(searchTerm);
-  return [albumsJson[Math.floor(Math.random() * albumsJson.length)]] as never[];
+  searchTerm: string,
+  paginationInfo: PaginationInfo
+): Promise<AlbumList[]> => {
+  const response = await app.get("/search", {
+    params: { q: searchTerm, ...paginationInfo },
+  });
+  return response.data;
 };

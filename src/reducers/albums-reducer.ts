@@ -41,8 +41,16 @@ export const albumSlice = createSlice({
       };
       return state;
     },
-    findSearch: (state, action: PayloadAction<Album[]>) => {
-      state.albums = [...action.payload];
+    findSearch: (state, action: PayloadAction<AlbumList>) => {
+      state = {
+        albums: [...action.payload.albums],
+        paginationInfo: {
+          page: { limit: action.payload.limit, offset: action.payload.offset },
+          next: action.payload.next,
+          prev: action.payload.prev,
+          total: action.payload.total,
+        },
+      };
       return state;
     },
   },

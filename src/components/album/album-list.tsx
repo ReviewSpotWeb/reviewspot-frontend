@@ -4,7 +4,11 @@ import { AlbumPaginationInfo } from "../../types/pagination";
 import PaginationBar from "../util/pagination-bar";
 import { AppDispatch } from "../util/redux/store";
 import AlbumListItem from "./album-list-item";
-import { findHomeAlbumsAction } from "../../actions/albums-actions";
+import {
+  findHomeAlbumsAction,
+  findSearchAlbumsAction,
+} from "../../actions/albums-actions";
+import { useSearchParams } from "react-router-dom";
 
 type AlbumListProps = {
   albums: Album[];
@@ -18,12 +22,17 @@ const AlbumList = (albumListProps: AlbumListProps) => {
   const next = paginationInfo ? paginationInfo.next : null; // If next page
   const dispatch: AppDispatch = useDispatch();
 
+  const [searchParams] = useSearchParams();
+  const q = searchParams.get("q");
+
   const loadNext = () => {
-    findHomeAlbumsAction(dispatch, next ?? undefined);
+    if (q) findSearchAlbumsAction(dispatch, q, next ?? undefined);
+    else findHomeAlbumsAction(dispatch, next ?? undefined);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const loadPrev = () => {
-    findHomeAlbumsAction(dispatch, prev ?? undefined);
+    if (q) findSearchAlbumsAction(dispatch, q, prev ?? undefined);
+    else findHomeAlbumsAction(dispatch, prev ?? undefined);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 

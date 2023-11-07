@@ -15,7 +15,8 @@ const SearchResults = () => {
   const q = searchParams.get("q");
   const dispatch: AppDispatch = useDispatch();
 
-  const albums = useAppSelector((state) => state.albums.albums);
+  const albumState = useAppSelector((state) => state.albums);
+  const { albums, paginationInfo } = albumState;
   const reviews = useAppSelector((state) => state.reviews.reviews);
 
   useEffect(() => {
@@ -31,7 +32,9 @@ const SearchResults = () => {
     {
       key: "albums",
       label: "Albums",
-      children: <AlbumList albums={[...albums]} />,
+      children: (
+        <AlbumList albums={[...albums]} paginationInfo={paginationInfo} />
+      ),
     },
     {
       key: "reviews",
@@ -47,7 +50,7 @@ const SearchResults = () => {
       </div>
       <div className="justify-between gap-3 hidden lg:flex">
         <div className="lg:w-2/3 w-full rounded">
-          <AlbumList albums={[...albums]} />
+          <AlbumList albums={[...albums]} paginationInfo={paginationInfo} />
         </div>
         <div className="lg:w-1/3 rounded md:inline hidden">
           <div className="w-full font-bold text-2xl text-center rounded bg-green-500 text-black p-1 mb-2 select-none cursor-default">

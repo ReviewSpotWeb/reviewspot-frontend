@@ -33,11 +33,12 @@ export const findHomeAlbumsAction = async (
 
 export const findSearchAlbumsAction = async (
   dispatch: AppDispatch,
-  searchTerm: string
+  searchTerm: string,
+  paginationInfo: PaginationInfo = { offset: 0, limit: 10 }
 ) => {
-  const albums = await findSearchAlbums(searchTerm);
+  const albumList = await findSearchAlbums(searchTerm, paginationInfo);
   dispatch({
     type: findSearch,
-    payload: albums,
+    payload: albumList,
   });
 };
