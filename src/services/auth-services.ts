@@ -1,11 +1,5 @@
-import axios from "axios";
-import { API_BASE } from "../lib/constants";
 import { User } from "../types/user";
-
-const app = axios.create({
-  baseURL: API_BASE,
-  withCredentials: true,
-});
+import { app } from "./axios";
 
 export const loginService = async (
   username: string,
