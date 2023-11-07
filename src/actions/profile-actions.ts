@@ -1,4 +1,4 @@
-import { findUser } from "../services/user-services";
+import { findUser } from "../services/profile-services";
 import { find } from "../reducers/profile-reducer";
 import { AppDispatch } from "../components/util/redux/store";
 

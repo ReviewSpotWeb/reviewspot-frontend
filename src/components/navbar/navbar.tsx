@@ -2,14 +2,16 @@ import { useNavigate } from "react-router-dom";
 import SearchBar from "../search/search-bar";
 import { AppDispatch } from "../util/redux/store";
 import { findHomeAlbumsAction } from "../../actions/albums-actions";
-import { useAppDispatch } from "../util/redux/hooks";
+import { useAppDispatch, useAppSelector } from "../util/redux/hooks";
 import ProfilePicture from "../user/profile-picture";
 import { HomeIcon } from "../util/icons";
 import { useState } from "react";
+import { logoutAction } from "../../actions/user-actions";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useAppDispatch();
+  const onAuthPage = ["/login", "/register"].includes(window.location.pathname);
 
   const handleLinkHome = () => {
     setShowOptions(false);
@@ -17,10 +19,9 @@ const Navbar = () => {
     navigate("/");
   };
 
-  // TODO: Get from state
-  const loggedIn = 0;
-  // TODO: Get this from state
-  const username = "alice";
+  const loggedIn = useAppSelector((state) => state.user.user.loggedIn);
+  const user = useAppSelector((state) => state.user.user);
+  const username = user.username;
 
   const [showOptions, setShowOptions] = useState<boolean>(false);
 
@@ -30,13 +31,14 @@ const Navbar = () => {
 
   const handleProfile = () => {
     setShowOptions(false);
+    if (!username) return;
     navigate(`user/${username.toLowerCase()}`);
   };
 
   const handleLogout = () => {
     setShowOptions(false);
-    // TODO: Handle logout
-    console.log("logout");
+    logoutAction(dispatch);
+    navigate("/");
   };
 
   const handleLogin = () => {
@@ -55,7 +57,7 @@ const Navbar = () => {
           </div>
           <span className="sm:inline hidden">ReviewSpot</span>
         </div>
-        <SearchBar />
+        {!onAuthPage && <SearchBar />}
         {loggedIn ? (
           <div
             className="border-2 border-[#333] hover:border-blue-700 bg-[#777] rounded-full w-max h-max overflow-clip cursor-pointer"

@@ -14,8 +14,8 @@ import {
   findReviewCommentsAction,
 } from "../../actions/comments-actions";
 import { WriteOrEditReviewIcon } from "../util/icons";
-import { loginToast } from "../../helpers/auth-helpers";
 import CommentForm from "../comment/comment-form";
+import { showToastMessage } from "../../helpers/toast-helpers";
 const ReviewPage = () => {
   const { reviewId } = useParams();
   // TODO: Handling undefined useParams
@@ -56,12 +56,14 @@ const ReviewPage = () => {
 
   const [showCommentForm, setShowCommentForm] = useState<boolean>(false);
 
-  // TODO: Get from state
-  const loggedIn = 1;
+  const loggedIn = useAppSelector((state) => state.user.user.loggedIn);
 
   const handleWriteComment = () => {
     if (!loggedIn) {
-      loginToast("Login to leave a comment", "top-center");
+      showToastMessage({
+        message: "Login to leave a comment",
+        position: "top-center",
+      });
       return;
     }
     setShowCommentForm((prev) => !prev);

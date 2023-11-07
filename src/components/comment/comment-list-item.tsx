@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AppDispatch } from "../util/redux/store";
 import { useDispatch } from "react-redux";
-import { findUser } from "../../services/user-services";
+import { findUser } from "../../services/profile-services";
 import { DeleteIcon } from "../util/icons";
+import { useAppSelector } from "../util/redux/hooks";
 
 const CommentListItem = ({ comment }: { comment: Comment }) => {
   const dispatch: AppDispatch = useDispatch();
@@ -20,8 +21,8 @@ const CommentListItem = ({ comment }: { comment: Comment }) => {
   }, [commenterId, dispatch]);
 
   // Can delete comment if commenter
-  // TODO: Get from state
-  const username = "bob";
+  const user = useAppSelector((state) => state.user.user);
+  const username = user.username;
   const userIsAuthor = username === commenter?.username.toLowerCase();
 
   const handleDeleteComment = () => {

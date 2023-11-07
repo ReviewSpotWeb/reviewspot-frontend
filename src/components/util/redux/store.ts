@@ -4,9 +4,11 @@ import activeTabReducer from "../../../reducers/tab-reducer";
 import reviewsReducer from "../../../reducers/reviews-reducer";
 import commentsReducer from "../../../reducers/comments-reducer";
 import profileReducer from "../../../reducers/profile-reducer";
+import userReducer from "../../../reducers/user-reducer";
 
 export const store = configureStore({
   reducer: {
+    user: userReducer,
     albums: albumsReducer,
     reviews: reviewsReducer,
     comments: commentsReducer,

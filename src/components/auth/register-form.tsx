@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { showToastMessage } from "../../helpers/toast-helpers";
+import { useAppSelector } from "../util/redux/hooks";
+import { registerAction } from "../../actions/user-actions";
+import { AppDispatch } from "../util/redux/store";
+import { useDispatch } from "react-redux";
 
 type RegisterInfo = {
   username: string;
@@ -8,6 +12,7 @@ type RegisterInfo = {
   confirm: string;
 };
 const RegisterForm = () => {
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const [registerInfo, setRegisterInfo] = useState<RegisterInfo>({
     username: "",
@@ -15,8 +20,8 @@ const RegisterForm = () => {
     confirm: "",
   });
 
-  // TODO: Get from state
-  const loggedIn = false;
+  // TODO: Need to use isLoggedIn endpoint for this
+  const loggedIn = useAppSelector((state) => state.user.user.loggedIn);
   useEffect(() => {
     // redirect if already logged in
     if (loggedIn) navigate("/");
@@ -36,7 +41,8 @@ const RegisterForm = () => {
       showToastMessage({ message: "Passwords do not match!" });
       return;
     }
-    // TODO: register
+    // TODO: test
+    registerAction(dispatch, registerInfo.username, registerInfo.password);
   };
 
   return (

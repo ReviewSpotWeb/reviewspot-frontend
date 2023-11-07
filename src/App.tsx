@@ -9,10 +9,21 @@ import ReviewPage from "./components/review/review-page";
 import ProfilePage from "./components/user/profile-page";
 import SearchResults from "./components/search/search-results";
 import Register from "./components/auth/register";
+import moment from "moment";
+import { useEffect } from "react";
+import { isLoggedInAction } from "./actions/user-actions";
+import { AppDispatch } from "./components/util/redux/store";
+import { useDispatch } from "react-redux";
 
 const App = () => {
-  // TODO: Check if logged in and get username for profile page
-  const userId = "charlie";
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    const loggedInUntil = localStorage.getItem("loggedInUntil");
+    const loggedIn = loggedInUntil && moment(loggedInUntil) >= moment();
+    if (loggedIn) isLoggedInAction(dispatch);
+  }, [dispatch]);
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -38,10 +49,6 @@ const App = () => {
         {
           path: "review/:reviewId",
           element: <ReviewPage />,
-        },
-        {
-          path: "user/",
-          element: <ProfilePage activeUserId={userId} />,
         },
         {
           path: "user/:userId",

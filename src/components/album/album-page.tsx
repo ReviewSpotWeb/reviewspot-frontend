@@ -14,8 +14,8 @@ import {
   editReviewAction,
   findAlbumReviewsAction,
 } from "../../actions/reviews-actions";
-import { loginToast } from "../../helpers/auth-helpers";
 import ReviewForm, { UserReview } from "../review/review-form";
+import { showToastMessage } from "../../helpers/toast-helpers";
 
 const AlbumPage = () => {
   const dispatch: AppDispatch = useAppDispatch();
@@ -28,9 +28,8 @@ const AlbumPage = () => {
 
   const [showReviewForm, setShowReviewForm] = useState<boolean>(false);
 
-  // TODO: Get from state
-  const loggedIn = 1;
-  // TODO: Get user from state
+  const loggedIn = useAppSelector((state) => state.user.user.loggedIn);
+  const activeUsername = useAppSelector((state) => state.user.user.username);
 
   useEffect(() => {
     if (!loggedIn) {
@@ -41,8 +40,8 @@ const AlbumPage = () => {
     // Get user review if it exists
     const activeUserReview: Review | undefined = reviews
       .filter(
-        // TODO: replace "alice" with active username
-        (review) => review.authorInfo.authorName.toLowerCase() === "alice"
+        (review) =>
+          review.authorInfo.authorName.toLowerCase() === activeUsername
       )
       .pop();
     // Remove it from rest of review list
@@ -55,7 +54,7 @@ const AlbumPage = () => {
       setUserReview(null);
       setOtherReviews(reviews);
     }
-  }, [loggedIn, reviews]);
+  }, [activeUsername, loggedIn, reviews]);
 
   useEffect(() => {
     findAlbumAction(dispatch, albumId ?? "");
@@ -65,7 +64,10 @@ const AlbumPage = () => {
   const handleEditReview = () => {
     if (!loggedIn) {
       // Should never reach this
-      loginToast("Login to edit your review", "top-center");
+      showToastMessage({
+        message: "Login to edit your review",
+        position: "top-center",
+      });
       return;
     }
     setShowReviewForm((prev) => !prev);
@@ -73,7 +75,10 @@ const AlbumPage = () => {
 
   const handleWriteReview = () => {
     if (!loggedIn) {
-      loginToast("Login to write a review", "top-center");
+      showToastMessage({
+        message: "Login to write a review",
+        position: "top-center",
+      });
       return;
     }
     setShowReviewForm((prev) => !prev);

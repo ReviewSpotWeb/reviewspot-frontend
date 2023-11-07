@@ -11,7 +11,6 @@ const ProfilePicture = ({ userId }: { userId: string }) => {
     }).toDataUriSync();
   }, [id]);
 
-  // TODO: Handle it being your own profile pic -- should just be /user
   return (
     <img
       src={avatar}

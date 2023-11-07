@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ProfilePicture from "./profile-picture";
 import { Role, User } from "../../types/user";
 import { HeartIconSolid, ReviewIcon } from "../util/icons";
@@ -37,19 +37,21 @@ const getFavoriteAlbums = async (reviews: Review[], num: number = 3) => {
   return reviewedAlbums.slice(0, num);
 };
 
-const ProfilePage = ({ activeUserId }: { activeUserId?: string }) => {
+const ProfilePage = () => {
   const [favoriteAlbums, setFavoriteAlbums] = useState<Album[]>([]);
+  const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const params = useParams();
-  const userId = activeUserId ?? params.userId;
+  const userId = params.userId;
 
   const user: User = useAppSelector((state) => state.profile.user);
   const reviews: Review[] = useAppSelector((state) => state.reviews.reviews);
 
   useEffect(() => {
+    if (!userId) navigate("/");
     findUserProfileAction(dispatch, userId ?? "");
     findUserReviewsAction(dispatch, userId ?? "");
-  }, [userId, dispatch]);
+  }, [userId, dispatch, navigate]);
 
   useEffect(() => {
     getFavoriteAlbums(reviews).then((albums) => setFavoriteAlbums(albums));

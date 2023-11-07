@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { showToastMessage } from "../../helpers/toast-helpers";
+import { useAppSelector } from "../util/redux/hooks";
+import { loginAction } from "../../actions/user-actions";
+import { AppDispatch } from "../util/redux/store";
+import { useDispatch } from "react-redux";
 
 type LoginInfo = {
   username: string;
@@ -8,13 +12,13 @@ type LoginInfo = {
 };
 const LoginForm = () => {
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({
     username: "",
     password: "",
   });
 
-  // TODO: Get from state
-  const loggedIn = false;
+  const loggedIn = useAppSelector((state) => state.user.user.loggedIn);
   useEffect(() => {
     // redirect if already logged in
     if (loggedIn) navigate("/");
@@ -29,7 +33,7 @@ const LoginForm = () => {
       showToastMessage({ message: "Password cannot be blank!" });
       return;
     }
-    // TODO: login
+    loginAction(dispatch, loginInfo.username, loginInfo.password);
   };
 
   return (

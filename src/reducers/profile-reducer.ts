@@ -1,12 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Role, User } from "../types/user";
+import { User } from "../types/user";
 
 interface ProfileState {
   user: User;
 }
 
 const initialState: ProfileState = {
-  user: { username: "", role: Role.GENERAL, banned: false },
+  user: { _id: "", loggedIn: false, username: "", role: null, banned: false },
 };
 
 export const profileSlice = createSlice({
