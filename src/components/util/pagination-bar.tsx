@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "./icons";
+import { PaginationInfo } from "../../types/pagination";
 
 type PaginationButtonProps = {
   onClick: () => void;
@@ -16,34 +17,34 @@ const PaginationButton = (props: PropsWithChildren<PaginationButtonProps>) => {
   );
 };
 
-export type PaginationInfo = {
-  prev: boolean;
-  next: boolean;
+export type PaginationBarProps = {
+  next: PaginationInfo | null;
+  prev: PaginationInfo | null;
   loadPrev: () => void;
   loadNext: () => void;
 };
 
-const PaginationBar = ({
-  paginationInfo,
-}: {
-  paginationInfo: PaginationInfo;
-}) => {
-  const { prev, next, loadPrev, loadNext } = paginationInfo;
+const PaginationBar = (paginationBarProps: PaginationBarProps) => {
+  const { prev, next, loadPrev, loadNext } = paginationBarProps;
   return (
     <div className="bg-gray-500 flex justify-between p-1 rounded">
-      {prev && (
+      {prev ? (
         <PaginationButton onClick={() => loadPrev()}>
           <div className="w-full flex justify-center">
             <ArrowLeftIcon />
           </div>
         </PaginationButton>
+      ) : (
+        <div></div>
       )}
-      {next && (
+      {next ? (
         <PaginationButton onClick={() => loadNext()}>
           <div className="w-full flex justify-center">
             <ArrowRightIcon />
           </div>
         </PaginationButton>
+      ) : (
+        <div></div>
       )}
     </div>
   );

@@ -16,16 +16,20 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<User>) => {
       state.user = { ...action.payload, loggedIn: true };
+      return state;
     },
     logout: (state) => {
       state.user = { ...initialState.user };
+      return state;
     },
     register: (state, action: PayloadAction<User>) => {
       state.user = { ...action.payload, loggedIn: true };
+      return state;
     },
     // TODO: deleting account
     delete: (state) => {
       state.user = { ...initialState.user };
+      return state;
     },
     loggedIn: (state, action: PayloadAction<LoggedInResponse>) => {
       if (!action.payload.loggedIn) {
@@ -42,6 +46,7 @@ export const userSlice = createSlice({
         loggedIn: true,
         banned: false,
       };
+      return state;
     },
   },
 });

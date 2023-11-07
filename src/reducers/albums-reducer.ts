@@ -1,12 +1,21 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Album } from "../types/album";
+import { Album, AlbumList } from "../types/album";
+import { AlbumPaginationInfo } from "../types/pagination";
 
-interface AlbumState {
+type AlbumState = {
   albums: Album[];
-}
+  paginationInfo: AlbumPaginationInfo;
+};
 
 const initialState: AlbumState = {
   albums: [],
+  paginationInfo: {
+    next: null,
+    prev: null,
+    // TODO: get these from constants
+    page: { offset: 0, limit: 10 },
+    total: 0,
+  },
 };
 
 export const albumSlice = createSlice({
@@ -14,13 +23,27 @@ export const albumSlice = createSlice({
   initialState,
   reducers: {
     find: (state, action: PayloadAction<Album>) => {
-      state.albums = [action.payload];
+      state = {
+        ...initialState,
+        albums: [action.payload],
+      };
+      return state;
     },
-    findHome: (state, action: PayloadAction<Album[]>) => {
-      state.albums = [...action.payload];
+    findHome: (state, action: PayloadAction<AlbumList>) => {
+      state = {
+        albums: [...action.payload.albums],
+        paginationInfo: {
+          page: { limit: action.payload.limit, offset: action.payload.offset },
+          next: action.payload.next,
+          prev: action.payload.prev,
+          total: action.payload.total,
+        },
+      };
+      return state;
     },
     findSearch: (state, action: PayloadAction<Album[]>) => {
       state.albums = [...action.payload];
+      return state;
     },
   },
 });

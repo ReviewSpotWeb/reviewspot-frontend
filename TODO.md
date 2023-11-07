@@ -26,6 +26,8 @@
 [ ] - isLoggedIn helper
 [ ] - search for users
 [ ] - forgot password
+[ ] - PAGINATION
+[ ] - CACHE ALBUMS
 
 [ ] - refactor profile page style (not sure if I like where the name and badge are)
 

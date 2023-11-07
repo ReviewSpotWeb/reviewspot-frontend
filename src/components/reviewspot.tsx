@@ -4,7 +4,7 @@ import Navbar from "./navbar/navbar";
 
 const ReviewSpot = () => {
   return (
-    <div className="min-h-screen min-w-screen w-full h-full font-mono flex justify-center">
+    <div className="min-h-screen min-w-screen w-full h-full font-mono flex justify-center scroll-smooth">
       <div className="xl:w-3/4 w-11/12 p-2">
         <div className="z-10">
           <Navbar />

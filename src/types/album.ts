@@ -1,3 +1,5 @@
+import { PaginationInfo } from "./pagination";
+
 type ExternalURLs = { [key: string]: string };
 
 export interface Artist {
@@ -45,3 +47,12 @@ export interface Album {
   type: string;
   uri: string;
 }
+
+export type AlbumList = {
+  albums: Album[];
+  limit: number;
+  offset: number;
+  total: number;
+  next: PaginationInfo | null;
+  prev: PaginationInfo | null;
+};

@@ -1,32 +1,44 @@
+import { useDispatch } from "react-redux";
 import { Album } from "../../types/album";
-import PaginationBar, { PaginationInfo } from "../util/pagination-bar";
+import { AlbumPaginationInfo } from "../../types/pagination";
+import PaginationBar from "../util/pagination-bar";
+import { AppDispatch } from "../util/redux/store";
 import AlbumListItem from "./album-list-item";
+import { findHomeAlbumsAction } from "../../actions/albums-actions";
 
-const AlbumList = ({ albums }: { albums: Album[] }) => {
-  const prev = true; // If previous page
-  const next = true; // If next page
+type AlbumListProps = {
+  albums: Album[];
+  paginationInfo?: AlbumPaginationInfo;
+};
+
+const AlbumList = (albumListProps: AlbumListProps) => {
+  const { albums, paginationInfo } = albumListProps;
+
+  const prev = paginationInfo ? paginationInfo.prev : null; // If previous page
+  const next = paginationInfo ? paginationInfo.next : null; // If next page
+  const dispatch: AppDispatch = useDispatch();
 
   const loadNext = () => {
-    return;
+    findHomeAlbumsAction(dispatch, next ?? undefined);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const loadPrev = () => {
-    return;
+    findHomeAlbumsAction(dispatch, prev ?? undefined);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  const paginationInfo: PaginationInfo = {
-    prev,
-    next,
-    loadNext,
-    loadPrev,
-  };
-  const PAGE_SIZE = 10;
 
   return (
     <ul className="w-full h-max flex flex-col gap-2 rounded">
       {albums.length > 0 &&
         albums.map((album, idx) => <AlbumListItem album={album} key={idx} />)}
-      {albums.length > PAGE_SIZE && (
+      {(next || prev) && (
         <div>
-          <PaginationBar paginationInfo={paginationInfo} />
+          <PaginationBar
+            next={next}
+            prev={prev}
+            loadNext={loadNext}
+            loadPrev={loadPrev}
+          />
         </div>
       )}
     </ul>
