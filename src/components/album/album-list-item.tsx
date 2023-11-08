@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Album } from "../../types/album";
 import AlbumRating, { RatingInfo } from "./album-rating";
 import {
+  AlbumIcon,
   MusicNoteIcon,
   ReviewIcon,
   SpotifyIcon,
@@ -24,7 +25,7 @@ const AlbumListItem = ({ album }: { album: Album }) => {
     },
     {
       label: "ReviewSpot",
-      icon: <div>RS</div>,
+      icon: <AlbumIcon />,
       rating: album.avgRating || null,
       color: "bg-yellow-500",
     },

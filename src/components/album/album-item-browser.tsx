@@ -4,6 +4,7 @@ import AlbumArtists from "./album-artists";
 import AlbumRating, { RatingInfo } from "./album-rating";
 import AlbumTitle from "./album-title";
 import {
+  AlbumIcon,
   MusicNoteIcon,
   ReviewIcon,
   SpotifyIcon,
@@ -26,7 +27,7 @@ const AlbumItemBrowser = ({ album }: { album: Album }) => {
     },
     {
       label: "ReviewSpot",
-      icon: <div>RS</div>,
+      icon: <AlbumIcon />,
       rating: album.avgRating || null,
       color: "bg-yellow-500",
     },

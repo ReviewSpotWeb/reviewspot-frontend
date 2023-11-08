@@ -79,7 +79,12 @@ export const SpotifyIconSmall = () => {
   );
 };
 export const AlbumIcon = () => {
-  return <FontAwesomeIcon icon={faCompactDisc} className="border w-10 h-10" />;
+  return (
+    <FontAwesomeIcon
+      icon={faCompactDisc}
+      className="fill-current text-yellow-500 w-6 h-6"
+    />
+  );
 };
 
 export const InfoIcon = ({ title }: { title: string }) => {

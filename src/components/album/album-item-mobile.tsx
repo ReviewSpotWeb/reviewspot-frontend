@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Album } from "../../types/album";
 import AlbumArtists from "./album-artists";
 import {
+  AlbumIcon,
   InfoIcon,
   MusicNoteIcon,
   ReviewIcon,
@@ -24,7 +25,7 @@ const AlbumItemMobile = ({ album }: { album: Album }) => {
     },
     {
       label: "ReviewSpot",
-      icon: <div>RS</div>,
+      icon: <AlbumIcon />,
       rating: album.avgRating || null,
       color: "bg-yellow-500",
     },
@@ -68,7 +69,7 @@ const AlbumItemMobile = ({ album }: { album: Album }) => {
             <ReviewIcon />
           </div>
         </div>
-        <div className="w-full h-full text-gray-300 ">
+        <div className="w-full h-full text-gray-300">
           <AlbumRating ratings={ratings} />
         </div>
       </div>
