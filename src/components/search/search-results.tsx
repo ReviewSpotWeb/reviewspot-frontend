@@ -58,7 +58,7 @@ const SearchResults = () => {
         </div>
         <div className="lg:w-1/3 rounded md:inline hidden">
           <div className="w-full font-bold text-2xl text-center rounded bg-green-500 text-black p-1 mb-2 select-none cursor-default">
-            Recent Reviews
+            Popular Reviews
           </div>
           <PopularReviewList popularReviews={popularReviews} />
         </div>
