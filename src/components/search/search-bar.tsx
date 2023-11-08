@@ -36,15 +36,15 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="h-max h-10 w-64 border-2 border-[#202020] rounded">
-      <div className="flex relative">
+    <div className="h-max h-10 w-48 md:w-64 border-2 border-[#202020] rounded">
+      <div className="flex relative justify-center w-full">
         <button
-          className="bg-blue-500 hover:bg-blue-600 px-2 text-sm font-bold w-max flex justify-center items-center"
+          className="bg-blue-500 hover:bg-blue-600 px-2 text-sm font-bold flex justify-center items-center w-1/6"
           onClick={() => handleSearch(searchTerm)}
         >
           <SearchIcon />
         </button>
-        <div className="w-full h-full relative">
+        <div className="w-5/6 h-full relative">
           <input
             name="search"
             type="text"
