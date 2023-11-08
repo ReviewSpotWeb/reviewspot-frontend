@@ -26,22 +26,46 @@ const RegisterForm = () => {
     if (loggedIn) navigate("/");
   }, [loggedIn, navigate]);
 
-  //   TODO: Enforce some rules here
+  const containsWhitespace = (str: string) => {
+    return /\s/g.test(str);
+  };
+
   const handleRegister = () => {
     if (!registerInfo.username.trim()) {
       showToastMessage({ message: "Username cannot be blank!" });
+      setRegisterInfo({ ...registerInfo, username: "" });
       return;
     }
     if (!registerInfo.password.trim()) {
       showToastMessage({ message: "Password cannot be blank!" });
+      setRegisterInfo({ ...registerInfo, password: "", confirm: "" });
       return;
     }
     if (registerInfo.password !== registerInfo.confirm) {
       showToastMessage({ message: "Passwords do not match!" });
+      setRegisterInfo({ ...registerInfo, password: "", confirm: "" });
       return;
     }
-    // TODO: test
-    registerAction(dispatch, registerInfo.username, registerInfo.password);
+    if (containsWhitespace(registerInfo.username)) {
+      showToastMessage({ message: "Username may not contain whitespace!" });
+      setRegisterInfo({ ...registerInfo, username: "" });
+      return;
+    }
+    if (
+      containsWhitespace(registerInfo.password) ||
+      containsWhitespace(registerInfo.confirm)
+    ) {
+      showToastMessage({ message: "Password may not contain whitespace!" });
+      setRegisterInfo({ ...registerInfo, password: "", confirm: "" });
+      return;
+    }
+    registerAction(
+      dispatch,
+      registerInfo.username,
+      registerInfo.password
+    ).catch((error) => {
+      showToastMessage({ message: error.message });
+    });
   };
 
   return (

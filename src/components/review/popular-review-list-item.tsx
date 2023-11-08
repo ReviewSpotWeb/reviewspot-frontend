@@ -49,7 +49,9 @@ const PopularReviewListItem = ({
       });
       return;
     }
-    likePopularReviewAction(dispatch, review.albumId, review._id, userId);
+    likePopularReviewAction(dispatch, review.albumId, review._id, userId).catch(
+      (error) => showToastMessage({ message: error.message })
+    );
   };
 
   const goToReviewButton = (

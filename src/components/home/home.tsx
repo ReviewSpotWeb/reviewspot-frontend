@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { findHomeAlbumsAction } from "../../actions/albums-actions";
 import PopularReviewList from "../review/popular-review-list";
 import { findHomeReviewsAction } from "../../actions/popular-reviews-actions";
+import { showToastMessage } from "../../helpers/toast-helpers";
 
 const Home = () => {
   const albumState = useAppSelector((state) => state.albums);
@@ -16,8 +17,12 @@ const Home = () => {
 
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
-    findHomeAlbumsAction(dispatch);
-    findHomeReviewsAction(dispatch);
+    findHomeAlbumsAction(dispatch).catch((error) =>
+      showToastMessage({ message: error.message })
+    );
+    findHomeReviewsAction(dispatch).catch((error) =>
+      showToastMessage({ message: error.message })
+    );
   }, [dispatch]);
 
   const tabs: TabInfo[] = [

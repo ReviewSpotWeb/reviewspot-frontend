@@ -6,6 +6,7 @@ import CommentListItem from "./comment-list-item";
 import { findReviewCommentsAction } from "../../actions/comments-actions";
 import { useParams } from "react-router-dom";
 import PaginationBar from "../util/pagination-bar";
+import { showToastMessage } from "../../helpers/toast-helpers";
 
 type CommentListProps = {
   comments: Comment[];
@@ -20,12 +21,22 @@ const CommentList = (commentListProps: CommentListProps) => {
 
   const loadNext = () => {
     if (!reviewId || !albumId) return;
-    findReviewCommentsAction(dispatch, reviewId, albumId, next ?? undefined);
+    findReviewCommentsAction(
+      dispatch,
+      reviewId,
+      albumId,
+      next ?? undefined
+    ).catch((error) => showToastMessage({ message: error.message }));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const loadPrev = () => {
     if (!reviewId || !albumId) return;
-    findReviewCommentsAction(dispatch, reviewId, albumId, prev ?? undefined);
+    findReviewCommentsAction(
+      dispatch,
+      reviewId,
+      albumId,
+      prev ?? undefined
+    ).catch((error) => showToastMessage({ message: error.message }));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   return (

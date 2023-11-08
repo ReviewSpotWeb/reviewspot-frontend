@@ -33,7 +33,11 @@ const LoginForm = () => {
       showToastMessage({ message: "Password cannot be blank!" });
       return;
     }
-    loginAction(dispatch, loginInfo.username, loginInfo.password);
+    loginAction(dispatch, loginInfo.username, loginInfo.password).catch(
+      (error) => {
+        showToastMessage({ message: error.message });
+      }
+    );
   };
 
   return (

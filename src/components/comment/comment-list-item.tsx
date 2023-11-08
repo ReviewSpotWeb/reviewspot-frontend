@@ -1,5 +1,5 @@
 import { Comment } from "../../types/comment";
-import { User } from "../../types/user";
+import { User, UserProfile } from "../../types/user";
 import ProfilePicture from "../user/profile-picture";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -9,6 +9,8 @@ import { findUserProfile } from "../../services/profile-services";
 import { DeleteIcon } from "../util/icons";
 import { useAppSelector } from "../util/redux/hooks";
 import { removeCommentAction } from "../../actions/comments-actions";
+import { isErrorResponse } from "../../services/axios";
+import { showToastMessage } from "../../helpers/toast-helpers";
 
 const CommentListItem = ({ comment }: { comment: Comment }) => {
   const dispatch: AppDispatch = useDispatch();
@@ -18,8 +20,15 @@ const CommentListItem = ({ comment }: { comment: Comment }) => {
   const commenterId = comment.authorInfo.authorName;
 
   useEffect(() => {
-    if (!commenterId) return;
-    findUserProfile(commenterId).then((user) => setCommenter(user.userInfo));
+    const fetchUserProfile = async () => {
+      if (!commenterId) return;
+      const res = await findUserProfile(commenterId);
+      const error = isErrorResponse(res);
+      if (error) throw Error(error.errors[0]);
+      const userProfile = res as UserProfile;
+      setCommenter(userProfile.userInfo);
+    };
+    fetchUserProfile();
   }, [commenterId, dispatch]);
 
   // Can delete comment if commenter
@@ -29,7 +38,9 @@ const CommentListItem = ({ comment }: { comment: Comment }) => {
 
   const handleDeleteComment = () => {
     if (!albumId || !reviewId) return;
-    removeCommentAction(dispatch, albumId, reviewId, comment._id);
+    removeCommentAction(dispatch, albumId, reviewId, comment._id).catch(
+      (error) => showToastMessage({ message: error.message })
+    );
   };
   return (
     <li className="bg-[#404040] rounded p-2 text-gray-300 h-30 w-full relative">

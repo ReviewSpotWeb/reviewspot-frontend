@@ -7,6 +7,7 @@ import ProfilePicture from "../user/profile-picture";
 import { HomeIcon } from "../util/icons";
 import { useState } from "react";
 import { logoutAction } from "../../actions/user-actions";
+import { showToastMessage } from "../../helpers/toast-helpers";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -37,7 +38,9 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setShowOptions(false);
-    logoutAction(dispatch);
+    logoutAction(dispatch).catch((error) => {
+      showToastMessage({ message: error.message });
+    });
     navigate("/");
   };
 

@@ -59,7 +59,9 @@ const AlbumPage = () => {
   }, [activeUsername, loggedIn, reviews]);
 
   useEffect(() => {
-    findAlbumReviewsAction(dispatch, albumId ?? "");
+    findAlbumReviewsAction(dispatch, albumId ?? "").catch((error) =>
+      showToastMessage({ message: error.message })
+    );
   }, [albumId, dispatch, loggedIn]);
 
   const handleEditReview = () => {
@@ -89,9 +91,13 @@ const AlbumPage = () => {
     setShowReviewForm((prev) => !prev);
     if (!albumId) return;
     if (userReview) {
-      editReviewAction(dispatch, review, albumId, userReview._id);
+      editReviewAction(dispatch, review, albumId, userReview._id).catch(
+        (error) => showToastMessage({ message: error.message })
+      );
     } else {
-      createReviewAction(dispatch, review, albumId);
+      createReviewAction(dispatch, review, albumId).catch((error) =>
+        showToastMessage({ message: error.message })
+      );
     }
   };
 

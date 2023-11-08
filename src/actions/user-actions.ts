@@ -8,6 +8,7 @@ import {
   registerService,
 } from "../services/auth-services";
 import { User } from "../types/user";
+import { isErrorResponse } from "../services/axios";
 
 export const loginAction = async (
   dispatch: AppDispatch,
@@ -15,7 +16,10 @@ export const loginAction = async (
   password: string
 ) => {
   if (!username.trim() || !password.trim()) return;
-  const user: User = await loginService(username, password);
+  const data = await loginService(username, password);
+  const error = isErrorResponse(data);
+  if (error) throw Error(error.errors[0]);
+  const user: User = data as User;
   localStorage.setItem("loggedInUntil", moment().add(1, "week").toISOString());
   dispatch({
     type: login,
@@ -29,7 +33,10 @@ export const registerAction = async (
   password: string
 ) => {
   if (!username.trim() || !password.trim()) return;
-  const user: User = await registerService(username, password);
+  const data = await registerService(username, password);
+  const error = isErrorResponse(data);
+  if (error) throw Error(error.errors[0]);
+  const user: User = data as User;
   localStorage.setItem("loggedInUntil", moment().add(1, "week").toISOString());
   dispatch({
     type: register,
@@ -40,6 +47,7 @@ export const registerAction = async (
 export const logoutAction = async (dispatch: AppDispatch) => {
   const res = await logoutService();
   const loggedOut = res === "OK";
+  if (!loggedOut) throw Error("An unexpected error occurred");
   localStorage.removeItem("loggedInUntil");
   dispatch({
     type: logout,
@@ -52,7 +60,10 @@ export type LoggedInResponse = {
   userInfo?: User;
 };
 export const isLoggedInAction = async (dispatch: AppDispatch) => {
-  const res: LoggedInResponse = await isLoggedInService();
+  const data = await isLoggedInService();
+  const error = isErrorResponse(data);
+  if (error) throw Error(error.errors[0]);
+  const res = data as LoggedInResponse;
   dispatch({
     type: loggedIn,
     payload: res,

@@ -10,6 +10,7 @@ import {
 import { useParams } from "react-router-dom";
 import PaginationBar from "../util/pagination-bar";
 import { Album } from "../../types/album";
+import { showToastMessage } from "../../helpers/toast-helpers";
 
 type ReviewListProps = {
   reviews: Review[];
@@ -26,14 +27,26 @@ const ReviewList = (reviewListProps: ReviewListProps) => {
 
   const { albumId, userId } = useParams();
   const loadNext = () => {
-    if (albumId) findAlbumReviewsAction(dispatch, albumId, next ?? undefined);
-    else if (userId) findUserReviewsAction(dispatch, userId, next ?? undefined);
+    if (albumId)
+      findAlbumReviewsAction(dispatch, albumId, next ?? undefined).catch(
+        (error) => showToastMessage({ message: error.message })
+      );
+    else if (userId)
+      findUserReviewsAction(dispatch, userId, next ?? undefined).catch(
+        (error) => showToastMessage({ message: error.message })
+      );
     else return;
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const loadPrev = () => {
-    if (albumId) findAlbumReviewsAction(dispatch, albumId, prev ?? undefined);
-    else if (userId) findUserReviewsAction(dispatch, userId, prev ?? undefined);
+    if (albumId)
+      findAlbumReviewsAction(dispatch, albumId, prev ?? undefined).catch(
+        (error) => showToastMessage({ message: error.message })
+      );
+    else if (userId)
+      findUserReviewsAction(dispatch, userId, prev ?? undefined).catch(
+        (error) => showToastMessage({ message: error.message })
+      );
     else return;
     window.scrollTo({ top: 0, behavior: "smooth" });
   };

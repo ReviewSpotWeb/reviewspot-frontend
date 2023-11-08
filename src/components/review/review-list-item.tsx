@@ -82,7 +82,9 @@ const ReviewListItem = ({
       });
       return;
     }
-    likeReviewAction(dispatch, review.albumId, review._id, userId);
+    likeReviewAction(dispatch, review.albumId, review._id, userId).catch(
+      (error) => showToastMessage({ message: error.message })
+    );
   };
 
   // Can delete review if author
@@ -93,7 +95,9 @@ const ReviewListItem = ({
 
   const handleDeleteReview = () => {
     if (!review.albumId || !review._id) return;
-    removeReviewAction(dispatch, review.albumId, review._id);
+    removeReviewAction(dispatch, review.albumId, review._id).catch((error) =>
+      showToastMessage({ message: error.message })
+    );
     navigate("/");
   };
 

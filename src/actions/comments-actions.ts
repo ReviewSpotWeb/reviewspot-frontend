@@ -6,6 +6,8 @@ import {
   removeComment,
 } from "../services/comments-services";
 import { PageInfo } from "../types/pagination";
+import { isErrorResponse } from "../services/axios";
+import { Comment, CommentList } from "../types/comment";
 
 export const findReviewCommentsAction = async (
   dispatch: AppDispatch,
@@ -14,7 +16,10 @@ export const findReviewCommentsAction = async (
   pageInfo: PageInfo = { offset: 0, limit: 10 }
 ) => {
   if (!reviewId) return;
-  const comments = await findReviewComments(reviewId, albumId, pageInfo);
+  const res = await findReviewComments(reviewId, albumId, pageInfo);
+  const error = isErrorResponse(res);
+  if (error) throw Error(error.errors[0]);
+  const comments = res as CommentList;
   dispatch({
     type: findComments,
     payload: comments,
@@ -28,7 +33,10 @@ export const createCommentAction = async (
   comment: string
 ) => {
   if (!albumId || !reviewId || !comment || !comment.trim()) return;
-  const newComment = await createComment(albumId, reviewId, comment);
+  const res = await createComment(albumId, reviewId, comment);
+  const error = isErrorResponse(res);
+  if (error) throw Error(error.errors[0]);
+  const newComment = res as Comment;
   dispatch({
     type: create,
     payload: newComment,
@@ -42,8 +50,12 @@ export const removeCommentAction = async (
   commentId: string
 ) => {
   if (!albumId || !reviewId || !commentId) return;
-  const removedComment = await removeComment(albumId, reviewId, commentId);
-  if (!removedComment) return;
+  const res = await removeComment(albumId, reviewId, commentId);
+  const error = isErrorResponse(res);
+  if (error) throw Error(error.errors[0]);
+  const removedComment = res as boolean;
+  if (!removedComment)
+    throw Error("An unexpected error occurred - comment was not deleted");
   dispatch({
     type: remove,
     payload: commentId,

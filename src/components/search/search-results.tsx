@@ -25,8 +25,12 @@ const SearchResults = () => {
       showToastMessage({ message: "No results found" });
       return;
     }
-    findSearchAlbumsAction(dispatch, q);
-    findHomeReviewsAction(dispatch);
+    findSearchAlbumsAction(dispatch, q).catch((error) =>
+      showToastMessage({ message: error.message })
+    );
+    findHomeReviewsAction(dispatch).catch((error) =>
+      showToastMessage({ message: error.message })
+    );
   }, [dispatch, q]);
 
   const tabs: TabInfo[] = [

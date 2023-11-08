@@ -9,6 +9,7 @@ import {
   findSearchAlbumsAction,
 } from "../../actions/albums-actions";
 import { useSearchParams } from "react-router-dom";
+import { showToastMessage } from "../../helpers/toast-helpers";
 
 type AlbumListProps = {
   albums: Album[];
@@ -26,13 +27,25 @@ const AlbumList = (albumListProps: AlbumListProps) => {
   const q = searchParams.get("q");
 
   const loadNext = () => {
-    if (q) findSearchAlbumsAction(dispatch, q, next ?? undefined);
-    else findHomeAlbumsAction(dispatch, next ?? undefined);
+    if (q)
+      findSearchAlbumsAction(dispatch, q, next ?? undefined).catch((error) =>
+        showToastMessage({ message: error.message })
+      );
+    else
+      findHomeAlbumsAction(dispatch, next ?? undefined).catch((error) =>
+        showToastMessage({ message: error.message })
+      );
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const loadPrev = () => {
-    if (q) findSearchAlbumsAction(dispatch, q, prev ?? undefined);
-    else findHomeAlbumsAction(dispatch, prev ?? undefined);
+    if (q)
+      findSearchAlbumsAction(dispatch, q, prev ?? undefined).catch((error) =>
+        showToastMessage({ message: error.message })
+      );
+    else
+      findHomeAlbumsAction(dispatch, prev ?? undefined).catch((error) =>
+        showToastMessage({ message: error.message })
+      );
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 

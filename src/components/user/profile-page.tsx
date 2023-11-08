@@ -9,8 +9,8 @@ import ReviewList from "../review/review-list";
 import { useAppSelector } from "../util/redux/hooks";
 import { useEffect, useState } from "react";
 import { findAlbum } from "../../services/albums-services";
+import { isErrorResponse } from "../../services/axios";
 
-// TODO: move to diff file
 const getReviewedAlbumIdsByRating = (reviews: Review[]): [number, string][] => {
   // [rating, albumId]
   const ratings: [number, string][] = reviews.map((review) => {
@@ -21,12 +21,15 @@ const getReviewedAlbumIdsByRating = (reviews: Review[]): [number, string][] => {
   return ratings;
 };
 
-// TODO: move to diff file
 const getFavoriteAlbums = async (reviews: Review[], num: number = 3) => {
   const reviewedAlbumIds = getReviewedAlbumIdsByRating(reviews);
   const reviewedAlbums = await Promise.all(
     reviewedAlbumIds.map(async ([, albumId]) => {
-      return await findAlbum(albumId ?? "");
+      const res = await findAlbum(albumId);
+      const error = isErrorResponse(res);
+      if (error) throw Error(error.errors[0]);
+      const album = res as Album;
+      return album;
     })
   );
   return reviewedAlbums.slice(0, num);

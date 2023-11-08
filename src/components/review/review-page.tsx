@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ReviewList from "./review-list";
 import CommentList from "../comment/comment-list";
 import { findReviewAction } from "../../actions/reviews-actions";
@@ -24,16 +24,22 @@ const ReviewPage = () => {
   const { reviews, album } = reviewState;
   const review = reviews[0];
 
+  const navigate = useNavigate();
   // TODO: use loader
   useEffect(() => {
     if (!reviewId || !albumId) return;
-    findReviewAction(dispatch, reviewId, albumId);
-  }, [reviewId, dispatch, albumId]);
+    findReviewAction(dispatch, reviewId, albumId).catch((error) => {
+      navigate("/");
+      showToastMessage({ message: error.message });
+    });
+  }, [reviewId, dispatch, albumId, navigate]);
 
   useEffect(() => {
     if (!reviewId || !albumId) return;
-    findReviewCommentsAction(dispatch, reviewId, albumId);
-  }, [reviewId, dispatch, albumId]);
+    findReviewCommentsAction(dispatch, reviewId, albumId).catch((error) => {
+      showToastMessage({ message: error.message });
+    });
+  }, [reviewId, dispatch, albumId, navigate]);
 
   const [numComments, setNumComments] = useState<number>(0);
 
@@ -59,7 +65,9 @@ const ReviewPage = () => {
   const onSave = (comment: string) => {
     setShowCommentForm((prev) => !prev);
     if (!reviewId || !albumId) return;
-    createCommentAction(dispatch, albumId, reviewId, comment);
+    createCommentAction(dispatch, albumId, reviewId, comment).catch((error) =>
+      showToastMessage({ message: error.message })
+    );
   };
   return (
     <div className="h-max w-full">

@@ -17,6 +17,10 @@ import { useDispatch } from "react-redux";
 import { findUserProfile } from "./services/profile-services";
 import { findUserReviewsAction } from "./actions/reviews-actions";
 import { findAlbum } from "./services/albums-services";
+import { showToastMessage } from "./helpers/toast-helpers";
+import { isErrorResponse } from "./services/axios";
+import { Album } from "./types/album";
+import { UserProfile } from "./types/user";
 
 const App = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -24,7 +28,10 @@ const App = () => {
   useEffect(() => {
     const loggedInUntil = localStorage.getItem("loggedInUntil");
     const loggedIn = loggedInUntil && moment(loggedInUntil) >= moment();
-    if (loggedIn) isLoggedInAction(dispatch);
+    if (loggedIn)
+      isLoggedInAction(dispatch).catch((error) =>
+        showToastMessage(error.message)
+      );
   }, [dispatch]);
 
   const router = createBrowserRouter([
@@ -52,9 +59,16 @@ const App = () => {
             if (!params.albumId)
               throw new Response("No album provided", { status: 400 });
             // Update review state
-            await findUserReviewsAction(dispatch, params.userId ?? "");
-            // Return user profile data
-            return await findAlbum(params.albumId);
+            await findUserReviewsAction(dispatch, params.userId ?? "").catch(
+              (error) => {
+                throw Error(error.message);
+              }
+            );
+            const res = await findAlbum(params.albumId);
+            const error = isErrorResponse(res);
+            if (error) throw Error(error.errors[0]);
+            const album = res as Album;
+            return album;
           },
         },
         {
@@ -68,9 +82,17 @@ const App = () => {
             if (!params.userId)
               throw new Response("No username provided", { status: 400 });
             // Update review state
-            await findUserReviewsAction(dispatch, params.userId ?? "");
+            await findUserReviewsAction(dispatch, params.userId ?? "").catch(
+              (error) => {
+                throw Error(error.message);
+              }
+            );
             // Return user profile data
-            return await findUserProfile(params.userId);
+            const res = await findUserProfile(params.userId);
+            const error = isErrorResponse(res);
+            if (error) throw Error(error.errors[0]);
+            const userProfile = res as UserProfile;
+            return userProfile;
           },
         },
         {
