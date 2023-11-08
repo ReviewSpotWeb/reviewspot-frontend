@@ -44,12 +44,12 @@ const SearchBar = () => {
         >
           <SearchIcon />
         </button>
-        <div className="w-5/6 h-full relative">
+        <div className="w-5/6 h-full relative rounded-none">
           <input
             name="search"
             type="text"
             placeholder="Search"
-            className="w-full p-1 px-2 outline-0 text-gray-300"
+            className="w-full p-1 px-2 outline-0 text-black bg-white font-bold rounded-none"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
