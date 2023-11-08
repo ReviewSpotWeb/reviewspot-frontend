@@ -14,10 +14,7 @@ import AlbumRating, { RatingInfo } from "./album-rating";
 import AlbumCover from "./album-cover";
 
 const AlbumItemMobile = ({ album }: { album: Album }) => {
-  const numReviews: number = 0;
-  const rng = Math.floor(Math.random() * 101);
-  const albumRating: number | null = rng <= 30 ? null : rng;
-
+  const numReviews: number = album.numReviews || 0;
   const ratings: RatingInfo[] = [
     {
       label: "Spotify",
@@ -28,7 +25,7 @@ const AlbumItemMobile = ({ album }: { album: Album }) => {
     {
       label: "ReviewSpot",
       icon: <div>RS</div>,
-      rating: albumRating,
+      rating: album.avgRating || null,
       color: "bg-yellow-500",
     },
   ];

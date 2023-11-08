@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "./icons";
-import { PaginationInfo } from "../../types/pagination";
+import { PageInfo } from "../../types/pagination";
 
 type PaginationButtonProps = {
   onClick: () => void;
@@ -18,8 +18,8 @@ const PaginationButton = (props: PropsWithChildren<PaginationButtonProps>) => {
 };
 
 export type PaginationBarProps = {
-  next: PaginationInfo | null;
-  prev: PaginationInfo | null;
+  next: PageInfo | null;
+  prev: PageInfo | null;
   loadPrev: () => void;
   loadNext: () => void;
 };

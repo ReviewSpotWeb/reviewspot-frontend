@@ -1,17 +1,18 @@
 import { useEffect } from "react";
 import AlbumList from "../album/album-list";
 import Tabs, { TabInfo } from "../util/tabs";
-import ReviewList from "../review/review-list";
 import { useAppSelector } from "../util/redux/hooks";
-import { findHomeReviewsAction } from "../../actions/reviews-actions";
 import { AppDispatch } from "../util/redux/store";
 import { useDispatch } from "react-redux";
 import { findHomeAlbumsAction } from "../../actions/albums-actions";
+import PopularReviewList from "../review/popular-review-list";
+import { findHomeReviewsAction } from "../../actions/popular-reviews-actions";
 
 const Home = () => {
-  const reviews = useAppSelector((state) => state.reviews.reviews);
   const albumState = useAppSelector((state) => state.albums);
-  const { albums, paginationInfo } = albumState;
+  const { albums, paginationInfo: albumPaginationInfo } = albumState;
+  const popularReviewState = useAppSelector((state) => state.popularReviews);
+  const { popularReviews } = popularReviewState;
 
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
@@ -24,13 +25,13 @@ const Home = () => {
       key: "albums",
       label: "Albums",
       children: (
-        <AlbumList albums={[...albums]} paginationInfo={paginationInfo} />
+        <AlbumList albums={[...albums]} paginationInfo={albumPaginationInfo} />
       ),
     },
     {
       key: "reviews",
       label: "Reviews",
-      children: <ReviewList reviews={[...reviews]} />,
+      children: <PopularReviewList popularReviews={popularReviews} />,
     },
   ];
 
@@ -41,13 +42,16 @@ const Home = () => {
       </div>
       <div className="justify-between gap-3 hidden lg:flex">
         <div className="lg:w-2/3 w-full rounded">
-          <AlbumList albums={[...albums]} paginationInfo={paginationInfo} />
+          <AlbumList
+            albums={[...albums]}
+            paginationInfo={albumPaginationInfo}
+          />
         </div>
         <div className="lg:w-1/3 rounded md:inline hidden">
           <div className="w-full font-bold text-2xl text-center rounded bg-green-500 text-black p-1 mb-2 select-none cursor-default">
-            Recent Reviews
+            Popular Reviews
           </div>
-          <ReviewList reviews={[...reviews]} />
+          <PopularReviewList popularReviews={popularReviews} />
         </div>
       </div>
     </div>

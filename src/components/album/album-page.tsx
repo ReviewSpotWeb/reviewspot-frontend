@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { Album } from "../../types/album";
 import AlbumItemMobile from "./album-item-mobile";
 import { Review } from "../../types/review";
 import ReviewList from "../review/review-list";
 import { WriteOrEditReviewIcon } from "../util/icons";
-import { findAlbumAction } from "../../actions/albums-actions";
 import { AppDispatch } from "../util/redux/store";
 import { useAppDispatch, useAppSelector } from "../util/redux/hooks";
 import AlbumList from "./album-list";
@@ -19,9 +18,12 @@ import { showToastMessage } from "../../helpers/toast-helpers";
 
 const AlbumPage = () => {
   const dispatch: AppDispatch = useAppDispatch();
-  const { albumId } = useParams();
-  const album: Album = useAppSelector((state) => state.albums.albums[0]);
-  const reviews: Review[] = useAppSelector((state) => state.reviews.reviews);
+
+  const album = useLoaderData() as Album;
+  const albumId = album.id;
+
+  const reviewState = useAppSelector((state) => state.reviews);
+  const { reviews, paginationInfo } = reviewState;
 
   const [otherReviews, setOtherReviews] = useState<Review[]>([]);
   const [userReview, setUserReview] = useState<Review | null>(null);
@@ -57,7 +59,6 @@ const AlbumPage = () => {
   }, [activeUsername, loggedIn, reviews]);
 
   useEffect(() => {
-    findAlbumAction(dispatch, albumId ?? "");
     findAlbumReviewsAction(dispatch, albumId ?? "");
   }, [albumId, dispatch, loggedIn]);
 
@@ -88,14 +89,10 @@ const AlbumPage = () => {
     setShowReviewForm((prev) => !prev);
     if (!albumId) return;
     if (userReview) {
-      // edit
-      editReviewAction(dispatch, review, userReview._id, albumId);
+      editReviewAction(dispatch, review, albumId, userReview._id);
     } else {
-      // create
       createReviewAction(dispatch, review, albumId);
     }
-    // TODO: component should rerender and display user review
-    // TODO: Do i need to update state or can i just force rerender
   };
 
   return (
@@ -162,7 +159,10 @@ const AlbumPage = () => {
                 ? "Review"
                 : "Reviews"}
             </div>
-            <ReviewList reviews={[...otherReviews]} />
+            <ReviewList
+              reviews={[...otherReviews]}
+              paginationInfo={paginationInfo}
+            />
           </div>
         </div>
       )}

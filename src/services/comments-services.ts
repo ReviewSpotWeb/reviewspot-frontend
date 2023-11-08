@@ -1,16 +1,37 @@
 // import axios from "axios";
-import commentsJson from "../data/comments.json";
-import { Comment } from "../types/comment";
+import { CommentList } from "../types/comment";
+import { PageInfo } from "../types/pagination";
+import { app } from "./axios";
 
 export const findReviewComments = async (
-  reviewId: string
-): Promise<Comment[]> => {
-  return commentsJson.filter(
-    (comment) => comment.reviewId === reviewId
-  ) as never[];
+  reviewId: string,
+  albumId: string,
+  pageInfo: PageInfo
+): Promise<CommentList> => {
+  const res = app.get(`/album/${albumId}/review/${reviewId}/comments`, {
+    params: pageInfo,
+  });
+  return (await res).data;
 };
 
-export const createComment = async (comment: string) => {
-  // TODO: make POST to server
-  console.log(comment);
+export const createComment = async (
+  albumId: string,
+  reviewId: string,
+  comment: string
+): Promise<Comment> => {
+  const res = await app.post(`/album/${albumId}/review/${reviewId}/comment`, {
+    content: comment,
+  });
+  return res.data.newComment;
+};
+
+export const removeComment = async (
+  albumId: string,
+  reviewId: string,
+  commentId: string
+): Promise<boolean> => {
+  const res = await app.delete(
+    `/album/${albumId}/review/${reviewId}/comment/${commentId}`
+  );
+  return res.data === "OK";
 };

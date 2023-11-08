@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Album } from "../../types/album";
-import { AlbumPaginationInfo } from "../../types/pagination";
+import { PaginationInfo } from "../../types/pagination";
 import PaginationBar from "../util/pagination-bar";
 import { AppDispatch } from "../util/redux/store";
 import AlbumListItem from "./album-list-item";
@@ -12,7 +12,7 @@ import { useSearchParams } from "react-router-dom";
 
 type AlbumListProps = {
   albums: Album[];
-  paginationInfo?: AlbumPaginationInfo;
+  paginationInfo?: PaginationInfo;
 };
 
 const AlbumList = (albumListProps: AlbumListProps) => {

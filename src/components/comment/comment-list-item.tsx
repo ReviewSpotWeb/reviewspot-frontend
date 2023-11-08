@@ -1,23 +1,25 @@
 import { Comment } from "../../types/comment";
 import { User } from "../../types/user";
 import ProfilePicture from "../user/profile-picture";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AppDispatch } from "../util/redux/store";
 import { useDispatch } from "react-redux";
-import { findUser } from "../../services/profile-services";
+import { findUserProfile } from "../../services/profile-services";
 import { DeleteIcon } from "../util/icons";
 import { useAppSelector } from "../util/redux/hooks";
+import { removeCommentAction } from "../../actions/comments-actions";
 
 const CommentListItem = ({ comment }: { comment: Comment }) => {
   const dispatch: AppDispatch = useDispatch();
+  const { albumId, reviewId } = useParams();
   const [commenter, setCommenter] = useState<User | null>(null);
 
   const commenterId = comment.authorInfo.authorName;
 
   useEffect(() => {
     if (!commenterId) return;
-    findUser(commenterId).then((user) => setCommenter(user));
+    findUserProfile(commenterId).then((user) => setCommenter(user.userInfo));
   }, [commenterId, dispatch]);
 
   // Can delete comment if commenter
@@ -26,10 +28,9 @@ const CommentListItem = ({ comment }: { comment: Comment }) => {
   const userIsAuthor = username === commenter?.username.toLowerCase();
 
   const handleDeleteComment = () => {
-    console.log("delete comment");
-    // TODO: Delete comment
+    if (!albumId || !reviewId) return;
+    removeCommentAction(dispatch, albumId, reviewId, comment._id);
   };
-
   return (
     <li className="bg-[#404040] rounded p-2 text-gray-300 h-30 w-full relative">
       {!commenter ? (

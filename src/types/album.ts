@@ -1,4 +1,4 @@
-import { PaginationInfo } from "./pagination";
+import { PageInfo } from "./pagination";
 
 type ExternalURLs = { [key: string]: string };
 
@@ -46,6 +46,8 @@ export interface Album {
   };
   type: string;
   uri: string;
+  numReviews?: number;
+  avgRating?: number | null;
 }
 
 export type AlbumList = {
@@ -53,6 +55,6 @@ export type AlbumList = {
   limit: number;
   offset: number;
   total: number;
-  next: PaginationInfo | null;
-  prev: PaginationInfo | null;
+  next: PageInfo | null;
+  prev: PageInfo | null;
 };

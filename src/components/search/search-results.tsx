@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import AlbumList from "../album/album-list";
 import Tabs, { TabInfo } from "../util/tabs";
-import ReviewList from "../review/review-list";
 import { useAppSelector } from "../util/redux/hooks";
 import { AppDispatch } from "../util/redux/store";
 import { useDispatch } from "react-redux";
 import { findSearchAlbumsAction } from "../../actions/albums-actions";
 import { useSearchParams } from "react-router-dom";
 import { showToastMessage } from "../../helpers/toast-helpers";
-import { findHomeReviewsAction } from "../../actions/reviews-actions";
+import { findHomeReviewsAction } from "../../actions/popular-reviews-actions";
+import PopularReviewList from "../review/popular-review-list";
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
@@ -16,8 +16,9 @@ const SearchResults = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const albumState = useAppSelector((state) => state.albums);
-  const { albums, paginationInfo } = albumState;
-  const reviews = useAppSelector((state) => state.reviews.reviews);
+  const { albums, paginationInfo: albumPaginationInfo } = albumState;
+  const popularReviewState = useAppSelector((state) => state.popularReviews);
+  const { popularReviews } = popularReviewState;
 
   useEffect(() => {
     if (!q) {
@@ -33,13 +34,13 @@ const SearchResults = () => {
       key: "albums",
       label: "Albums",
       children: (
-        <AlbumList albums={[...albums]} paginationInfo={paginationInfo} />
+        <AlbumList albums={[...albums]} paginationInfo={albumPaginationInfo} />
       ),
     },
     {
       key: "reviews",
       label: "Reviews",
-      children: <ReviewList reviews={[...reviews]} />,
+      children: <PopularReviewList popularReviews={popularReviews} />,
     },
   ];
 
@@ -50,13 +51,16 @@ const SearchResults = () => {
       </div>
       <div className="justify-between gap-3 hidden lg:flex">
         <div className="lg:w-2/3 w-full rounded">
-          <AlbumList albums={[...albums]} paginationInfo={paginationInfo} />
+          <AlbumList
+            albums={[...albums]}
+            paginationInfo={albumPaginationInfo}
+          />
         </div>
         <div className="lg:w-1/3 rounded md:inline hidden">
           <div className="w-full font-bold text-2xl text-center rounded bg-green-500 text-black p-1 mb-2 select-none cursor-default">
             Recent Reviews
           </div>
-          <ReviewList reviews={[...reviews]} />
+          <PopularReviewList popularReviews={popularReviews} />
         </div>
       </div>
     </div>

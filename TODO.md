@@ -6,32 +6,30 @@
 [x] - review list item profile pic size responsiveness!! - may need to fully refactor
 [x] - profile page profile pic size responsiveness
 [ ] - reviewspot logo icon
-[ ] - conditionally render pagination bars
-[ ] - album cover too big on mobile layout?
+[x] - conditionally render pagination bars
+[x] - album cover too big on mobile layout?
 [x] - album list item responsiveness (bottom of album cover not lining up with bottom of album rating)
 [x] - combine album list item into one component
 [ ] - better location for UserBadge on review list item?
 [x] - link to artist spotify url
-[ ] - a way to simplify onAlbumPage conditional rendering checks
-[ ] - yellow border not showing up for reviewspot ratings on album list items
-[ ] - show review related to search term!!
+[x] - a way to simplify onAlbumPage conditional rendering checks
+[x] - yellow border not showing up for reviewspot ratings on album list items
 [ ] - extra flex boxes in review spot list item? refactor simpler
-[ ] - custom row and column components ??
 [ ] - loading component
 [ ] - useMemo ??
 [] - Abstract rating configs
 [ ] - disallow whitespace in username/password
 [x] - clicking back button from album page doesnt update home albums - probably true for other pages too
 [ ] - delete account
-[ ] - isLoggedIn helper
 [ ] - search for users
 [ ] - forgot password
-[ ] - PAGINATION
-[ ] - CACHE ALBUMS
-
-[ ] - refactor profile page style (not sure if I like where the name and badge are)
-
-[ ] - see notes app
+[x] - PAGINATION
+[ ] - CACHE ALBUMS IN STATE (e.g. popularReviews)
+[ ] - USE LOADER WHERE POSSIBLE - https://reactrouter.com/en/main/route/loader
+[ ] - updatedAt and createdAt timestamps on reviews/comments
+[ ] - edit review from review page
+[ ] - delete review from album page
+[ ] - update number of comments on review page when adding/deleting comments
 
 [ ] - simplify album item components if possible (album-item-browser, album-item-mobile, album-list, album-list-item)
 

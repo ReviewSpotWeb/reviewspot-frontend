@@ -1,11 +1,11 @@
-export type PaginationInfo = {
+export type PageInfo = {
   offset: number;
   limit: number;
 };
 
-export type AlbumPaginationInfo = {
-  next: PaginationInfo | null;
-  prev: PaginationInfo | null;
-  page: PaginationInfo;
+export type PaginationInfo = {
+  next: PageInfo | null;
+  prev: PageInfo | null;
+  page: PageInfo;
   total: number;
 };

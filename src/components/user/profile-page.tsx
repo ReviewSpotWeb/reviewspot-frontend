@@ -1,18 +1,13 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import ProfilePicture from "./profile-picture";
-import { Role, User } from "../../types/user";
-import { HeartIconSolid, ReviewIcon } from "../util/icons";
+import { Role, UserProfile } from "../../types/user";
+import { CommentIcon, ReviewIcon } from "../util/icons";
 import { Album } from "../../types/album";
 import { Link } from "react-router-dom";
 import { Review } from "../../types/review";
 import ReviewList from "../review/review-list";
-import PaginationBar, { PaginationInfo } from "../util/pagination-bar";
-import { AppDispatch } from "../util/redux/store";
-import { useDispatch } from "react-redux";
 import { useAppSelector } from "../util/redux/hooks";
 import { useEffect, useState } from "react";
-import { findUserReviewsAction } from "../../actions/reviews-actions";
-import { findUserProfileAction } from "../../actions/profile-actions";
 import { findAlbum } from "../../services/albums-services";
 
 // TODO: move to diff file
@@ -39,47 +34,18 @@ const getFavoriteAlbums = async (reviews: Review[], num: number = 3) => {
 
 const ProfilePage = () => {
   const [favoriteAlbums, setFavoriteAlbums] = useState<Album[]>([]);
-  const navigate = useNavigate();
-  const dispatch: AppDispatch = useDispatch();
-  const params = useParams();
-  const userId = params.userId;
 
-  const user: User = useAppSelector((state) => state.profile.user);
-  const reviews: Review[] = useAppSelector((state) => state.reviews.reviews);
+  const reviewState = useAppSelector((state) => state.reviews);
+  const { reviews, paginationInfo } = reviewState;
+  const userProfile = useLoaderData() as UserProfile;
+  const { userInfo, numReviews, numComments } = userProfile;
 
   useEffect(() => {
-    if (!userId) navigate("/");
-    findUserProfileAction(dispatch, userId ?? "");
-    findUserReviewsAction(dispatch, userId ?? "");
-  }, [userId, dispatch, navigate]);
-
-  useEffect(() => {
+    // TODO: Replace this with endpoint for getting favorite albums
     getFavoriteAlbums(reviews).then((albums) => setFavoriteAlbums(albums));
   }, [reviews]);
 
-  const numReviews: number = reviews.length;
-  let numLikes: number = 0;
-  reviews.forEach((review) => (numLikes += review.likedBy.length));
-
-  const prev = true; // If previous page
-  const next = true; // If next page
-
-  const loadNext = () => {
-    console.log("next on profile page");
-    return;
-  };
-  const loadPrev = () => {
-    console.log("prev on profile page");
-    return;
-  };
-  const paginationInfo: PaginationInfo = {
-    prev,
-    next,
-    loadNext,
-    loadPrev,
-  };
-
-  const PAGE_SIZE = 10;
+  // TODO: Get numLikes from server
 
   return (
     <div className="flex flex-col gap-5">
@@ -88,7 +54,7 @@ const ProfilePage = () => {
           <div className="flex w-full h-full gap-1">
             {/* Place avatar at bottom of frame - flex flex-col justify-end */}
             <div className="rounded bg-[#303030] w-1/3 md:w-1/4 lg:w-1/5">
-              <ProfilePicture userId={userId ?? ""} />
+              <ProfilePicture userId={userInfo.username ?? ""} />
             </div>
             <div className="w-2/3 md:w-3/4 lg:w-4/5">
               <div className="bg-[#303030] rounded w-full h-full">
@@ -97,11 +63,11 @@ const ProfilePage = () => {
                     <div className="flex justify-center items-center w-full relative">
                       <span
                         className="font-bold text-xl md:text-3xl truncate"
-                        title={user.username}
+                        title={userInfo.username}
                       >
-                        {user.username}
+                        {userInfo.username}
                       </span>
-                      {user.role === Role.MODERATOR && (
+                      {userInfo.role === Role.MODERATOR && (
                         <div className="absolute right-0 w-max bg-purple-700 px-4 font-bold rounded-full border-2 border-[#202020] cursor-default">
                           Mod
                         </div>
@@ -154,13 +120,28 @@ const ProfilePage = () => {
             <div className="w-1/2 truncate bg-[#202020] rounded px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
               <b
                 className="truncate whitespace-pre"
+                title={`${numComments} ${
+                  numComments === 1 ? "comment" : "comments"
+                }`}
+              >
+                <span className="hidden md:inline"> {"Left "}</span>
+                {`${numComments} ${
+                  numComments === 1 ? "comment" : "comments"
+                } `}
+              </b>
+              <CommentIcon />
+            </div>
+            {/* TODO: Put this back when getting likes from serv */}
+            {/* <div className="w-1/2 truncate bg-[#202020] rounded px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
+              <b
+                className="truncate whitespace-pre"
                 title={`${numLikes} ${numLikes === 1 ? "like" : "likes"}`}
               >
                 <span className="hidden md:inline"> {"Earned "}</span>
                 {`${numLikes} ${numLikes === 1 ? "like" : "likes"} `}
               </b>
               <HeartIconSolid />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -172,10 +153,11 @@ const ProfilePage = () => {
             ? "Review"
             : "Reviews"}
         </div>
-        <ReviewList reviews={[...reviews]} hideAuthorInfo />
-        {reviews.length > PAGE_SIZE && (
-          <PaginationBar paginationInfo={paginationInfo} />
-        )}
+        <ReviewList
+          reviews={[...reviews]}
+          hideAuthorInfo
+          paginationInfo={paginationInfo}
+        />
       </div>
     </div>
   );

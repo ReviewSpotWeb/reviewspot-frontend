@@ -1,11 +1,9 @@
-// import axios from "axios";
-import usersJson from "../data/users.json";
-import { User } from "../types/user";
+import { UserProfile } from "../types/user";
+import { app } from "./axios";
 
 // TODO: Replace w real requests
 
-export const findUser = async (userId: string): Promise<User> => {
-  return usersJson.find(
-    (user) => user.username.toLowerCase() === userId.toLowerCase()
-  ) as never;
+export const findUserProfile = async (userId: string): Promise<UserProfile> => {
+  const response = await app.get(`/user/${userId}`);
+  return response.data;
 };

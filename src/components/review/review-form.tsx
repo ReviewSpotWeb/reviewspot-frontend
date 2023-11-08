@@ -3,7 +3,7 @@ import { showToastMessage } from "../../helpers/toast-helpers";
 import { Review } from "../../types/review";
 
 export type UserReview = {
-  review: string;
+  content: string;
   rating: number;
 };
 
@@ -16,14 +16,14 @@ type ReviewFormProps = {
 const ReviewForm = (reviewFormProps: ReviewFormProps) => {
   const { onSave, onCancel, review } = reviewFormProps;
   const initialUserReview = review
-    ? { review: review.content, rating: review.rating.rating }
+    ? { content: review.content, rating: review.rating.rating }
     : {
-        review: "",
+        content: "",
         rating: 0,
       };
   const [userReview, setUserReview] = useState<UserReview>(initialUserReview);
   const handleSave = () => {
-    if (!userReview.review.trim()) {
+    if (!userReview.content.trim()) {
       showToastMessage({ message: "Your review is empty!" });
       return;
     }
@@ -40,9 +40,9 @@ const ReviewForm = (reviewFormProps: ReviewFormProps) => {
             id="review-text"
             className="resize-none px-2 py-1 w-full h-32 rounded bg-[#333] border-2 border-[#222]"
             onChange={(e) =>
-              setUserReview({ ...userReview, review: e.target.value })
+              setUserReview({ ...userReview, content: e.target.value })
             }
-            value={userReview.review}
+            value={userReview.content}
           />
         </div>
         <div className="flex justify-center items-center gap-2">

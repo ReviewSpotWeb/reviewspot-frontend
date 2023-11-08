@@ -14,11 +14,9 @@ import { formatReleaseDate } from "../../helpers/album-helpers";
 const AlbumItemBrowser = ({ album }: { album: Album }) => {
   const { albumId } = useParams();
   const navigate = useNavigate();
-  const numReviews: number = 0;
-  const rng = Math.floor(Math.random() * 101);
-  const albumRating: number | null = rng <= 30 ? null : rng;
   const onAlbumPage = album.id === albumId;
 
+  const numReviews: number = album.numReviews || 0;
   const ratings: RatingInfo[] = [
     {
       label: "Spotify",
@@ -29,7 +27,7 @@ const AlbumItemBrowser = ({ album }: { album: Album }) => {
     {
       label: "ReviewSpot",
       icon: <div>RS</div>,
-      rating: albumRating,
+      rating: album.avgRating || null,
       color: "bg-yellow-500",
     },
   ];

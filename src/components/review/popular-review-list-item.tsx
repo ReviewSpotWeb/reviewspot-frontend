@@ -1,38 +1,26 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Review } from "../../types/review";
+import { Album } from "../../types/album";
 import { Role } from "../../types/user";
-import {
-  CommentIcon,
-  DeleteIcon,
-  HeartIcon,
-  HeartIconSolid,
-  ReviewIcon,
-  SpotifyIconSmall,
-} from "../util/icons";
+import { CommentIcon, HeartIcon, HeartIconSolid } from "../util/icons";
+import { RatingInfo } from "../album/album-rating";
 import AlbumRating from "../album/album-rating";
 import UserBadge from "../user/user-badge";
 import ProfilePicture from "../user/profile-picture";
 import { useAppSelector } from "../util/redux/hooks";
 import { showToastMessage } from "../../helpers/toast-helpers";
-import {
-  likeReviewAction,
-  removeReviewAction,
-} from "../../actions/reviews-actions";
 import { AppDispatch } from "../util/redux/store";
 import { useDispatch } from "react-redux";
-import { Album } from "../../types/album";
+import { likePopularReviewAction } from "../../actions/popular-reviews-actions";
 
-const ReviewListItem = ({
+const PopularReviewListItem = ({
   review,
   album,
-  hideAuthorInfo = false,
 }: {
   review: Review;
-  album?: Album;
-  hideAuthorInfo?: boolean;
+  album: Album;
 }) => {
   const dispatch: AppDispatch = useDispatch();
-  const navigate = useNavigate();
   const loggedIn = useAppSelector((state) => state.user.user.loggedIn);
   const userId = useAppSelector((state) => state.user.user._id);
 
@@ -42,37 +30,16 @@ const ReviewListItem = ({
   const role: Role = Role[authorRole.toUpperCase() as keyof typeof Role];
   const ratingValue = rating ? rating.rating : null;
   const numLikes = likedBy ? likedBy.length : 0;
-  const ratings = album
-    ? [
-        {
-          label: "Spotify",
-          icon: <SpotifyIconSmall />,
-          rating: album?.popularity || null,
-          color: "bg-green-500",
-        },
-        {
-          label: "Rating",
-          icon: <ReviewIcon />,
-          rating: ratingValue,
-          color: "bg-blue-500",
-        },
-      ]
-    : [
-        {
-          label: "Rating",
-          icon: <ReviewIcon />,
-          rating: ratingValue,
-          color: "bg-blue-500",
-        },
-      ];
 
-  const { reviewId } = useParams();
-  const onReviewPage = review._id === reviewId;
-  const albumName = album
-    ? album.name
-    : review.albumName
-    ? review.albumName
-    : null;
+  const userLikedReview = review.likedBy.includes(userId);
+
+  const ratings: RatingInfo[] = [
+    {
+      label: "",
+      rating: ratingValue,
+      color: "bg-blue-500",
+    },
+  ];
 
   const handleLike = () => {
     if (!loggedIn) {
@@ -82,19 +49,7 @@ const ReviewListItem = ({
       });
       return;
     }
-    likeReviewAction(dispatch, review.albumId, review._id, userId);
-  };
-
-  // Can delete review if author
-  const user = useAppSelector((state) => state.user.user);
-  const username = user.username;
-  const userIsAuthor = username === authorName.toLowerCase();
-  const userLikedReview = review.likedBy.includes(user._id);
-
-  const handleDeleteReview = () => {
-    if (!review.albumId || !review._id) return;
-    removeReviewAction(dispatch, review.albumId, review._id);
-    navigate("/");
+    likePopularReviewAction(dispatch, review.albumId, review._id, userId);
   };
 
   const goToReviewButton = (
@@ -112,7 +67,7 @@ const ReviewListItem = ({
       <div className="flex flex-col gap-1 w-full">
         {/* First Row */}
         <div className="w-full flex gap-2">
-          <div className={hideAuthorInfo ? "hidden" : colSmall}>
+          <div className={colSmall}>
             <Link to={`/user/${authorName.toLowerCase()}`}>
               <div
                 className="w-full text-white font-bold bg-[#303030] border-2 border-[#222] hover:border-blue-500 rounded"
@@ -128,16 +83,16 @@ const ReviewListItem = ({
               </div>
             </Link>
           </div>
-          {albumName && (
-            <div className={hideAuthorInfo ? "w-full" : colBig}>
+          {album && (
+            <div className={colBig}>
               <div className="w-full">
                 <div className="flex justify-center items-center mx-4">
                   <Link
-                    to={`/album/${review.albumId}`}
+                    to={`/album/${album.id}`}
                     className="font-bold text-lg truncate"
                   >
-                    <span className="hover:text-green-400" title={albumName}>
-                      {albumName}
+                    <span className="hover:text-green-400" title={album.name}>
+                      {album.name}
                     </span>
                   </Link>
                 </div>
@@ -148,7 +103,7 @@ const ReviewListItem = ({
 
         {/* Second Row - fill any space*/}
         <div className="w-full flex gap-2">
-          <div className={hideAuthorInfo ? "hidden" : colSmall}>
+          <div className={colSmall}>
             <Link to={`/user/${authorName.toLowerCase()}`}>
               <div className="h-full w-full flex flex-col bg-[#303030] border-4 gap-1 border-[#222] hover:border-blue-500 rounded">
                 <div className="flex flex-col w-full h-full justify-center">
@@ -162,7 +117,7 @@ const ReviewListItem = ({
               </div>
             </Link>
           </div>
-          <div className={hideAuthorInfo ? "w-full h-full" : colBig}>
+          <div className={colBig}>
             <div className="rounded h-full w-full text-center flex flex-col justify-between gap-2">
               <div className="h-full w-full bg-[#303030] p-2 rounded border border-transparent hover:border-blue-500 cursor-default flex justify-center items-center">
                 <div className="line-clamp-5 lg:line-clamp-3 xl:line-clamp-4">
@@ -175,16 +130,12 @@ const ReviewListItem = ({
         {/* Third Row */}
         <div className="w-full gap-2 flex">
           <div className={colSmall}>
-            <div
-              className={`flex lg:flex-col justify-between gap-1 h-full ${
-                onReviewPage && "flex-col"
-              }`}
-            >
-              <div className="w-full h-full bg-[#303030] rounded whitespace-pre px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
+            <div className="flex lg:flex-col justify-between gap-1">
+              <div className="w-full bg-[#303030] rounded whitespace-pre px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
                 <b>{review.numComments} </b>
                 <CommentIcon />
               </div>
-              <div className="w-full h-full bg-[#303030] rounded whitespace-pre px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
+              <div className="w-full bg-[#303030] rounded whitespace-pre px-2 py-1 rounded border border-transparent hover:border-blue-500 flex items-center justify-center select-none cursor-default">
                 <b>{numLikes} </b>
                 <div
                   className="flex justify-center items-center cursor-pointer "
@@ -200,28 +151,13 @@ const ReviewListItem = ({
               <div className="h-full w-full">
                 <AlbumRating ratings={ratings} />
               </div>
-              {!onReviewPage && (
-                <div className="h-full lg:inline hidden">
-                  {goToReviewButton}
-                </div>
-              )}
+              <div className="h-full lg:inline hidden">{goToReviewButton}</div>
             </div>
           </div>
         </div>
-        {/* Render go to review button at bottom of screens < lg */}
-        {!onReviewPage && (
-          <div className="w-full lg:hidden">{goToReviewButton}</div>
-        )}
+        <div className="w-full lg:hidden">{goToReviewButton}</div>
       </div>
-      {userIsAuthor && onReviewPage && (
-        <div
-          className="absolute right-2 top-2 cursor-pointer fill-current hover:text-red-500"
-          onClick={() => handleDeleteReview()}
-        >
-          <DeleteIcon />
-        </div>
-      )}
     </li>
   );
 };
-export default ReviewListItem;
+export default PopularReviewListItem;

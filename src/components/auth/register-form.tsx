@@ -20,7 +20,6 @@ const RegisterForm = () => {
     confirm: "",
   });
 
-  // TODO: Need to use isLoggedIn endpoint for this
   const loggedIn = useAppSelector((state) => state.user.user.loggedIn);
   useEffect(() => {
     // redirect if already logged in

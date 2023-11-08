@@ -1,20 +1,31 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { User } from "../types/user";
+import { UserProfile } from "../types/user";
 
 interface ProfileState {
-  user: User;
+  profile: UserProfile;
 }
 
 const initialState: ProfileState = {
-  user: { _id: "", loggedIn: false, username: "", role: null, banned: false },
+  profile: {
+    numComments: 0,
+    numReviews: 0,
+    userInfo: {
+      _id: "",
+      loggedIn: false,
+      username: "",
+      role: null,
+      banned: false,
+    },
+  },
 };
 
 export const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    find: (state, action: PayloadAction<User>) => {
-      state.user = { ...action.payload };
+    find: (state, action: PayloadAction<UserProfile>) => {
+      state.profile = { ...action.payload };
+      return state;
     },
   },
 });

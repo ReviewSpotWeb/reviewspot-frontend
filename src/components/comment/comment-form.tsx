@@ -20,7 +20,7 @@ const CommentForm = (commentFormProps: CommentFormProps) => {
   return (
     <div className="flex justify-center h-max">
       <div className="w-3/4 h-max text-gray-200 flex flex-col gap-2">
-        <div className="text-center font-bold text-2xl">Rate and Review</div>
+        <div className="text-center font-bold text-2xl">Comment</div>
         <div>
           <textarea
             name="review"

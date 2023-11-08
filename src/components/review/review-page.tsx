@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Review } from "../../types/review";
 import ReviewList from "./review-list";
 import CommentList from "../comment/comment-list";
-import { Comment } from "../../types/comment";
-import PaginationBar, { PaginationInfo } from "../util/pagination-bar";
 import { findReviewAction } from "../../actions/reviews-actions";
 import { AppDispatch } from "../util/redux/store";
 import { useDispatch } from "react-redux";
@@ -17,42 +14,32 @@ import { WriteOrEditReviewIcon } from "../util/icons";
 import CommentForm from "../comment/comment-form";
 import { showToastMessage } from "../../helpers/toast-helpers";
 const ReviewPage = () => {
-  const { reviewId } = useParams();
-  // TODO: Handling undefined useParams
+  const { reviewId, albumId } = useParams();
 
-  const prev = true; // If previous page
-  const next = true; // If next page
-
-  const loadNext = () => {
-    console.log("next on profile page");
-    return;
-  };
-  const loadPrev = () => {
-    console.log("prev on profile page");
-    return;
-  };
-  const paginationInfo: PaginationInfo = {
-    prev,
-    next,
-    loadNext,
-    loadPrev,
-  };
+  const commentState = useAppSelector((state) => state.comments);
+  const { comments, paginationInfo } = commentState;
 
   const dispatch: AppDispatch = useDispatch();
-  const review: Review = useAppSelector((state) => state.reviews.reviews[0]);
-  useEffect(() => {
-    findReviewAction(dispatch, reviewId ?? "");
-  }, [reviewId, dispatch]);
+  const reviewState = useAppSelector((state) => state.reviews);
+  const { reviews, album } = reviewState;
+  const review = reviews[0];
 
-  const comments: Comment[] = useAppSelector(
-    (state) => state.comments.comments
-  );
+  // TODO: use loader
   useEffect(() => {
-    findReviewCommentsAction(dispatch, reviewId ?? "");
-  }, [reviewId, dispatch]);
-  const numComments: number = comments.length;
+    if (!reviewId || !albumId) return;
+    findReviewAction(dispatch, reviewId, albumId);
+  }, [reviewId, dispatch, albumId]);
 
-  const PAGE_SIZE = 10;
+  useEffect(() => {
+    if (!reviewId || !albumId) return;
+    findReviewCommentsAction(dispatch, reviewId, albumId);
+  }, [reviewId, dispatch, albumId]);
+
+  const [numComments, setNumComments] = useState<number>(0);
+
+  useEffect(() => {
+    setNumComments(comments.length);
+  }, [comments]);
 
   const [showCommentForm, setShowCommentForm] = useState<boolean>(false);
 
@@ -71,11 +58,9 @@ const ReviewPage = () => {
 
   const onSave = (comment: string) => {
     setShowCommentForm((prev) => !prev);
-    createCommentAction(dispatch, comment);
-    // TODO: component should rerender and display user review
-    // TODO: Do i need to update state or can i just force rerender
+    if (!reviewId || !albumId) return;
+    createCommentAction(dispatch, albumId, reviewId, comment);
   };
-
   return (
     <div className="h-max w-full">
       {!review ? (
@@ -83,7 +68,7 @@ const ReviewPage = () => {
       ) : (
         <div className="h-full w-full flex flex-col gap-5">
           <div className="flex flex-col gap-2">
-            <ReviewList reviews={[{ ...review }]} />
+            <ReviewList reviews={[{ ...review }]} album={album ?? undefined} />
             <div className="w-full h-full bg-[#404040] rounded">
               {!showCommentForm && (
                 <div
@@ -112,10 +97,10 @@ const ReviewPage = () => {
                 ? "Comment"
                 : "Comments"}
             </div>
-            <CommentList comments={[...comments]} />
-            {comments.length > PAGE_SIZE && (
-              <PaginationBar paginationInfo={paginationInfo} />
-            )}
+            <CommentList
+              comments={[...comments]}
+              paginationInfo={paginationInfo}
+            />
           </div>
         </div>
       )}

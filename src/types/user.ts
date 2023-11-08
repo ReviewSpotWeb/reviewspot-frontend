@@ -10,3 +10,9 @@ export interface User {
   banned: boolean;
   role: Role | null;
 }
+
+export interface UserProfile {
+  numComments: number;
+  numReviews: number;
+  userInfo: User;
+}

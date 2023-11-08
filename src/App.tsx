@@ -14,6 +14,9 @@ import { useEffect } from "react";
 import { isLoggedInAction } from "./actions/user-actions";
 import { AppDispatch } from "./components/util/redux/store";
 import { useDispatch } from "react-redux";
+import { findUserProfile } from "./services/profile-services";
+import { findUserReviewsAction } from "./actions/reviews-actions";
+import { findAlbum } from "./services/albums-services";
 
 const App = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -45,14 +48,30 @@ const App = () => {
         {
           path: "album/:albumId",
           element: <AlbumPage />,
+          loader: async ({ params }) => {
+            if (!params.albumId)
+              throw new Response("No album provided", { status: 400 });
+            // Update review state
+            await findUserReviewsAction(dispatch, params.userId ?? "");
+            // Return user profile data
+            return await findAlbum(params.albumId);
+          },
         },
         {
-          path: "review/:reviewId",
+          path: "album/:albumId/review/:reviewId",
           element: <ReviewPage />,
         },
         {
           path: "user/:userId",
           element: <ProfilePage />,
+          loader: async ({ params }) => {
+            if (!params.userId)
+              throw new Response("No username provided", { status: 400 });
+            // Update review state
+            await findUserReviewsAction(dispatch, params.userId ?? "");
+            // Return user profile data
+            return await findUserProfile(params.userId);
+          },
         },
         {
           path: "search/",

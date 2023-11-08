@@ -1,3 +1,5 @@
+import { Album } from "./album";
+import { PageInfo } from "./pagination";
 import { User } from "./user";
 
 interface Rating {
@@ -14,6 +16,21 @@ export interface Review {
   albumId: string;
   content: string;
   numComments: number;
-  likedBy: User[];
+  likedBy: string[];
   rating: Rating;
+  albumName?: string;
 }
+
+export interface PopularReview {
+  review: Review;
+  album: Album;
+}
+
+export type ReviewList = {
+  reviews: Review[];
+  limit: number;
+  offset: number;
+  total: number;
+  next: PageInfo | null;
+  prev: PageInfo | null;
+};

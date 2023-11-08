@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Album, AlbumList } from "../types/album";
-import { AlbumPaginationInfo } from "../types/pagination";
+import { PaginationInfo } from "../types/pagination";
 
 type AlbumState = {
   albums: Album[];
-  paginationInfo: AlbumPaginationInfo;
+  paginationInfo: PaginationInfo;
 };
 
 const initialState: AlbumState = {
