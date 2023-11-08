@@ -59,6 +59,13 @@ const RegisterForm = () => {
       setRegisterInfo({ ...registerInfo, password: "", confirm: "" });
       return;
     }
+    if (registerInfo.password.length < 7) {
+      showToastMessage({
+        message: "Password must be at least 6 characters long!",
+      });
+      setRegisterInfo({ ...registerInfo, password: "", confirm: "" });
+      return;
+    }
     registerAction(
       dispatch,
       registerInfo.username,
