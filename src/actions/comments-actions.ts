@@ -8,6 +8,7 @@ import {
 import { PageInfo } from "../types/pagination";
 import { isErrorResponse } from "../services/axios";
 import { Comment, CommentList } from "../types/comment";
+import { decNumComments, incNumComments } from "../reducers/reviews-reducer";
 
 export const findReviewCommentsAction = async (
   dispatch: AppDispatch,
@@ -41,6 +42,10 @@ export const createCommentAction = async (
     type: create,
     payload: newComment,
   });
+  dispatch({
+    type: incNumComments,
+    payload: reviewId,
+  });
 };
 
 export const removeCommentAction = async (
@@ -59,5 +64,9 @@ export const removeCommentAction = async (
   dispatch({
     type: remove,
     payload: commentId,
+  });
+  dispatch({
+    type: decNumComments,
+    payload: reviewId,
   });
 };

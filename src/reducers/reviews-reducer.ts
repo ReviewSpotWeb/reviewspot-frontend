@@ -120,6 +120,34 @@ export const reviewsSlice = createSlice({
       };
       return state;
     },
+    incNumComments: (state, action: PayloadAction<string>) => {
+      const updatedReviews = state.reviews.map((review) => {
+        if (review._id !== action.payload) return review;
+        return {
+          ...review,
+          numComments: review.numComments + 1,
+        };
+      });
+      state = {
+        ...state,
+        reviews: [...updatedReviews],
+      };
+      return state;
+    },
+    decNumComments: (state, action: PayloadAction<string>) => {
+      const updatedReviews = state.reviews.map((review) => {
+        if (review._id !== action.payload) return review;
+        return {
+          ...review,
+          numComments: Math.max(0, review.numComments - 1),
+        };
+      });
+      state = {
+        ...state,
+        reviews: [...updatedReviews],
+      };
+      return state;
+    },
   },
 });
 
@@ -132,6 +160,8 @@ export const {
   create,
   remove,
   like,
+  incNumComments,
+  decNumComments,
 } = reviewsSlice.actions;
 
 export default reviewsSlice.reducer;
