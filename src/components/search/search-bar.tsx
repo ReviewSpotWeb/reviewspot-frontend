@@ -50,6 +50,7 @@ const SearchBar = () => {
         </button>
         <div className="w-5/6 h-full relative rounded-none">
           <input
+            autoComplete="off"
             name="search"
             type="text"
             placeholder="Search"
