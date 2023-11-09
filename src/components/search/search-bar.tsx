@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, KeyboardEvent } from "react";
 import { showToastMessage } from "../../helpers/toast-helpers";
 import { ToastInfo } from "../../helpers/toast-helpers";
 import { ClearSearchIcon, SearchIcon } from "../util/icons";
@@ -31,6 +31,10 @@ const SearchBar = () => {
     navigate(`/search?q=${search}`);
   };
 
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handleSearch(searchTerm);
+  };
+
   const handleClearSearch = () => {
     setSearchTerm("");
   };
@@ -52,6 +56,7 @@ const SearchBar = () => {
             className="w-full p-1 px-2 outline-0 text-black bg-white font-bold rounded-none"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e)}
           />
           {searchTerm && (
             <div className="absolute top-1.5 right-1">
